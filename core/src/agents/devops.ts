@@ -17,6 +17,7 @@ const SAFE_COMMANDS = [
 ];
 
 const APPROVAL_COMMANDS = [
+  'git add .',
   'git commit',
   'git push',
   'docker restart',
@@ -29,6 +30,7 @@ const APPROVAL_COMMANDS = [
 ];
 
 const APPROVED_EXECUTION_COMMANDS = [
+  'git add .',
   'git status',
   'git log --oneline -n 5',
   'docker compose ps'
