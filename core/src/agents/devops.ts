@@ -242,6 +242,71 @@ async function executeApprovedDecision(decisionId: string) {
   }
 }
 
+
+async function runRepoStatus() {
+  const checks: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync('git branch --show-current', {
+      cwd: '/host_jarvis',
+      timeout: 5000
+    });
+    checks.branch = stdout.trim();
+  } catch (err: any) {
+    checks.branch = `ERRO: ${err.message}`;
+  }
+
+  try {
+    const { stdout } = await execAsync('git status --short', {
+      cwd: '/host_jarvis',
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    checks.changed_files = lines;
+    checks.staged_count = lines.filter((line) => line[0] && line[0] !== '?').length;
+    checks.untracked_count = lines.filter((line) => line.startsWith('??')).length;
+    checks.clean = lines.length === 0;
+  } catch (err: any) {
+    checks.changed_files = [`ERRO: ${err.message}`];
+    checks.clean = false;
+  }
+
+  try {
+    const { stdout } = await execAsync('git log --oneline -n 5', {
+      cwd: '/host_jarvis',
+      timeout: 5000
+    });
+    checks.last_commits = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+  } catch (err: any) {
+    checks.last_commits = [`ERRO: ${err.message}`];
+  }
+
+  await log('Repo status executado com sucesso', 'SUCCESS', {
+    source_brain: 'JARVIS',
+    agent_id: 'devops',
+    agent_role: 'DEVOPS',
+    action_type: 'DEVOPS_REPO_STATUS',
+    autonomy: 'N1',
+    status: 'SUCCESS',
+    output_summary: JSON.stringify(checks).slice(0, 500),
+    metadata: checks
+  });
+
+  return {
+    ok: true,
+    command: 'repo status',
+    repo: checks
+  };
+}
+
 async function runCoreDoctor() {
   const checks: Record<string, any> = {};
 
@@ -306,6 +371,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'core doctor') {
     return await runCoreDoctor();
+  }
+
+  if (normalized === 'repo status') {
+    return await runRepoStatus();
   }
 
   if (normalized === 'pending list') {
