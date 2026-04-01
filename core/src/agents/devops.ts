@@ -307,6 +307,88 @@ async function runRepoStatus() {
   };
 }
 
+
+async function runRepoLastCommits() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync('git log --oneline -n 10', {
+      cwd: '/host_jarvis',
+      timeout: 5000
+    });
+
+    result.commits = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+  } catch (err: any) {
+    result.commits = [`ERRO: ${err.message}`];
+  }
+
+  await log('Repo last commits executado com sucesso', 'SUCCESS', {
+    source_brain: 'JARVIS',
+    agent_id: 'devops',
+    agent_role: 'DEVOPS',
+    action_type: 'DEVOPS_REPO_LAST_COMMITS',
+    autonomy: 'N1',
+    status: 'SUCCESS',
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: 'repo last commits',
+    repo: result
+  };
+}
+
+
+async function runRepoPending() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync('git status --short', {
+      cwd: '/host_jarvis',
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.items = lines;
+    result.total = lines.length;
+    result.staged = lines.filter((line) => line[0] && line[0] !== '?').length;
+    result.untracked = lines.filter((line) => line.startsWith('??')).length;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.items = [`ERRO: ${err.message}`];
+    result.total = 0;
+    result.staged = 0;
+    result.untracked = 0;
+    result.clean = false;
+  }
+
+  await log('Repo pending executado com sucesso', 'SUCCESS', {
+    source_brain: 'JARVIS',
+    agent_id: 'devops',
+    agent_role: 'DEVOPS',
+    action_type: 'DEVOPS_REPO_PENDING',
+    autonomy: 'N1',
+    status: 'SUCCESS',
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: 'repo pending',
+    repo: result
+  };
+}
+
 async function runCoreDoctor() {
   const checks: Record<string, any> = {};
 
@@ -375,6 +457,14 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'repo status') {
     return await runRepoStatus();
+  }
+
+  if (normalized === 'repo last commits') {
+    return await runRepoLastCommits();
+  }
+
+  if (normalized === 'repo pending') {
+    return await runRepoPending();
   }
 
   if (normalized === 'pending list') {
