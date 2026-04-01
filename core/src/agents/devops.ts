@@ -33,7 +33,8 @@ const APPROVED_EXECUTION_COMMANDS = [
   'git add .',
   'git status',
   'git log --oneline -n 5',
-  'docker compose ps'
+  'docker compose ps',
+  'git commit'
 ];
 
 
@@ -149,9 +150,15 @@ async function executeApprovedDecision(decisionId: string) {
     };
   }
 
-  const approvedAllowed = APPROVED_EXECUTION_COMMANDS.some(
-    (allowed) => command.trim().toLowerCase() === allowed.toLowerCase()
-  );
+  const normalizedApprovedCommand = command.trim().toLowerCase();
+
+  const approvedAllowed = APPROVED_EXECUTION_COMMANDS.some((allowed) => {
+    const normalizedAllowed = allowed.toLowerCase();
+    return (
+      normalizedApprovedCommand === normalizedAllowed ||
+      normalizedApprovedCommand.startsWith(normalizedAllowed + ' ')
+    );
+  });
 
   if (!approvedAllowed) {
     await log(`Execução aprovada bloqueada por whitelist: ${command}`, 'ERROR', {
