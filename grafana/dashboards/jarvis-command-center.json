@@ -1,0 +1,34 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "title": "Logs Totais (Sentinel)",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
+      "datasource": "JARVIS-PostgreSQL",
+      "targets": [{ "target": "SELECT count(*) FROM jarvis_logs;" }],
+      "options": { "colorMode": "value", "graphMode": "area" }
+    },
+    {
+      "title": "V.I.S.I.O.N. Status",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
+      "datasource": "JARVIS-PostgreSQL",
+      "targets": [{ "target": "SELECT CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END FROM jarvis_logs ORDER BY created_at DESC LIMIT 1;" }],
+      "fieldConfig": { "defaults": { "mappings": [{ "type": "value", "options": { "1": { "text": "ONLINE", "color": "green" }, "0": { "text": "OFFLINE", "color": "red" } } }] } }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["WPS-Digital", "J.A.R.V.I.S."],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "J.A.R.V.I.S. Command Center",
+  "uid": "jarvis-command-center"
+}

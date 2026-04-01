@@ -1,0 +1,23 @@
+{
+  "name": "jarvis-core",
+  "version": "1.1.0",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "npx tsc src/server.ts src/dispatcher.ts src/logger.ts src/agents/devops.ts --outDir dist --module commonjs --esModuleInterop true --skipLibCheck true --useUnknownInCatchVariables false",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.14.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "@types/pg": "^8.20.0",
+    "typescript": "^6.0.2"
+  }
+}
