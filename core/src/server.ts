@@ -9,6 +9,14 @@ import http from 'http';
 const app = express();
 app.use(express.json());
 
+app.get('/health', async (_req, res) => {
+  return res.json({
+    ok: true,
+    service: 'jarvis-core',
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.post('/ask', async (req, res) => {
   const { prompt, category } = req.body;
   try {

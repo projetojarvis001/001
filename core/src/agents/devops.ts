@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import { readFileSync } from 'fs';
 import { promisify } from 'util';
 import { log, pool } from '../logger';
 
@@ -474,6 +475,1177 @@ async function runRepoPending() {
   };
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function runStageChangesExecute() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.pending_count = lines.length;
+    result.has_pending = lines.length > 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.pending_count = 0;
+    result.has_pending = false;
+    result.error = err.message;
+  }
+
+  if (!result.has_pending) {
+    result.next_step = "nenhum staging necessario";
+
+    await log("Stage changes execute sem pendencias", "SUCCESS", {
+      source_brain: "JARVIS",
+      agent_id: "devops",
+      agent_role: "DEVOPS",
+      action_type: "DEVOPS_STAGE_CHANGES_EXECUTE",
+      autonomy: "N1",
+      status: "SUCCESS",
+      output_summary: JSON.stringify(result).slice(0, 500),
+      metadata: result
+    });
+
+    return {
+      ok: true,
+      command: "stage changes execute",
+      stage: result
+    };
+  }
+
+  const approval = await createPendingDecision("git add .");
+
+  result.next_step = "aguardando aprovacao para git add .";
+  result.approval_required = true;
+  result.approval = approval.decision || null;
+
+  await log("Stage changes execute solicitou aprovacao", "INFO", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_STAGE_CHANGES_EXECUTE",
+    autonomy: "N2",
+    status: "PENDING",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: false,
+    command: "stage changes execute",
+    stage: result
+  };
+}
+
+async function runStageChangesPlan() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.pending_count = lines.length;
+    result.has_pending = lines.length > 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.pending_count = 0;
+    result.has_pending = false;
+    result.error = err.message;
+  }
+
+  result.can_stage = !!result.has_pending;
+
+  if (result.can_stage) {
+    result.next_step = "solicitar git add pelo fluxo controlado";
+  } else {
+    result.next_step = "nenhum staging necessario";
+  }
+
+  await log("Stage changes plan executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_STAGE_CHANGES_PLAN",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "stage changes plan",
+    repo: result
+  };
+}
+
+async function runExecutionReadiness() {
+  const result: Record<string, any> = {
+    has_prepare_repo: false,
+    has_commit_plan: false,
+    has_commit_message: false,
+    has_repo_ready: false,
+    has_safe_push_plan: false
+  };
+
+  let code = "";
+
+  try {
+    code = readFileSync("/host_jarvis/core/src/agents/devops.ts", "utf-8");
+  } catch (err: any) {
+    result.error = err.message;
+
+    await log("Execution readiness executado com erro de leitura", "ERROR", {
+      source_brain: "JARVIS",
+      agent_id: "devops",
+      agent_role: "DEVOPS",
+      action_type: "DEVOPS_EXECUTION_READINESS",
+      autonomy: "N1",
+      status: "ERROR",
+      output_summary: JSON.stringify(result).slice(0, 500),
+      metadata: result
+    });
+
+    return {
+      ok: false,
+      command: "execution readiness",
+      readiness: result
+    };
+  }
+
+  result.has_prepare_repo = code.includes("runPrepareRepo()");
+  result.has_commit_plan = code.includes("runRepoCommitPlan()");
+  result.has_commit_message = code.includes("runRepoCommitMessage()");
+  result.has_repo_ready = code.includes("runRepoReady()");
+  result.has_safe_push_plan = code.includes("runSafePushPlan()");
+
+  result.execution_readiness = !!(
+    result.has_prepare_repo &&
+    result.has_commit_plan &&
+    result.has_commit_message &&
+    result.has_repo_ready &&
+    result.has_safe_push_plan
+  );
+
+  result.next_step = result.execution_readiness
+    ? "playbook base pronto para execucao guiada"
+    : "completar playbooks faltantes";
+
+  await log("Execution readiness executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_EXECUTION_READINESS",
+    autonomy: "N1",
+    status: result.execution_readiness ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "execution readiness",
+    readiness: result
+  };
+}
+
+async function runSafePushPlan() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+    result.remote_lines = lines;
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.clean = false;
+    result.status_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_diff = lines.length > 0;
+    result.diff_stat = lines;
+
+    const fileLines = lines.filter((line) => line.includes('|'));
+    result.changed_files_count = fileLines.length;
+  } catch (err: any) {
+    result.has_diff = false;
+    result.diff_stat = [];
+    result.changed_files_count = 0;
+    result.diff_error = err.message;
+  }
+
+  result.ready_for_push = !!(
+    result.branch &&
+    result.upstream &&
+    result.has_origin &&
+    result.clean
+  );
+
+  if (result.ready_for_push) {
+    result.suggested_message = null;
+    result.next_step = "push permitido";
+  } else if (result.has_diff) {
+    result.suggested_message = "atualiza comandos e playbooks operacionais do devops";
+    result.next_step = "executar git add, git commit e depois revisar push";
+  } else if (!result.has_origin) {
+    result.suggested_message = null;
+    result.next_step = "configurar remote origin";
+  } else if (!result.upstream) {
+    result.suggested_message = null;
+    result.next_step = "configurar upstream da branch";
+  } else {
+    result.suggested_message = null;
+    result.next_step = "revisar estado do repositorio";
+  }
+
+  await log("Safe push plan executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_SAFE_PUSH_PLAN",
+    autonomy: "N1",
+    status: result.ready_for_push ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "safe push plan",
+    repo: result
+  };
+}
+
+async function runRepoCommitMessage() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.diff_stat = lines;
+    result.has_diff = lines.length > 0;
+
+    const fileLines = lines.filter((line) => line.includes('|'));
+    result.changed_files_count = fileLines.length;
+
+    if (result.has_diff) {
+      result.suggested_message = "atualiza comandos e playbooks operacionais do devops";
+      result.next_step = "revisar mensagem e executar git add/git commit";
+    } else {
+      result.suggested_message = null;
+      result.next_step = "nenhum commit necessario";
+    }
+  } catch (err: any) {
+    result.has_diff = false;
+    result.changed_files_count = 0;
+    result.suggested_message = null;
+    result.error = err.message;
+    result.next_step = "revisar estado do repositorio";
+  }
+
+  await log("Repo commit message executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_COMMIT_MESSAGE",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo commit message",
+    repo: result
+  };
+}
+
+async function runRepoCommitPlan() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.pending_count = lines.length;
+    result.has_pending = lines.length > 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.pending_count = 0;
+    result.has_pending = false;
+    result.status_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.diff_stat = lines;
+    result.has_diff = lines.length > 0;
+  } catch (err: any) {
+    result.diff_stat = [];
+    result.has_diff = false;
+    result.diff_error = err.message;
+  }
+
+  result.ready_to_commit = !!result.has_pending;
+
+  if (result.ready_to_commit) {
+    result.next_step = "revisar diff e definir mensagem de commit";
+  } else {
+    result.next_step = "nenhum commit necessario";
+  }
+
+  await log("Repo commit plan executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_COMMIT_PLAN",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo commit plan",
+    repo: result
+  };
+}
+
+async function runPrepareRepo() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+    result.remote_lines = lines;
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_diff = lines.length > 0;
+    result.diff_stat = lines;
+  } catch (err: any) {
+    result.has_diff = false;
+    result.diff_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.clean = false;
+    result.status_error = err.message;
+  }
+
+  result.ready_for_push = !!(
+    result.branch &&
+    result.upstream &&
+    result.has_origin &&
+    result.clean
+  );
+
+  if (result.ready_for_push) {
+    result.next_step = "push permitido";
+  } else if (result.has_diff && result.clean === false) {
+    result.next_step = "revisar diff e commitar antes do push";
+  } else if (!result.has_origin) {
+    result.next_step = "configurar remote origin";
+  } else if (!result.upstream) {
+    result.next_step = "configurar upstream da branch";
+  } else {
+    result.next_step = "revisar estado do repositorio";
+  }
+
+  await log("Prepare repo executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_PREPARE_REPO",
+    autonomy: "N1",
+    status: result.ready_for_push ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "prepare repo",
+    repo: result
+  };
+}
+
+async function runRepoReady() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.clean = false;
+    result.status_error = err.message;
+  }
+
+  result.ready_for_push = !!(
+    result.branch &&
+    result.upstream &&
+    result.has_origin &&
+    result.clean
+  );
+
+  await log("Repo ready executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_READY",
+    autonomy: "N1",
+    status: result.ready_for_push ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo ready",
+    repo: result
+  };
+}
+
+async function runRepoDoctor() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.remote_lines = lines;
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_diff = lines.length > 0;
+    result.diff_stat = lines;
+  } catch (err: any) {
+    result.has_diff = false;
+    result.diff_error = err.message;
+  }
+
+  result.repo_ok = !!(result.branch && result.has_origin);
+
+  await log("Repo doctor executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_DOCTOR",
+    autonomy: "N1",
+    status: result.repo_ok ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo doctor",
+    repo: result
+  };
+}
+
+async function runRepoDiff() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git diff --stat", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_diff = lines.length > 0;
+    result.diff_stat = lines;
+  } catch (err: any) {
+    result.has_diff = false;
+    result.error = err.message;
+  }
+
+  await log("Repo diff executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_DIFF",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo diff",
+    repo: result
+  };
+}
+
+async function runRepoRemote() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.raw = lines;
+
+    const fetchLine = lines.find((line) => line.startsWith("origin") && line.includes("(fetch)"));
+    const pushLine = lines.find((line) => line.startsWith("origin") && line.includes("(push)"));
+
+    result.fetch = fetchLine || null;
+    result.push = pushLine || null;
+    result.has_origin = !!(fetchLine || pushLine);
+  } catch (err: any) {
+    result.has_origin = false;
+    result.error = err.message;
+  }
+
+  await log("Repo remote executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_REMOTE",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo remote",
+    repo: result
+  };
+}
+
+async function runRepoBranch() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  await log("Repo branch executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_REPO_BRANCH",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "repo branch",
+    repo: result
+  };
+}
+
+async function runRecentSummary() {
+  const lastEventResult = await pool.query(
+    `SELECT created_at, action_type, status, input_summary
+     FROM jarvis_logs
+     WHERE agent_id = $1
+     ORDER BY created_at DESC
+     LIMIT 1`,
+    ['devops']
+  );
+
+  const recentLogsResult = await pool.query(
+    `SELECT created_at, action_type, status, input_summary
+     FROM jarvis_logs
+     WHERE agent_id = $1
+     ORDER BY created_at DESC
+     LIMIT 10`,
+    ['devops']
+  );
+
+  const recentDecisionsResult = await pool.query(
+    `SELECT id, created_at, status, description
+     FROM pending_decisions
+     ORDER BY created_at DESC
+     LIMIT 10`
+  );
+
+  const lastMeshResult = await pool.query(
+    `SELECT created_at, input_summary, output_summary
+     FROM jarvis_logs
+     WHERE agent_id = $1
+       AND action_type = $2
+     ORDER BY created_at DESC
+     LIMIT 1`,
+    ['devops', 'DEVOPS_MESH_STATUS']
+  );
+
+  const summary = {
+    last_event: lastEventResult.rows[0] || null,
+    recent_logs_count: recentLogsResult.rows.length,
+    recent_decisions_count: recentDecisionsResult.rows.length,
+    last_mesh_status: lastMeshResult.rows[0] || null
+  };
+
+  await log("Recent summary executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_RECENT_SUMMARY",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(summary).slice(0, 500),
+    metadata: summary
+  });
+
+  return {
+    ok: true,
+    command: "recent summary",
+    summary
+  };
+}
+
+async function runRecentDecisions() {
+  const result = await pool.query(
+    `SELECT id, created_at, agent_id, autonomy, description, recommendation, status, resolved_at, resolved_by
+     FROM pending_decisions
+     ORDER BY created_at DESC
+     LIMIT 10`
+  );
+
+  await log("Recent decisions executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_RECENT_DECISIONS",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result.rows).slice(0, 500),
+    metadata: { total: result.rows.length }
+  });
+
+  return {
+    ok: true,
+    command: "recent decisions",
+    decisions: result.rows
+  };
+}
+
+async function runLastMission() {
+  const result = await pool.query(
+    `SELECT created_at, action_type, status, input_summary
+     FROM jarvis_logs
+     WHERE agent_id = $1
+     ORDER BY created_at DESC
+     LIMIT 1`,
+    ['devops']
+  );
+
+  const row = result.rows[0] || null;
+
+  await log("Last mission executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_LAST_MISSION",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(row).slice(0, 500),
+    metadata: { found: !!row }
+  });
+
+  return {
+    ok: true,
+    command: "last mission",
+    mission: row
+  };
+}
+
+async function runRecentLogs() {
+  const result = await pool.query(
+    `SELECT created_at, action_type, status, input_summary
+     FROM jarvis_logs
+     WHERE agent_id = $1
+     ORDER BY created_at DESC
+     LIMIT 10`,
+    ['devops']
+  );
+
+  await log("Recent logs executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_RECENT_LOGS",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result.rows).slice(0, 500),
+    metadata: { total: result.rows.length }
+  });
+
+  return {
+    ok: true,
+    command: "recent logs",
+    logs: result.rows
+  };
+}
+
+async function runMeshStatus() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("wget -qO- http://localhost:3000/health", {
+      cwd: "/app",
+      timeout: 5000
+    });
+    result.core = JSON.parse(stdout);
+  } catch (err: any) {
+    result.core = { ok: false, error: err.message };
+  }
+
+  const visionHost = process.env.VISION_HOST || '';
+  result.vision_host = visionHost || null;
+
+  if (!visionHost) {
+    result.vision = { ok: false, error: "VISION_HOST não configurado" };
+  } else {
+    try {
+      const { stdout } = await execAsync(`wget -qO- http://${visionHost}:5005/health`, {
+        cwd: "/app",
+        timeout: 5000
+      });
+      result.vision = JSON.parse(stdout);
+    } catch (err: any) {
+      result.vision = { ok: false, error: err.message };
+    }
+  }
+
+  result.mesh_ok = !!(result.core?.ok && result.vision?.ok);
+
+  await log("Mesh status executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MESH_STATUS",
+    autonomy: "N1",
+    status: result.mesh_ok ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "mesh status",
+    mesh: result
+  };
+}
+
+async function runVisionHealth() {
+  const visionHost = process.env.VISION_HOST || '';
+  const baseUrl = visionHost ? `http://${visionHost}:5005/health` : '';
+
+  const result: Record<string, any> = {
+    host: visionHost || null
+  };
+
+  if (!visionHost) {
+    result.ok = false;
+    result.error = 'VISION_HOST não configurado';
+
+    await log("Vision health executado sem VISION_HOST", "ERROR", {
+      source_brain: "JARVIS",
+      agent_id: "devops",
+      agent_role: "DEVOPS",
+      action_type: "DEVOPS_VISION_HEALTH",
+      autonomy: "N1",
+      status: "ERROR",
+      output_summary: JSON.stringify(result).slice(0, 500),
+      metadata: result
+    });
+
+    return {
+      ok: false,
+      command: "vision health",
+      vision: result
+    };
+  }
+
+  try {
+    const { stdout } = await execAsync(`wget -qO- ${baseUrl}`, {
+      cwd: "/app",
+      timeout: 5000
+    });
+
+    const payload = JSON.parse(stdout);
+    result.ok = !!payload.ok;
+    result.response = payload;
+  } catch (err: any) {
+    result.ok = false;
+    result.error = err.message;
+  }
+
+  await log("Vision health executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_VISION_HEALTH",
+    autonomy: "N1",
+    status: result.ok ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: !!result.ok,
+    command: "vision health",
+    vision: result
+  };
+}
+
+async function runStackHealth() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("wget -qO- http://localhost:3000/health", {
+      cwd: "/app",
+      timeout: 5000
+    });
+    result.core = JSON.parse(stdout);
+  } catch (err: any) {
+    result.core = { ok: false, error: err.message };
+  }
+
+  try {
+    const { stdout } = await execAsync("pg_isready -h postgres -U jarvis_admin -d jarvis_db", {
+      cwd: "/app",
+      timeout: 5000
+    });
+    result.postgres = { ok: stdout.includes("accepting connections"), output: stdout.trim() };
+  } catch (err: any) {
+    result.postgres = { ok: false, error: err.message };
+  }
+
+  try {
+    const { stdout } = await execAsync("redis-cli -h redis -a 'W!@#wps@2026' ping", {
+      cwd: "/app",
+      timeout: 5000
+    });
+    result.redis = { ok: stdout.trim() == "PONG", output: stdout.trim() };
+  } catch (err: any) {
+    result.redis = { ok: false, error: err.message };
+  }
+
+  await log("Stack health executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_STACK_HEALTH",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "stack health",
+    stack: result
+  };
+}
+
 async function runCoreDoctor() {
   const checks: Record<string, any> = {};
 
@@ -550,6 +1722,82 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'repo pending') {
     return await runRepoPending();
+  }
+
+  if (normalized === 'stack health') {
+    return await runStackHealth();
+  }
+
+  if (normalized === 'vision health') {
+    return await runVisionHealth();
+  }
+
+  if (normalized === 'mesh status') {
+    return await runMeshStatus();
+  }
+
+  if (normalized === 'recent logs') {
+    return await runRecentLogs();
+  }
+
+  if (normalized === 'last mission') {
+    return await runLastMission();
+  }
+
+  if (normalized === 'recent decisions') {
+    return await runRecentDecisions();
+  }
+
+  if (normalized === 'recent summary') {
+    return await runRecentSummary();
+  }
+
+  if (normalized === 'repo branch') {
+    return await runRepoBranch();
+  }
+
+  if (normalized === 'repo remote') {
+    return await runRepoRemote();
+  }
+
+  if (normalized === 'repo diff') {
+    return await runRepoDiff();
+  }
+
+  if (normalized === 'repo doctor') {
+    return await runRepoDoctor();
+  }
+
+  if (normalized === 'repo ready') {
+    return await runRepoReady();
+  }
+
+  if (normalized === 'prepare repo') {
+    return await runPrepareRepo();
+  }
+
+  if (normalized === 'repo commit plan') {
+    return await runRepoCommitPlan();
+  }
+
+  if (normalized === 'repo commit message') {
+    return await runRepoCommitMessage();
+  }
+
+  if (normalized === 'safe push plan') {
+    return await runSafePushPlan();
+  }
+
+  if (normalized === 'execution readiness') {
+    return await runExecutionReadiness();
+  }
+
+  if (normalized === 'stage changes plan') {
+    return await runStageChangesPlan();
+  }
+
+  if (normalized === 'stage changes execute') {
+    return await runStageChangesExecute();
   }
 
   if (normalized === 'pending list') {
