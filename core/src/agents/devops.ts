@@ -1818,6 +1818,127 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runExecutionDashboard() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo = {
+      clean: lines.length === 0,
+      pending: lines,
+      pending_count: lines.length
+    };
+  } catch (err: any) {
+    result.repo = {
+      clean: false,
+      pending: [],
+      pending_count: 0,
+      error: err.message
+    };
+  }
+
+  try {
+    const lastCommit = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = lastCommit.stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  try {
+    const missionClose = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_CLOSE'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.mission_close = missionClose || null;
+  } catch (err: any) {
+    result.mission_close = null;
+    result.mission_close_error = err.message;
+  }
+
+  try {
+    const nextPriorities = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_NEXT_PRIORITIES'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.next_priorities = nextPriorities || null;
+  } catch (err: any) {
+    result.next_priorities = null;
+    result.next_priorities_error = err.message;
+  }
+
+  try {
+    const mesh = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MESH_STATUS'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.mesh_status = mesh || null;
+  } catch (err: any) {
+    result.mesh_status = null;
+    result.mesh_status_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  result.mission_status = result.repo?.clean ? "READY" : "ATTENTION";
+  result.recommended_action = result.repo?.clean
+    ? "seguir para mission board"
+    : "limpar pendencias e concluir ciclo git antes da proxima evolucao";
+
+  await log("Execution dashboard executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_EXECUTION_DASHBOARD",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "execution dashboard",
+    dashboard: result
+  };
+}
+
 async function runNextPriorities() {
   const result: Record<string, any> = {};
 
@@ -2531,6 +2652,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'next priorities') {
     return await runNextPriorities();
+  }
+
+  if (normalized === 'execution dashboard') {
+    return await runExecutionDashboard();
   }
 
   if (normalized === 'repo branch') {
