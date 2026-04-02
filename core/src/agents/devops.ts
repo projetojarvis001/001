@@ -1886,16 +1886,34 @@ async function runMultiagentOrchestration() {
   result.active_mission = "multiagent orchestration";
   result.lead_agent = "devops";
   result.available_agents = ["devops", "dispatcher", "sentinel", "vision"];
+
+  result.orchestration_state = result.repo_clean ? "SYNCED" : "DIRTY";
+  result.shared_context_status = result.repo_clean ? "AVAILABLE" : "PENDING_UPDATE";
+  result.handoff_queue = [
+    "devops -> dispatcher",
+    "dispatcher -> sentinel",
+    "sentinel -> vision"
+  ];
   result.last_handoff = "devops -> proxima camada de coordenacao";
+
   result.coordination_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
     ? "READY"
     : "ATTENTION";
+
   result.next_recommended_agent = result.coordination_status === "READY"
     ? "dispatcher"
     : "devops";
+
   result.next_step = result.coordination_status === "READY"
     ? "estruturar handoff e estado compartilhado entre agentes"
     : "limpar pendencias antes da orquestracao";
+
+  result.mission_contract = {
+    owner: "devops",
+    next_owner: result.next_recommended_agent,
+    shared_state_required: true,
+    approval_gate_required: true
+  };
 
   await log("Multiagent orchestration executado com sucesso", "SUCCESS", {
     source_brain: "JARVIS",
