@@ -1915,10 +1915,45 @@ async function runMemoryBoard() {
     result.repo_status_error = err.message;
   }
 
+  try {
+    const lastMissionClose = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_CLOSE'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mission_close = lastMissionClose || null;
+  } catch (err: any) {
+    result.last_mission_close = null;
+    result.last_mission_close_error = err.message;
+  }
+
+  try {
+    const lastPriorities = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_NEXT_PRIORITIES'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_priorities = lastPriorities || null;
+  } catch (err: any) {
+    result.last_priorities = null;
+    result.last_priorities_error = err.message;
+  }
+
+  result.last_known_phase = "Fase 15";
   result.memory_status = result.repo_clean ? "STABLE" : "DIRTY";
   result.resume_hint = result.repo_clean
     ? "retomar a partir do mission board ou iniciar nova feature"
     : "fechar pendencias locais antes de retomar a proxima missao";
+
+  result.next_recommended_step = result.repo_clean
+    ? "seguir para consolidacao avancada da memoria operacional"
+    : "limpar pendencias antes da consolidacao da memoria";
 
   await log("Memory board executado com sucesso", "SUCCESS", {
     source_brain: "JARVIS",
