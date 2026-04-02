@@ -2054,6 +2054,73 @@ async function runGoalExecution() {
   };
 }
 
+async function runDispatcherHandoff() {
+  const result: any = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 15000,
+      maxBuffer: 1024 * 1024
+    });
+
+    const parsed = stdout
+      .split("\n")
+      .map((line: string) => line.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = parsed.length === 0;
+    result.repo_pending = parsed;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const pending = await listPendingDecisions();
+    result.pending_decisions = Array.isArray(pending?.decisions)
+      ? pending.decisions.filter((d: any) => d.status === "PENDING").length
+      : 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  result.current_phase = "Fase 20";
+  result.active_mission = "dispatcher handoff";
+  result.current_owner = "devops";
+  result.next_owner = "dispatcher";
+  result.available_engines = ["local", "premium", "specialist"];
+  result.recommended_engine = "local";
+  result.routing_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "READY"
+    : "ATTENTION";
+  result.risk_level = "LOW";
+  result.budget_cap_usd = 5;
+  result.approval_gate_required = true;
+  result.next_step = result.routing_status === "READY"
+    ? "dispatcher assumir roteamento multi-motor"
+    : "limpar pendencias antes do handoff";
+
+  await log("Dispatcher handoff executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_DISPATCHER_HANDOFF",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "dispatcher handoff",
+    handoff: result
+  };
+}
+
 async function runMultiagentOrchestration() {
   const result: Record<string, any> = {};
 
@@ -3286,6 +3353,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'goal execution') {
     return await runGoalExecution();
+  }
+
+  if (normalized === 'dispatcher handoff') {
+    return await runDispatcherHandoff();
   }
 
   if (normalized === 'executive cockpit') {
