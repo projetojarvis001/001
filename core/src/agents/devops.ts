@@ -812,6 +812,119 @@ async function runWorkingTreeDoctor() {
 
 
 
+
+async function runPushRequest() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.clean = false;
+    result.status_error = err.message;
+  }
+
+  result.can_request_push = !!(
+    result.branch &&
+    result.upstream &&
+    result.has_origin &&
+    result.clean
+  );
+
+  if (!result.can_request_push) {
+    result.next_step = "repositorio ainda nao pode solicitar push";
+
+    await log("Push request bloqueado por pre-condicoes", "SUCCESS", {
+      source_brain: "JARVIS",
+      agent_id: "devops",
+      agent_role: "DEVOPS",
+      action_type: "DEVOPS_PUSH_REQUEST",
+      autonomy: "N1",
+      status: "ERROR",
+      output_summary: JSON.stringify(result).slice(0, 500),
+      metadata: result
+    });
+
+    return {
+      ok: false,
+      command: "push request",
+      push: result
+    };
+  }
+
+  const approval = await createPendingDecision("git push");
+
+  result.next_step = "aguardando aprovacao para git push";
+  result.approval_required = true;
+  result.approval = approval.decision || null;
+
+  await log("Push request solicitou aprovacao", "INFO", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_PUSH_REQUEST",
+    autonomy: "N2",
+    status: "PENDING",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: false,
+    command: "push request",
+    push: result
+  };
+}
+
 async function runPushReadinessRecheck() {
   const result: Record<string, any> = {};
 
@@ -2156,6 +2269,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'push readiness recheck') {
     return await runPushReadinessRecheck();
+  }
+
+  if (normalized === 'push request') {
+    return await runPushRequest();
   }
 
   if (normalized === 'working tree doctor') {
