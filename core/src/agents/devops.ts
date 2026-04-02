@@ -1817,6 +1817,110 @@ async function queryOne(sql: string) {
 }
 
 
+
+async function runNextPriorities() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const lastClose = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_CLOSE'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mission_close = lastClose || null;
+  } catch (err: any) {
+    result.last_mission_close = null;
+    result.last_mission_close_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  try {
+    const mesh = await queryOne(`
+      SELECT created_at, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MESH_STATUS'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mesh_status = mesh || null;
+  } catch (err: any) {
+    result.last_mesh_status = null;
+    result.last_mesh_status_error = err.message;
+  }
+
+  result.priority_1 = result.repo_clean
+    ? "criar dashboard executivo de execucao"
+    : "limpar o repositorio antes de nova evolucao";
+
+  result.priority_2 = "criar mission board com status por fase";
+
+  result.priority_3 = "estruturar carga inicial de conhecimento operacional";
+
+  result.blockers = [];
+  if (!result.repo_clean) {
+    result.blockers.push("repositorio com pendencias locais");
+  }
+  if ((result.pending_decisions ?? 0) > 0) {
+    result.blockers.push("existem aprovacoes pendentes");
+  }
+
+  result.recommended_action = result.repo_clean
+    ? "seguir para execution dashboard"
+    : "executar ciclo de stage, commit e push antes da proxima feature";
+
+  await log("Next priorities executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_NEXT_PRIORITIES",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "next priorities",
+    priorities: result
+  };
+}
+
 async function runMissionClose() {
   const result: Record<string, any> = {};
 
@@ -2423,6 +2527,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'mission close') {
     return await runMissionClose();
+  }
+
+  if (normalized === 'next priorities') {
+    return await runNextPriorities();
   }
 
   if (normalized === 'repo branch') {
