@@ -34,7 +34,8 @@ const APPROVED_EXECUTION_COMMANDS = [
   'git status',
   'git log --oneline -n 5',
   'docker compose ps',
-  'git commit'
+  'git commit',
+  'git push'
 ];
 
 
@@ -177,6 +178,90 @@ async function executeApprovedDecision(decisionId: string) {
       decision_id: decisionId,
       command
     };
+  }
+
+  if (normalizedApprovedCommand.startsWith('git push')) {
+    try {
+      const { stdout: remoteStdout } = await execAsync('git remote', {
+        cwd: '/host_jarvis',
+        timeout: 5000
+      });
+
+      const remotes = remoteStdout
+        .split('\n')
+        .map((x) => x.trim())
+        .filter(Boolean);
+
+      if (!remotes.includes('origin')) {
+        return {
+          ok: false,
+          error: 'Remote origin não configurado',
+          decision_id: decisionId,
+          command
+        };
+      }
+    } catch (err: any) {
+      return {
+        ok: false,
+        error: `Falha ao validar remote: ${err.message}`,
+        decision_id: decisionId,
+        command
+      };
+    }
+
+    try {
+      const { stdout: branchStdout } = await execAsync('git branch --show-current', {
+        cwd: '/host_jarvis',
+        timeout: 5000
+      });
+
+      const currentBranch = branchStdout.trim();
+
+      if (currentBranch !== 'main') {
+        return {
+          ok: false,
+          error: `Push permitido apenas na branch main. Atual: ${currentBranch || 'desconhecida'}`,
+          decision_id: decisionId,
+          command
+        };
+      }
+    } catch (err: any) {
+      return {
+        ok: false,
+        error: `Falha ao validar branch: ${err.message}`,
+        decision_id: decisionId,
+        command
+      };
+    }
+
+    try {
+      const { stdout: statusStdout } = await execAsync('git status --short', {
+        cwd: '/host_jarvis',
+        timeout: 5000
+      });
+
+      const pending = statusStdout
+        .split('\n')
+        .map((x) => x.trimEnd())
+        .filter(Boolean);
+
+      if (pending.length > 0) {
+        return {
+          ok: false,
+          error: 'Working tree não está limpo para push',
+          decision_id: decisionId,
+          command,
+          pending
+        };
+      }
+    } catch (err: any) {
+      return {
+        ok: false,
+        error: `Falha ao validar working tree: ${err.message}`,
+        decision_id: decisionId,
+        command
+      };
+    }
   }
 
   await log(`Execução de decisão aprovada iniciada: ${decisionId}`, 'INFO', {
