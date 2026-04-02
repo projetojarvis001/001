@@ -1912,13 +1912,15 @@ async function runExecutiveCockpit() {
   }
 
   result.current_phase = "Fase 18";
-  result.executive_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+  result.open_approvals = result.pending_decisions ?? 0;
+
+  result.executive_status = (result.repo_clean && result.open_approvals === 0)
     ? "GREEN"
     : "YELLOW";
 
   result.program_status = {
     repository: result.repo_clean ? "OK" : "PENDENTE",
-    approvals: (result.pending_decisions ?? 0) === 0 ? "OK" : "PENDENTE",
+    approvals: result.open_approvals === 0 ? "OK" : "PENDENTE",
     orchestration: "ATIVA",
     execution: "ATIVA"
   };
