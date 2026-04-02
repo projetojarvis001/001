@@ -1819,6 +1819,123 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runMissionBoard() {
+  const result: Record<string, any> = {};
+
+  try {
+    const dashboard = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_EXECUTION_DASHBOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_dashboard = dashboard || null;
+  } catch (err: any) {
+    result.last_dashboard = null;
+    result.last_dashboard_error = err.message;
+  }
+
+  try {
+    const priorities = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_NEXT_PRIORITIES'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_priorities = priorities || null;
+  } catch (err: any) {
+    result.last_priorities = null;
+    result.last_priorities_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  result.current_phase = "Fase 14";
+  result.current_step = "mission board";
+  result.completed_steps = [
+    "repositorio preparado",
+    "fluxo de stage/commit/push com aprovacao",
+    "mission summary",
+    "mission close",
+    "next priorities",
+    "execution dashboard"
+  ];
+
+  result.in_progress = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "mission board consolidado"
+    : "limpar pendencias antes de consolidar board";
+
+  result.next_steps = [
+    "mission board",
+    "memory board",
+    "multiagent orchestration"
+  ];
+
+  result.blockers = [];
+  if (!result.repo_clean) {
+    result.blockers.push("repositorio com pendencias locais");
+  }
+  if ((result.pending_decisions ?? 0) > 0) {
+    result.blockers.push("existem aprovacoes pendentes");
+  }
+
+  result.overall_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "ON TRACK"
+    : "ATTENTION";
+
+  await log("Mission board executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MISSION_BOARD",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "mission board",
+    board: result
+  };
+}
+
 async function runExecutionDashboard() {
   const result: Record<string, any> = {};
 
@@ -2656,6 +2773,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'execution dashboard') {
     return await runExecutionDashboard();
+  }
+
+  if (normalized === 'mission board') {
+    return await runMissionBoard();
   }
 
   if (normalized === 'repo branch') {
