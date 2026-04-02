@@ -1822,6 +1822,110 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runGoalExecution() {
+  const result: Record<string, any> = {};
+
+  try {
+    const orchestration = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MULTIAGENT_ORCHESTRATION'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_orchestration = orchestration || null;
+  } catch (err: any) {
+    result.last_orchestration = null;
+    result.last_orchestration_error = err.message;
+  }
+
+  try {
+    const memory = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MEMORY_BOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_memory_board = memory || null;
+  } catch (err: any) {
+    result.last_memory_board = null;
+    result.last_memory_board_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    const lines = stdout.split('\n').map(x => x.trimEnd()).filter(Boolean);
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  result.current_phase = "Fase 17";
+  result.active_goal = "goal execution";
+  result.goal_owner = "devops";
+  result.goal_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "READY"
+    : "ATTENTION";
+
+  result.dependencies = [
+    "multiagent orchestration",
+    "memory board",
+    "execution dashboard"
+  ];
+
+  result.blockers = [];
+  if (!result.repo_clean) {
+    result.blockers.push("repositorio com pendencias locais");
+  }
+  if ((result.pending_decisions ?? 0) > 0) {
+    result.blockers.push("existem aprovacoes pendentes");
+  }
+
+  result.next_recommended_command = result.goal_status === "READY"
+    ? "definir objetivo operacional e proximo agente executor"
+    : "limpar pendencias antes de iniciar goal execution";
+
+  await log("Goal execution executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_GOAL_EXECUTION",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "goal execution",
+    goal: result
+  };
+}
+
 async function runMultiagentOrchestration() {
   const result: Record<string, any> = {};
 
@@ -3050,6 +3154,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'multiagent orchestration') {
     return await runMultiagentOrchestration();
+  }
+
+  if (normalized === 'goal execution') {
+    return await runGoalExecution();
   }
 
   if (normalized === 'repo branch') {
