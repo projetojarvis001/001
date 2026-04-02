@@ -1820,6 +1820,124 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runMemoryBoard() {
+  const result: Record<string, any> = {};
+
+  try {
+    const lastCommit = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = lastCommit.stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  try {
+    const lastPush = await queryOne(`
+      SELECT id, created_at, status, resolved_at, resolved_by, description
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'APPROVED'
+        AND description ILIKE '%git push%'
+      ORDER BY resolved_at DESC NULLS LAST, created_at DESC
+      LIMIT 1
+    `);
+    result.last_push = lastPush || null;
+  } catch (err: any) {
+    result.last_push = null;
+    result.last_push_error = err.message;
+  }
+
+  try {
+    const dashboard = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_EXECUTION_DASHBOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_dashboard = dashboard || null;
+  } catch (err: any) {
+    result.last_dashboard = null;
+    result.last_dashboard_error = err.message;
+  }
+
+  try {
+    const missionBoard = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_BOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mission_board = missionBoard || null;
+  } catch (err: any) {
+    result.last_mission_board = null;
+    result.last_mission_board_error = err.message;
+  }
+
+  try {
+    const recentSummary = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_SUMMARY'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mission_summary = recentSummary || null;
+  } catch (err: any) {
+    result.last_mission_summary = null;
+    result.last_mission_summary_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  result.memory_status = result.repo_clean ? "STABLE" : "DIRTY";
+  result.resume_hint = result.repo_clean
+    ? "retomar a partir do mission board ou iniciar nova feature"
+    : "fechar pendencias locais antes de retomar a proxima missao";
+
+  await log("Memory board executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MEMORY_BOARD",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "memory board",
+    memory: result
+  };
+}
+
 async function runMissionBoard() {
   const result: Record<string, any> = {};
 
@@ -2777,6 +2895,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'mission board') {
     return await runMissionBoard();
+  }
+
+  if (normalized === 'memory board') {
+    return await runMemoryBoard();
   }
 
   if (normalized === 'repo branch') {
