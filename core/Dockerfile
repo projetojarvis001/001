@@ -1,6 +1,6 @@
 FROM node:20-alpine
 WORKDIR /app
-RUN apk add --no-cache git postgresql-client redis
+RUN apk add --no-cache git openssh-client postgresql-client redis
 COPY package*.json ./
 RUN npm install
 COPY . .
