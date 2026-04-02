@@ -1823,6 +1823,132 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runExecutiveCockpit() {
+  const result: Record<string, any> = {};
+
+  try {
+    const goal = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_GOAL_EXECUTION'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_goal_execution = goal || null;
+  } catch (err: any) {
+    result.last_goal_execution = null;
+    result.last_goal_execution_error = err.message;
+  }
+
+  try {
+    const orchestration = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MULTIAGENT_ORCHESTRATION'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_orchestration = orchestration || null;
+  } catch (err: any) {
+    result.last_orchestration = null;
+    result.last_orchestration_error = err.message;
+  }
+
+  try {
+    const push = await queryOne(`
+      SELECT id, created_at, status, resolved_at, resolved_by, description
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'APPROVED'
+        AND description ILIKE '%git push%'
+      ORDER BY resolved_at DESC NULLS LAST, created_at DESC
+      LIMIT 1
+    `);
+    result.last_push = push || null;
+  } catch (err: any) {
+    result.last_push = null;
+    result.last_push_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    const lines = stdout.split('\n').map(x => x.trimEnd()).filter(Boolean);
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  result.current_phase = "Fase 18";
+  result.executive_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "GREEN"
+    : "YELLOW";
+
+  result.program_status = {
+    repository: result.repo_clean ? "OK" : "PENDENTE",
+    approvals: (result.pending_decisions ?? 0) === 0 ? "OK" : "PENDENTE",
+    orchestration: "ATIVA",
+    execution: "ATIVA"
+  };
+
+  result.recommended_agent = result.executive_status === "GREEN"
+    ? "dispatcher"
+    : "devops";
+
+  result.next_executive_command = result.executive_status === "GREEN"
+    ? "iniciar cockpit de despacho executivo"
+    : "limpar pendencias antes do cockpit executivo final";
+
+  await log("Executive cockpit executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_EXECUTIVE_COCKPIT",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "executive cockpit",
+    cockpit: result
+  };
+}
+
 async function runGoalExecution() {
   const result: Record<string, any> = {};
 
@@ -3158,6 +3284,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'goal execution') {
     return await runGoalExecution();
+  }
+
+  if (normalized === 'executive cockpit') {
+    return await runExecutiveCockpit();
   }
 
   if (normalized === 'repo branch') {
