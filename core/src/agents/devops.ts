@@ -494,6 +494,131 @@ async function runRepoPending() {
 
 
 
+
+
+async function runCommitChangesExecute() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git diff --cached --name-only", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.staged_files = lines;
+    result.staged_count = lines.length;
+    result.has_staged = lines.length > 0;
+  } catch (err: any) {
+    result.staged_files = [];
+    result.staged_count = 0;
+    result.has_staged = false;
+    result.error = err.message;
+  }
+
+  if (!result.has_staged) {
+    result.next_step = "nenhum commit necessario";
+
+    await log("Commit changes execute sem staged files", "SUCCESS", {
+      source_brain: "JARVIS",
+      agent_id: "devops",
+      agent_role: "DEVOPS",
+      action_type: "DEVOPS_COMMIT_CHANGES_EXECUTE",
+      autonomy: "N1",
+      status: "SUCCESS",
+      output_summary: JSON.stringify(result).slice(0, 500),
+      metadata: result
+    });
+
+    return {
+      ok: true,
+      command: "commit changes execute",
+      commit: result
+    };
+  }
+
+  result.suggested_message = "atualiza comandos e playbooks operacionais do devops";
+
+  const approval = await createPendingDecision(`git commit -m "${result.suggested_message}"`);
+
+  result.next_step = "aguardando aprovacao para git commit";
+  result.approval_required = true;
+  result.approval = approval.decision || null;
+
+  await log("Commit changes execute solicitou aprovacao", "INFO", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_COMMIT_CHANGES_EXECUTE",
+    autonomy: "N2",
+    status: "PENDING",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: false,
+    command: "commit changes execute",
+    commit: result
+  };
+}
+
+async function runCommitChangesPlan() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git diff --cached --name-only", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.staged_files = lines;
+    result.staged_count = lines.length;
+    result.has_staged = lines.length > 0;
+  } catch (err: any) {
+    result.staged_files = [];
+    result.staged_count = 0;
+    result.has_staged = false;
+    result.error = err.message;
+  }
+
+  if (result.has_staged) {
+    result.suggested_message = "atualiza comandos e playbooks operacionais do devops";
+    result.can_request_commit = true;
+    result.next_step = "solicitar aprovacao para git commit";
+  } else {
+    result.suggested_message = null;
+    result.can_request_commit = false;
+    result.next_step = "nenhum commit necessario";
+  }
+
+  await log("Commit changes plan executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_COMMIT_CHANGES_PLAN",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "commit changes plan",
+    commit: result
+  };
+}
+
 async function runStageChangesExecute() {
   const result: Record<string, any> = {};
 
@@ -560,6 +685,239 @@ async function runStageChangesExecute() {
     ok: false,
     command: "stage changes execute",
     stage: result
+  };
+}
+
+
+
+
+async function runWorkingTreeFixPlan() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.items = lines;
+    result.total = lines.length;
+    result.staged = lines.filter((line) => line.length >= 2 && line[0] !== ' ' && line[0] !== '?').length;
+    result.unstaged = lines.filter((line) => line.length >= 2 && line[1] !== ' ').length;
+    result.untracked = lines.filter((line) => line.startsWith("??")).length;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.items = [];
+    result.total = 0;
+    result.staged = 0;
+    result.unstaged = 0;
+    result.untracked = 0;
+    result.clean = false;
+    result.error = err.message;
+  }
+
+  result.needs_stage = result.unstaged > 0 || result.untracked > 0;
+  result.needs_commit = result.staged > 0 || result.needs_stage;
+
+  if (result.clean) {
+    result.next_step = "repositorio limpo; pode seguir para revalidacao de push";
+  } else if (result.needs_stage) {
+    result.next_step = "executar novo stage changes plan/execution e depois novo commit";
+  } else if (result.staged > 0) {
+    result.next_step = "executar commit changes plan/execution";
+  } else {
+    result.next_step = "revisar manualmente o working tree";
+  }
+
+  await log("Working tree fix plan executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_WORKING_TREE_FIX_PLAN",
+    autonomy: "N1",
+    status: result.clean ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "working tree fix plan",
+    tree: result
+  };
+}
+
+async function runWorkingTreeDoctor() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.items = lines;
+    result.total = lines.length;
+    result.staged = lines.filter((line) => line.length >= 2 && line[0] !== ' ' && line[0] !== '?').length;
+    result.unstaged = lines.filter((line) => line.length >= 2 && line[1] !== ' ').length;
+    result.untracked = lines.filter((line) => line.startsWith("??")).length;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.items = [];
+    result.total = 0;
+    result.staged = 0;
+    result.unstaged = 0;
+    result.untracked = 0;
+    result.clean = false;
+    result.error = err.message;
+  }
+
+  if (result.clean) {
+    result.next_step = "working tree limpo";
+  } else if (result.unstaged > 0) {
+    result.next_step = "revisar e decidir se faz novo staging ou commit";
+  } else if (result.staged > 0) {
+    result.next_step = "avaliar commit ou restauracao";
+  } else {
+    result.next_step = "revisar estado do working tree";
+  }
+
+  await log("Working tree doctor executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_WORKING_TREE_DOCTOR",
+    autonomy: "N1",
+    status: result.clean ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "working tree doctor",
+    tree: result
+  };
+}
+
+
+
+async function runPushReadinessRecheck() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git branch --show-current", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.branch = stdout.trim();
+  } catch (err: any) {
+    result.branch = null;
+    result.branch_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git rev-parse --abbrev-ref --symbolic-full-name @{u}", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.upstream = stdout.trim();
+  } catch (_err: any) {
+    result.upstream = null;
+  }
+
+  try {
+    const { stdout } = await execAsync("git remote -v", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    result.has_origin = lines.some((line) => line.startsWith("origin"));
+  } catch (err: any) {
+    result.has_origin = false;
+    result.remote_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.pending = lines;
+    result.clean = lines.length === 0;
+  } catch (err: any) {
+    result.pending = [];
+    result.clean = false;
+    result.status_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  result.can_request_push = !!(
+    result.branch &&
+    result.upstream &&
+    result.has_origin &&
+    result.clean &&
+    result.last_commit
+  );
+
+  if (result.can_request_push) {
+    result.next_step = "solicitar aprovacao para git push";
+  } else if (!result.clean) {
+    result.next_step = "limpar working tree antes do push";
+  } else if (!result.upstream) {
+    result.next_step = "configurar upstream da branch";
+  } else if (!result.has_origin) {
+    result.next_step = "configurar remote origin";
+  } else {
+    result.next_step = "revisar estado final do repositorio";
+  }
+
+  await log("Push readiness recheck executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_PUSH_READINESS_RECHECK",
+    autonomy: "N1",
+    status: result.can_request_push ? "SUCCESS" : "ERROR",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "push readiness recheck",
+    push: result
   };
 }
 
@@ -1796,8 +2154,32 @@ export async function runDevOpsCommand(command: string) {
     return await runStageChangesPlan();
   }
 
+  if (normalized === 'push readiness recheck') {
+    return await runPushReadinessRecheck();
+  }
+
+  if (normalized === 'working tree doctor') {
+    return await runWorkingTreeDoctor();
+  }
+
+  if (normalized === 'working tree fix plan') {
+    return await runWorkingTreeFixPlan();
+  }
+
+  if (normalized === 'working tree doctor') {
+    return await runWorkingTreeDoctor();
+  }
+
   if (normalized === 'stage changes execute') {
     return await runStageChangesExecute();
+  }
+
+  if (normalized === 'commit changes plan') {
+    return await runCommitChangesPlan();
+  }
+
+  if (normalized === 'commit changes execute') {
+    return await runCommitChangesExecute();
   }
 
   if (normalized === 'pending list') {
