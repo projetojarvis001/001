@@ -2121,6 +2121,87 @@ async function runDispatcherHandoff() {
   };
 }
 
+async function runRoutingBoard() {
+  const result: any = {};
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 15000,
+      maxBuffer: 1024 * 1024
+    });
+
+    const parsed = stdout
+      .split("\n")
+      .map((line: string) => line.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = parsed.length === 0;
+    result.repo_pending = parsed;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const pending = await listPendingDecisions();
+    result.pending_decisions = Array.isArray(pending?.decisions)
+      ? pending.decisions.filter((d: any) => d.status === "PENDING").length
+      : 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  result.current_phase = "Fase 20";
+  result.active_mission = "routing board";
+  result.current_owner = "devops";
+  result.next_owner = "dispatcher";
+
+  result.task_profile = {
+    task_type: "multi-motor routing",
+    primary_engine: "local",
+    fallback_engine: "premium",
+    specialist_engine: "specialist",
+    risk_level: "LOW",
+    estimated_cost_usd: 0,
+    approval_gate_required: true
+  };
+
+  result.routing_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "READY"
+    : "ATTENTION";
+
+  result.routing_policy = {
+    simple_ops: "local",
+    strategic_reasoning: "premium",
+    multimodal_or_extraction: "specialist",
+    fallback_order: ["local", "premium", "specialist"]
+  };
+
+  result.next_step = result.routing_status === "READY"
+    ? "dispatcher assumir decisao de roteamento por tarefa"
+    : "limpar pendencias antes do roteamento";
+
+  await log("Routing board executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_ROUTING_BOARD",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "routing board",
+    routing: result
+  };
+}
+
 async function runMultiagentOrchestration() {
   const result: Record<string, any> = {};
 
@@ -3357,6 +3438,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'dispatcher handoff') {
     return await runDispatcherHandoff();
+  }
+
+  if (normalized === 'routing board') {
+    return await runRoutingBoard();
   }
 
   if (normalized === 'executive cockpit') {
