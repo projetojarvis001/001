@@ -12,6 +12,13 @@ O projeto J.A.R.V.I.S. + V.I.S.I.O.N. foi concebido para atuar como uma malha de
 - **redis**: comunicação e suporte à malha distribuída
 - **grafana**: visualização operacional e observabilidade
 
+## Health endpoint
+- `GET /health` -> status básico do `jarvis-core`
+- resposta esperada:
+  - `ok`
+  - `service`
+  - `timestamp`
+
 ## Capacidades já implementadas
 - roteamento central de comandos
 - integração entre Core e Vision
