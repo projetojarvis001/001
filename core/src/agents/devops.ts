@@ -1821,6 +1821,100 @@ async function queryOne(sql: string) {
 
 
 
+
+async function runMultiagentOrchestration() {
+  const result: Record<string, any> = {};
+
+  try {
+    const missionBoard = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MISSION_BOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mission_board = missionBoard || null;
+  } catch (err: any) {
+    result.last_mission_board = null;
+    result.last_mission_board_error = err.message;
+  }
+
+  try {
+    const memoryBoard = await queryOne(`
+      SELECT created_at, action_type, status, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MEMORY_BOARD'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_memory_board = memoryBoard || null;
+  } catch (err: any) {
+    result.last_memory_board = null;
+    result.last_memory_board_error = err.message;
+  }
+
+  try {
+    const pending = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'PENDING'
+    `);
+    result.pending_decisions = pending?.total ?? 0;
+  } catch (err: any) {
+    result.pending_decisions = 0;
+    result.pending_decisions_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    const lines = stdout.split('\n').map(x => x.trimEnd()).filter(Boolean);
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  result.current_phase = "Fase 16";
+  result.active_mission = "multiagent orchestration";
+  result.lead_agent = "devops";
+  result.available_agents = ["devops", "dispatcher", "sentinel", "vision"];
+  result.last_handoff = "devops -> proxima camada de coordenacao";
+  result.coordination_status = (result.repo_clean && (result.pending_decisions ?? 0) === 0)
+    ? "READY"
+    : "ATTENTION";
+  result.next_recommended_agent = result.coordination_status === "READY"
+    ? "dispatcher"
+    : "devops";
+  result.next_step = result.coordination_status === "READY"
+    ? "estruturar handoff e estado compartilhado entre agentes"
+    : "limpar pendencias antes da orquestracao";
+
+  await log("Multiagent orchestration executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MULTIAGENT_ORCHESTRATION",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "multiagent orchestration",
+    orchestration: result
+  };
+}
+
 async function runMemoryBoard() {
   const result: Record<string, any> = {};
 
@@ -2934,6 +3028,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'memory board') {
     return await runMemoryBoard();
+  }
+
+  if (normalized === 'multiagent orchestration') {
+    return await runMultiagentOrchestration();
   }
 
   if (normalized === 'repo branch') {
