@@ -1809,6 +1809,109 @@ async function runRepoBranch() {
   };
 }
 
+
+
+async function queryOne(sql: string) {
+  const res = await pool.query(sql);
+  return res.rows?.[0] || null;
+}
+
+async function runMissionSummary() {
+  const result: Record<string, any> = {};
+
+  try {
+    const lastLog = await queryOne(`
+      SELECT created_at, action_type, status, input_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_event = lastLog || null;
+  } catch (err: any) {
+    result.last_event = null;
+    result.last_event_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  try {
+    const mesh = await queryOne(`
+      SELECT created_at, input_summary, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MESH_STATUS'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mesh_status = mesh || null;
+  } catch (err: any) {
+    result.last_mesh_status = null;
+    result.last_mesh_status_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const decisions = await queryOne(`
+      SELECT COUNT(*)::int AS total
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+    `);
+    result.recent_decisions_total = decisions?.total ?? 0;
+  } catch (err: any) {
+    result.recent_decisions_total = 0;
+    result.recent_decisions_error = err.message;
+  }
+
+  result.summary = result.repo_clean
+    ? "Missao operacional concluida com repositorio limpo e push realizado."
+    : "Missao avancou, mas ainda existem pendencias no repositorio.";
+
+  await log("Mission summary executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MISSION_SUMMARY",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "mission summary",
+    mission: result
+  };
+}
+
 async function runRecentSummary() {
   const lastEventResult = await pool.query(
     `SELECT created_at, action_type, status, input_summary
@@ -2221,6 +2324,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'recent summary') {
     return await runRecentSummary();
+  }
+
+  if (normalized === 'mission summary') {
+    return await runMissionSummary();
   }
 
   if (normalized === 'repo branch') {
