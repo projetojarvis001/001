@@ -5,3 +5,6 @@ core/node_modules/
 core/dist/
 *.log
 .DS_Store
+coverage/
+.idea/
+.vscode/
