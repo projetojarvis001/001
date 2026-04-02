@@ -1816,6 +1816,97 @@ async function queryOne(sql: string) {
   return res.rows?.[0] || null;
 }
 
+
+async function runMissionClose() {
+  const result: Record<string, any> = {};
+
+  try {
+    const { stdout } = await execAsync("git log --oneline -n 1", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+    result.last_commit = stdout.trim() || null;
+  } catch (err: any) {
+    result.last_commit = null;
+    result.last_commit_error = err.message;
+  }
+
+  try {
+    const { stdout } = await execAsync("git status --short", {
+      cwd: "/host_jarvis",
+      timeout: 5000
+    });
+
+    const lines = stdout
+      .split('\n')
+      .map((x) => x.trimEnd())
+      .filter(Boolean);
+
+    result.repo_clean = lines.length === 0;
+    result.repo_pending = lines;
+  } catch (err: any) {
+    result.repo_clean = false;
+    result.repo_pending = [];
+    result.repo_status_error = err.message;
+  }
+
+  try {
+    const push = await queryOne(`
+      SELECT id, created_at, status, resolved_at, resolved_by, description
+      FROM pending_decisions
+      WHERE agent_id = 'devops'
+        AND status = 'APPROVED'
+        AND description ILIKE '%git push%'
+      ORDER BY resolved_at DESC NULLS LAST, created_at DESC
+      LIMIT 1
+    `);
+    result.last_successful_push = push || null;
+  } catch (err: any) {
+    result.last_successful_push = null;
+    result.last_push_error = err.message;
+  }
+
+  try {
+    const mesh = await queryOne(`
+      SELECT created_at, input_summary, output_summary
+      FROM jarvis_logs
+      WHERE agent_id = 'devops'
+        AND action_type = 'DEVOPS_MESH_STATUS'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `);
+    result.last_mesh_status = mesh || null;
+  } catch (err: any) {
+    result.last_mesh_status = null;
+    result.last_mesh_status_error = err.message;
+  }
+
+  result.final_status = (result.repo_clean && result.last_successful_push)
+    ? "DONE"
+    : "PARTIAL";
+
+  result.summary = result.final_status === "DONE"
+    ? "Missao encerrada com sucesso, push realizado e repositorio limpo."
+    : "Missao encerrada parcialmente; revisar pendencias operacionais.";
+
+  await log("Mission close executado com sucesso", "SUCCESS", {
+    source_brain: "JARVIS",
+    agent_id: "devops",
+    agent_role: "DEVOPS",
+    action_type: "DEVOPS_MISSION_CLOSE",
+    autonomy: "N1",
+    status: "SUCCESS",
+    output_summary: JSON.stringify(result).slice(0, 500),
+    metadata: result
+  });
+
+  return {
+    ok: true,
+    command: "mission close",
+    mission: result
+  };
+}
+
 async function runMissionSummary() {
   const result: Record<string, any> = {};
 
@@ -2328,6 +2419,10 @@ export async function runDevOpsCommand(command: string) {
 
   if (normalized === 'mission summary') {
     return await runMissionSummary();
+  }
+
+  if (normalized === 'mission close') {
+    return await runMissionClose();
   }
 
   if (normalized === 'repo branch') {
