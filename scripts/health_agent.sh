@@ -108,3 +108,45 @@ fi
 echo "[$(date)] Health score: $score/100 — $STATUS"
 cp /tmp/health_report.json /Users/jarvis001/jarvis/dashboard/health_report.json 2>/dev/null
 cp /tmp/health_report.json /Users/jarvis001/jarvis/core/dashboard/health_report.json 2>/dev/null
+
+# Envia email se score crítico
+if [ $score -lt 70 ]; then
+  python3 << PYEOF2
+import smtplib, ssl, json
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+with open("/tmp/health_report.json") as f:
+    d = json.load(f)
+
+msg = MIMEMultipart()
+msg["From"] = "projetojarvis001@gmail.com"
+msg["To"] = "wagner@wpssolucoes.com.br"
+msg["Subject"] = f"JARVIS ALERTA — Score {d['score']}/100 — {d['status']}"
+
+issues = [x for x in d["issues"].split("|") if x.strip()]
+warns = [x for x in d["warnings"].split("|") if x.strip()]
+
+body = f"""
+J.A.R.V.I.S. — Alerta Automático
+Score: {d["score"]}/100 — {d["status"]}
+RAM: {d["mem_mb"]}MB | Disco: {d["disk_pct"]}%
+Tunnel: {d["tunnel"]}
+
+PROBLEMAS:
+{"\n".join(issues) if issues else "Nenhum"}
+
+AVISOS:
+{"\n".join(warns) if warns else "Nenhum"}
+
+Dashboard: https://platform-less-other-relationship.trycloudflare.com/dashboard/index.html
+"""
+msg.attach(MIMEText(body, "plain"))
+
+ctx = ssl.create_default_context()
+with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx) as s:
+    s.login("projetojarvis001@gmail.com", "ihlckoohqvckthdt")
+    s.send_message(msg)
+    print("Email enviado")
+PYEOF2
+fi
