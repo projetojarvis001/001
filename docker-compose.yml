@@ -61,7 +61,19 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
 
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_SECURE_COOKIE=false
+      - WEBHOOK_URL=https://arranged-plus-threshold-campus.trycloudflare.com
+
 volumes:
   pg_data:
   redis_data:
+  n8n_data:
   grafana_data:
