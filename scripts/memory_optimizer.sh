@@ -15,7 +15,7 @@ MEM_FREE_MB=$((MEM_FREE * 4096 / 1048576))
 
 KILLERS=("Safari" "Spotify" "Slack" "Discord" "zoom.us" "Microsoft Teams" "Finder" "Photos")
 
-if [ "$MEM_FREE_MB" -lt 200 ]; then
+if [ "$MEM_FREE_MB" -lt 400 ]; then
   LIBERADO=0
   for app in "${KILLERS[@]}"; do
     if pgrep -f "$app" > /dev/null 2>&1; then
@@ -24,6 +24,7 @@ if [ "$MEM_FREE_MB" -lt 200 ]; then
     fi
   done
   killall WallpaperAerialsExtension 2>/dev/null || true
+  sudo purge 2>/dev/null || true
   killall mediaanalysisd 2>/dev/null || true
   sleep 3
   MEM_AFTER=$(vm_stat | grep "Pages free" | awk '{print $3}' | tr -d '.')

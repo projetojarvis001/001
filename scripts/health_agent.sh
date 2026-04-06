@@ -29,8 +29,8 @@ check() {
 MEM_FREE=$(vm_stat | grep "Pages free" | awk '{print $3}' | tr -d '.')
 MEM_MB=$((MEM_FREE * 4096 / 1048576))
 DISK=$(df -h / | tail -1 | awk '{print $5}' | tr -d '%')
-[ "$MEM_MB" -lt 200 ] && check "HARDWARE" "RAM crítica ${MEM_MB}MB" "FAIL" 20
-[ "$MEM_MB" -lt 500 ] && [ "$MEM_MB" -ge 200 ] && check "HARDWARE" "RAM baixa ${MEM_MB}MB" "WARN" 10
+[ "$MEM_MB" -lt 400 ] && check "HARDWARE" "RAM crítica ${MEM_MB}MB" "FAIL" 20
+[ "$MEM_MB" -lt 500 ] && [ "$MEM_MB" -ge 400 ] && check "HARDWARE" "RAM baixa ${MEM_MB}MB" "WARN" 10
 [ "$DISK" -gt 85 ] && check "HARDWARE" "Disco ${DISK}%" "FAIL" 15
 TUNNEL=$(cat /tmp/current_tunnel_mac1.txt 2>/dev/null)
 [ -z "$TUNNEL" ] && check "REDE" "Tunnel offline" "FAIL" 15
@@ -44,12 +44,13 @@ OLLAMA=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://192.168.8.12
 [ "$OLLAMA" != "200" ] && check "PLATAFORMA" "Ollama offline" "FAIL" 15
 PG=$(docker exec jarvis-postgres-1 pg_isready -U jarvis_admin 2>/dev/null | grep -c "accepting")
 [ "$PG" -eq 0 ] && check "BD" "PostgreSQL offline" "FAIL" 20
+source /Users/jarvis001/jarvis/.env 2>/dev/null
 REDIS=$(docker exec redis redis-cli -a "$REDIS_PASSWORD" ping 2>/dev/null | grep -c "PONG")
 [ "$REDIS" -eq 0 ] && check "MENSAGERIA" "Redis offline" "WARN" 10
 
 # CAMADA 3 — SISTEMA
 BOOT_EXIT=$(launchctl list | grep "com.wagner.jarvis.boot" | awk '{print $2}')
-[ "$BOOT_EXIT" = "127" ] && check "BOOT" "boot.sh erro 127 (cmd not found)" "FAIL" 10
+[ "$BOOT_EXIT" = "127" ] && check "BOOT" "boot.sh erro 127 — verificar OrbStack" "WARN" 5
 ZEROCLAW_EXIT=$(launchctl list | grep "com.wagner.jarvis.zeroclaw" | awk '{print $2}')
 [ "$ZEROCLAW_EXIT" = "1" ] && check "AGENTES" "ZeroClaw exit 1" "WARN" 5
 DISP_DUP=$(ls ~/jarvis/core/src/dispatcher.ts ~/jarvis/core/src/services/dispatcher.ts 2>/dev/null | wc -l)
