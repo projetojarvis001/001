@@ -9,6 +9,7 @@ import './agents/sentinel';
 
 const app = express();
 app.use(express.json());
+app.use('/dashboard', express.static('/app/dashboard'));
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';

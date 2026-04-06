@@ -108,3 +108,4 @@ fi
 
 echo "[$(date)] Health score: $score/100 — $STATUS"
 cp /tmp/health_report.json /Users/jarvis001/jarvis/dashboard/health_report.json 2>/dev/null
+cp /tmp/health_report.json /Users/jarvis001/jarvis/core/dashboard/health_report.json 2>/dev/null

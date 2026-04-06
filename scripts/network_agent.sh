@@ -52,3 +52,4 @@ JSONEOF
 
 echo "[$(date)] IP: $PUBLIC_IP | Latência: ${LATENCY_CF}ms | Banda: ${BANDWIDTH_KB}KB/s | Conn: $CONN_COUNT" >> $LOG
 cp /tmp/network_report.json /Users/jarvis001/jarvis/dashboard/network_report.json 2>/dev/null
+cp /tmp/network_report.json /Users/jarvis001/jarvis/core/dashboard/network_report.json 2>/dev/null
