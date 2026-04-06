@@ -1,3 +1,4 @@
+import { loadSkills } from './skills';
 import { log, queryLogs } from './logger';
 import axios from 'axios';
 import { runDevOpsCommand } from './agents/devops';
@@ -31,7 +32,7 @@ async function callGroq(prompt: string): Promise<DispatchResult> {
       messages: [
         {
           role: 'system',
-          content: 'Você é o J.A.R.V.I.S., assistente executivo em português do Brasil, direto, prático e objetivo.'
+          content: 'Você é o J.A.R.V.I.S., assistente executivo em português do Brasil, direto, prático e objetivo.' + loadSkills()
         },
         {
           role: 'user',

@@ -37,6 +37,36 @@ async function telegramPolling(): Promise<void> {
       lastUpdateId = update.update_id;
       const msg = update.message?.text || '';
       const fromChatId = update.message?.chat?.id?.toString();
+
+      // Handler de áudio/voz
+      const voice = update.message?.voice || update.message?.audio;
+      if (voice && fromChatId === CHAT_ID) {
+        try {
+          await sendTelegram('🎤 Transcrevendo áudio...');
+          const fileRes = await axios.get(
+            `https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${voice.file_id}`
+          );
+          const filePath = fileRes.data.result.file_path;
+          const audioUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`;
+          const audioRes = await axios.get(audioUrl, { responseType: 'arraybuffer' });
+          const FormData = require('form-data');
+          const form = new FormData();
+          form.append('file', Buffer.from(audioRes.data), { filename: 'audio.ogg', contentType: 'audio/ogg' });
+          const transcribeRes = await axios.post(
+            `http://${process.env.VISION_HOST}:5007/transcribe`,
+            form, { headers: form.getHeaders(), timeout: 60000 }
+          );
+          const transcript = transcribeRes.data.text;
+          await sendTelegram(`📝 *Transcrição:* ${transcript}`);
+          const result: any = await dispatch(transcript, 'chat');
+          const reply = result?.response || result?.text || result?.answer || JSON.stringify(result).slice(0, 500);
+          await sendTelegram(reply);
+        } catch(e: any) {
+          await sendTelegram(`❌ Erro na transcrição: ${e.message}`);
+        }
+        continue;
+      }
+
       if (!msg || fromChatId !== CHAT_ID) continue;
       try {
         await sendTelegram('⏳ Processando...');

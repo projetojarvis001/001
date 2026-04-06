@@ -1,8 +1,8 @@
 {
-  "ts": "2026-04-06 20:03:35",
+  "ts": "2026-04-06 20:13:38",
   "score": 75,
   "status": "🟡 ATENÇÃO",
-  "mem_mb": 935,
+  "mem_mb": 732,
   "disk_pct": 7,
   "tunnel": "https://platform-less-other-relationship.trycloudflare.com",
   "core": "200",
