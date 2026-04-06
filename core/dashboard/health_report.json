@@ -1,16 +1,16 @@
 {
-  "ts": "2026-04-06 19:56:42",
-  "score": 95,
-  "status": "🟢 SAUDÁVEL",
-  "mem_mb": 422,
+  "ts": "2026-04-06 20:03:35",
+  "score": 75,
+  "status": "🟡 ATENÇÃO",
+  "mem_mb": 935,
   "disk_pct": 7,
   "tunnel": "https://platform-less-other-relationship.trycloudflare.com",
   "core": "200",
   "vision": "200",
-  "postgres": "1",
-  "redis": "1",
+  "postgres": "0",
+  "redis": "0",
   "telegram": "1",
   "n8n": "200",
-  "issues": "|",
-  "warnings": "|⚠️ [HARDWARE] RAM baixa 422MB|"
+  "issues": "|❌ [BD] PostgreSQL offline|",
+  "warnings": "|⚠️ [MENSAGERIA] Redis offline|"
 }
