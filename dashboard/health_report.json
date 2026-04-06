@@ -1,16 +1,18 @@
 {
-  "ts": "2026-04-06 20:18:39",
-  "score": 75,
-  "status": "🟡 ATENÇÃO",
-  "mem_mb": 659,
+  "ts": "2026-04-06 20:25:01",
+  "score": 100,
+  "status": "🟢 SAUDÁVEL",
+  "mem_mb": 605,
   "disk_pct": 7,
   "tunnel": "https://platform-less-other-relationship.trycloudflare.com",
   "core": "200",
   "vision": "200",
-  "postgres": "0",
-  "redis": "0",
+  "postgres": "1",
+  "redis": "0
+0
+1",
   "telegram": "1",
   "n8n": "200",
-  "issues": "|❌ [BD] PostgreSQL offline|",
-  "warnings": "|⚠️ [MENSAGERIA] Redis offline|"
+  "issues": "|",
+  "warnings": "|"
 }
