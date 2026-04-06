@@ -75,3 +75,9 @@ export const updateAgentStats = async (agent: string, status: string) => {
     metadata: { function: 'updateAgentStats' }
   });
 };
+
+export async function queryLogs(sql: string, params: any[] = []) {
+  const result = await pool.query(sql, params);
+  return result.rows;
+}
+
