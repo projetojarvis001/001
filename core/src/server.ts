@@ -38,6 +38,36 @@ async function telegramPolling(): Promise<void> {
       const msg = update.message?.text || '';
       const fromChatId = update.message?.chat?.id?.toString();
 
+
+      // Handler de imagem/foto
+      const photo = update.message?.photo;
+      if (photo && fromChatId === CHAT_ID) {
+        try {
+          await sendTelegram('🔍 Analisando imagem...');
+          const largest = photo[photo.length - 1];
+          const fileRes = await axios.get(
+            `https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${largest.file_id}`
+          );
+          const filePath = fileRes.data.result.file_path;
+          const imgUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`;
+          const imgRes = await axios.get(imgUrl, { responseType: 'arraybuffer' });
+          const FormData = require('form-data');
+          const form = new FormData();
+          const caption = update.message?.caption || 'Descreva esta imagem detalhadamente em português.';
+          form.append('file', Buffer.from(imgRes.data), { filename: 'image.jpg', contentType: 'image/jpeg' });
+          form.append('prompt', caption);
+          const visionRes = await axios.post(
+            `http://${process.env.VISION_HOST}:5006/analyze-image`,
+            form, { headers: form.getHeaders(), timeout: 120000 }
+          );
+          const description = visionRes.data.description;
+          await sendTelegram(`👁️ *Análise VISION:*\n\n${description.slice(0, 1000)}`);
+        } catch(e: any) {
+          await sendTelegram(`❌ Erro na análise: ${e.message}`);
+        }
+        continue;
+      }
+
       // Handler de áudio/voz
       const voice = update.message?.voice || update.message?.audio;
       if (voice && fromChatId === CHAT_ID) {
