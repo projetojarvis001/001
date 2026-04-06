@@ -8,14 +8,14 @@ echo "[${DATE}] Iniciando backup..."
 
 cp -r /Users/jarvis001/jarvis/.env $BACKUP_DIR/jarvis.env.bak
 cp -r /Users/jarvis001/jarvis/docker-compose.yml $BACKUP_DIR/
-cp -r /Users/jarvis001/jarvin-universal/.env $BACKUP_DIR/jarvin-universal.env.bak
-cp -r /Users/jarvis001/jarvin-universal/docker-compose.yml $BACKUP_DIR/jarvin-universal-compose.bak
+cp -r /Users/jarvis001/jarvis/.env $BACKUP_DIR/jarvis.env.bak
+cp -r /Users/jarvis001/jarvis/docker-compose.yml $BACKUP_DIR/jarvis-compose.bak
 
 docker exec jarvis-postgres-1 pg_dump -U jarvis_admin jarvis_db > $BACKUP_DIR/jarvis_db.sql 2>/dev/null
-docker exec jarvin-universal-postgres-1 pg_dump -U jarvin jarvin > $BACKUP_DIR/jarvin_db.sql 2>/dev/null
+docker exec jarvis-postgres-1 pg_dump -U jarvin jarvin > $BACKUP_DIR/jarvin_db.sql 2>/dev/null
 
-cp -r /Users/jarvis001/jarvin-universal/core/data $BACKUP_DIR/knowledge_data
-cp -r /Users/jarvis001/jarvin-universal/core/src $BACKUP_DIR/src_code
+cp -r /Users/jarvis001/jarvis/core/data $BACKUP_DIR/knowledge_data
+cp -r /Users/jarvis001/jarvis/core/src $BACKUP_DIR/src_code
 
 find /Volumes/JARVIS-COLD/backups -maxdepth 1 -type d -mtime +30 -exec rm -rf {} \; 2>/dev/null
 

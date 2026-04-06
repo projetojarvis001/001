@@ -11,7 +11,7 @@ notify() {
 
 echo "[$(date)] Dev Agent iniciando..." >> $LOG
 
-ERRORS=$(docker logs jarvin-universal-core-1 --since 1h 2>&1 | grep -i "error\|ERROR\|fatal" | tail -5)
+ERRORS=$(docker logs jarvis-core-1 --since 1h 2>&1 | grep -i "error\|ERROR\|fatal" | tail -5)
 
 if [ -n "$ERRORS" ]; then
   notify "🔧 *Dev Agent — Erros detectados*
@@ -41,6 +41,6 @@ fi
 CONTAINERS_DOWN=$(docker ps -a --format "{{.Names}}:{{.Status}}" | grep -v "Up\|healthy" | grep -v "^$")
 if [ -n "$CONTAINERS_DOWN" ]; then
   notify "🔄 Dev Agent: reiniciando containers caídos..."
-  docker compose -f ~/jarvin-universal/docker-compose.yml up -d >> $LOG 2>&1
+  docker compose -f ~/jarvis/docker-compose.yml up -d >> $LOG 2>&1
   notify "✅ Dev Agent: containers reiniciados"
 fi

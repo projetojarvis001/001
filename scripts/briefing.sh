@@ -1,6 +1,6 @@
 #!/bin/bash
 source /Users/jarvis001/jarvis/.env
-source /Users/jarvis001/jarvin-universal/.env
+source /Users/jarvis001/jarvis/.env
 
 DATE=$(date '+%d/%m/%Y')
 HORA=$(date '+%H:%M')

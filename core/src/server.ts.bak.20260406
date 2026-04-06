@@ -5,7 +5,6 @@ import express from 'express';
 import { dispatch } from './dispatcher';
 import { pool } from './logger';
 import http from 'http';
-import './agents/sentinel';
 
 const app = express();
 app.use(express.json());
