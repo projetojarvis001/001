@@ -107,3 +107,4 @@ $(echo -e "$warnings")"
 fi
 
 echo "[$(date)] Health score: $score/100 — $STATUS"
+cp /tmp/health_report.json /Users/jarvis001/jarvis/dashboard/health_report.json 2>/dev/null

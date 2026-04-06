@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="30">
+<title>JARVIS Command Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e1a;color:#e2e8f0;font-family:system-ui,sans-serif;padding:16px}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #1e293b}
+.logo{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+h1{font-size:18px;color:#7dd3fc}
+.ts{font-size:11px;color:#475569;margin-left:auto}
+.score-bar{display:flex;align-items:center;gap:12px;background:#111827;border-radius:12px;padding:16px;margin-bottom:16px}
+.score-num{font-size:48px;font-weight:700}
+.score-100{color:#22c55e}.score-80{color:#eab308}.score-60{color:#f97316}.score-0{color:#ef4444}
+.score-info{flex:1}
+.score-label{font-size:14px;color:#94a3b8}
+.score-bar-inner{height:8px;background:#1e293b;border-radius:4px;margin-top:8px;overflow:hidden}
+.score-fill{height:100%;border-radius:4px;transition:width .5s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:16px}
+.card{background:#111827;border-radius:10px;padding:12px;border:.5px solid #1e293b}
+.card-label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.card-val{font-size:22px;font-weight:600}
+.card-sub{font-size:10px;color:#475569;margin-top:2px}
+.ok{color:#22c55e}.warn{color:#eab308}.fail{color:#ef4444}.info{color:#7dd3fc}
+.section{margin-bottom:16px}
+.section-title{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600}
+.row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#111827;border-radius:8px;margin-bottom:4px;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dg{background:#22c55e;animation:pulse 2s infinite}
+.dy{background:#eab308}
+.dr{background:#ef4444}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.name{flex:1;color:#e2e8f0;font-weight:500}
+.val{font-size:11px;color:#475569}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500}
+.bg{background:#14532d;color:#4ade80}
+.by{background:#422006;color:#fbbf24}
+.br{background:#450a0a;color:#f87171}
+.issue-list{background:#1a0a0a;border-radius:8px;padding:10px;margin-bottom:8px}
+.warn-list{background:#1a1000;border-radius:8px;padding:10px}
+.issue-item{font-size:12px;color:#f87171;padding:2px 0}
+.warn-item{font-size:12px;color:#fbbf24;padding:2px 0}
+.net-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.net-card{background:#111827;border-radius:10px;padding:12px;flex:1;min-width:140px;border:.5px solid #1e293b}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">JV</div>
+  <div>
+    <h1>J.A.R.V.I.S. + V.I.S.I.O.N. — Command Center</h1>
+    <div style="font-size:11px;color:#475569">Grupo Wagner · Mac1 192.168.8.121 · Mac2 192.168.8.124</div>
+  </div>
+  <div class="ts" id="ts"></div>
+</div>
+
+<div class="score-bar" id="score-bar">
+  <div class="score-num score-100" id="score-num">--</div>
+  <div class="score-info">
+    <div style="font-size:16px;font-weight:600" id="score-status">Carregando...</div>
+    <div class="score-label">Health Score Global</div>
+    <div class="score-bar-inner"><div class="score-fill" id="score-fill" style="width:0;background:#22c55e"></div></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card"><div class="card-label">RAM Mac1</div><div class="card-val info" id="ram1">--</div><div class="card-sub">MB livre</div></div>
+  <div class="card"><div class="card-label">Disco Mac1</div><div class="card-val ok" id="disk1">--</div><div class="card-sub">% usado</div></div>
+  <div class="card"><div class="card-label">IP Público</div><div class="card-val info" id="pub-ip" style="font-size:13px">--</div><div class="card-sub" id="isp">--</div></div>
+  <div class="card"><div class="card-label">Latência CF</div><div class="card-val ok" id="latency">--</div><div class="card-sub">ms</div></div>
+  <div class="card"><div class="card-label">Conexões</div><div class="card-val" id="conns">--</div><div class="card-sub" id="ext-conns">externas: --</div></div>
+  <div class="card"><div class="card-label">Banda</div><div class="card-val info" id="banda">--</div><div class="card-sub">KB/s</div></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Camada 1 — Fundação (Hardware + Rede)</div>
+  <div class="row"><div class="dot dg" id="d-ram"></div><span class="name">RAM</span><span class="val" id="v-ram">--</span><span class="badge bg" id="b-ram">OK</span></div>
+  <div class="row"><div class="dot dg" id="d-net"></div><span class="name">Internet</span><span class="val" id="v-net">--</span><span class="badge bg" id="b-net">OK</span></div>
+  <div class="row"><div class="dot dg" id="d-tunnel"></div><span class="name">Tunnel Cloudflare</span><span class="val" id="v-tunnel" style="font-size:10px">--</span><span class="badge bg" id="b-tunnel">OK</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Camada 2 — Plataforma (Serviços + BD)</div>
+  <div class="row"><div class="dot" id="d-core"></div><span class="name">jarvis-core :3000</span><span class="val" id="v-core">--</span><span class="badge" id="b-core">--</span></div>
+  <div class="row"><div class="dot" id="d-vision"></div><span class="name">VISION Semantic :5006</span><span class="val" id="v-vision">--</span><span class="badge" id="b-vision">--</span></div>
+  <div class="row"><div class="dot" id="d-pg"></div><span class="name">PostgreSQL :5432</span><span class="val" id="v-pg">--</span><span class="badge" id="b-pg">--</span></div>
+  <div class="row"><div class="dot" id="d-redis"></div><span class="name">Redis :6379</span><span class="val" id="v-redis">--</span><span class="badge" id="b-redis">--</span></div>
+  <div class="row"><div class="dot" id="d-n8n"></div><span class="name">N8n :5678</span><span class="val" id="v-n8n">--</span><span class="badge" id="b-n8n">--</span></div>
+  <div class="row"><div class="dot" id="d-ollama"></div><span class="name">Ollama Mac2 :11434</span><span class="val" id="v-ollama">--</span><span class="badge" id="b-ollama">--</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Camada 3 — Sistema (Agentes + Código)</div>
+  <div class="row"><div class="dot dg"></div><span class="name">ZeroClaw Gateway :42617</span><span class="val">Llama4 Scout</span><span class="badge bg">ON</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Guardian Agent</span><span class="val">a cada 2min</span><span class="badge bg">ON</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Health Agent</span><span class="val">a cada 5min</span><span class="badge bg">ON</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Network Agent</span><span class="val">a cada 5min</span><span class="badge bg">ON</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Memory Optimizer</span><span class="val">a cada 5min</span><span class="badge bg">ON</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Camada 4 — Operação (Schedules)</div>
+  <div class="row"><div class="dot dg"></div><span class="name">Briefing Matinal</span><span class="val">07:00</span><span class="badge bg">AGENDADO</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Bitcoin Hunter</span><span class="val">08:30</span><span class="badge bg">AGENDADO</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Leitor do Futuro</span><span class="val">08:00</span><span class="badge bg">AGENDADO</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Pipeline Vendas</span><span class="val">10:00</span><span class="badge bg">AGENDADO</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">N8n Hunter WPS</span><span class="val">09:00 seg-sex</span><span class="badge bg">AGENDADO</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Camada 5 — Inteligência (VISION + Memória)</div>
+  <div class="row"><div class="dot dg"></div><span class="name">Base Vetorial</span><span class="val" id="v-vectors">146 vetores</span><span class="badge bg">ATIVA</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Modelos Ollama</span><span class="val">gemma3:12b · qwen2.5:14b · llama3.1:8b</span><span class="badge bg">5 modelos</span></div>
+  <div class="row"><div class="dot dg"></div><span class="name">Cost Router</span><span class="val">Groq→Gemini→Deepseek→Ollama</span><span class="badge bg">AUTO</span></div>
+</div>
+
+<div id="issues-section" style="display:none">
+  <div class="section-title" style="color:#f87171">Problemas ativos</div>
+  <div class="issue-list" id="issues-list"></div>
+</div>
+<div id="warns-section" style="display:none;margin-top:8px">
+  <div class="section-title" style="color:#fbbf24">Avisos</div>
+  <div class="warn-list" id="warns-list"></div>
+</div>
+
+<div style="font-size:10px;color:#1e293b;text-align:center;margin-top:12px">
+  Grupo Wagner · J.A.R.V.I.S. v2.0 · Missão dada é missão cumprida
+</div>
+
+<script>
+document.getElementById('ts').textContent = new Date().toLocaleString('pt-BR');
+
+function setStatus(dotId, badgeId, valId, ok, val, okLabel, failLabel) {
+  const dot = document.getElementById(dotId);
+  const badge = document.getElementById(badgeId);
+  const v = document.getElementById(valId);
+  if (dot) dot.className = 'dot ' + (ok ? 'dg' : 'dr');
+  if (badge) { badge.textContent = ok ? okLabel : failLabel; badge.className = 'badge ' + (ok ? 'bg' : 'br'); }
+  if (v && val) v.textContent = val;
+}
+
+fetch('/health_report.json').then(r=>r.json()).then(d=>{
+  const s = d.score;
+  document.getElementById('score-num').textContent = s;
+  document.getElementById('score-num').className = 'score-num ' + (s>=90?'score-100':s>=70?'score-80':s>=50?'score-60':'score-0');
+  document.getElementById('score-status').textContent = d.status;
+  document.getElementById('score-fill').style.width = s + '%';
+  document.getElementById('score-fill').style.background = s>=90?'#22c55e':s>=70?'#eab308':s>=50?'#f97316':'#ef4444';
+  document.getElementById('ram1').textContent = d.mem_mb;
+  document.getElementById('ram1').className = 'card-val ' + (d.mem_mb>500?'ok':d.mem_mb>200?'warn':'fail');
+  document.getElementById('disk1').textContent = d.disk_pct;
+  setStatus('d-core','b-core','v-core', d.core==='200', 'HTTP '+d.core, 'OK', 'FAIL');
+  setStatus('d-vision','b-vision','v-vision', d.vision==='200', 'HTTP '+d.vision, 'OK', 'FAIL');
+  setStatus('d-pg','b-pg','v-pg', d.postgres==='1', 'healthy', 'OK', 'FAIL');
+  setStatus('d-redis','b-redis','v-redis', d.redis==='1', 'PONG', 'OK', 'FAIL');
+  setStatus('d-n8n','b-n8n','v-n8n', d.n8n==='200', 'HTTP '+d.n8n, 'OK', 'FAIL');
+  setStatus('d-tunnel','b-tunnel','v-tunnel', !!d.tunnel, d.tunnel||'offline', 'OK', 'OFFLINE');
+
+  const issues = d.issues.split('|').filter(x=>x.trim());
+  const warns = d.warnings.split('|').filter(x=>x.trim());
+  if(issues.length) {
+    document.getElementById('issues-section').style.display='block';
+    document.getElementById('issues-list').innerHTML = issues.map(i=>`<div class="issue-item">${i}</div>`).join('');
+  }
+  if(warns.length) {
+    document.getElementById('warns-section').style.display='block';
+    document.getElementById('warns-list').innerHTML = warns.map(w=>`<div class="warn-item">${w}</div>`).join('');
+  }
+}).catch(()=>{});
+
+fetch('/network_report.json').then(r=>r.json()).then(d=>{
+  document.getElementById('pub-ip').textContent = d.public_ip;
+  document.getElementById('isp').textContent = d.isp;
+  document.getElementById('latency').textContent = d.latency_cf_ms;
+  document.getElementById('latency').className = 'card-val ' + (d.latency_cf_ms<50?'ok':d.latency_cf_ms<150?'warn':'fail');
+  document.getElementById('conns').textContent = d.conn_total;
+  document.getElementById('ext-conns').textContent = 'externas: ' + d.conn_external;
+  document.getElementById('banda').textContent = d.bandwidth_kb;
+  setStatus('d-net','b-net','v-net', true, d.latency_cf_ms+'ms CF', 'OK', 'FAIL');
+}).catch(()=>{});
+
+fetch('http://192.168.8.124:5006/health').then(r=>r.json()).then(d=>{
+  setStatus('d-ollama','b-ollama','v-ollama', d.ok, '5 modelos', 'OK', 'FAIL');
+}).catch(()=>{ setStatus('d-ollama','b-ollama','v-ollama', false, 'offline', 'OK', 'FAIL'); });
+</script>
+</body>
+</html>
