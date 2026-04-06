@@ -42,10 +42,9 @@ VISION=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://192.168.8.12
 [ "$VISION" != "200" ] && check "PLATAFORMA" "VISION offline" "FAIL" 20
 OLLAMA=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://192.168.8.124:11434/api/tags)
 [ "$OLLAMA" != "200" ] && check "PLATAFORMA" "Ollama offline" "FAIL" 15
-PG=$(docker exec jarvis-postgres-1 pg_isready -U jarvis_admin 2>/dev/null | grep -c "accepting")
+PG=$(docker exec jarvis-postgres-1 pg_isready -U jarvis_admin 2>/dev/null | grep -c 'accepting')
 [ "$PG" -eq 0 ] && check "BD" "PostgreSQL offline" "FAIL" 20
-source /Users/jarvis001/jarvis/.env 2>/dev/null
-REDIS=$(docker exec redis redis-cli -a "$REDIS_PASSWORD" ping 2>/dev/null | grep -c "PONG")
+REDIS=$(docker exec redis redis-cli -a "W!@#wps@2026" ping 2>/dev/null | grep -c "PONG")
 [ "$REDIS" -eq 0 ] && check "MENSAGERIA" "Redis offline" "WARN" 10
 
 # CAMADA 3 — SISTEMA
