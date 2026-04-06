@@ -8,3 +8,5 @@ core/dist/
 coverage/
 .idea/
 .vscode/
+.env.backup*
+.env*
