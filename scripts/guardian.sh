@@ -12,12 +12,12 @@ notify() {
 
 check_and_fix() {
   local NAME=$1 URL=$2 FIX_CMD=$3
-  HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$URL" 2>/dev/null)
+  HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null)
   if [ "$HTTP" != "200" ]; then
     echo "[$(date)] FALHA $NAME ($HTTP) — tentando fix..." >> $LOG
     eval "$FIX_CMD" >> $LOG 2>&1
     sleep 5
-    HTTP2=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$URL" 2>/dev/null)
+    HTTP2=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null)
     if [ "$HTTP2" = "200" ]; then
       notify "✅ *Guardian auto-fix:* $NAME recuperado"
       echo "[$(date)] $NAME recuperado" >> $LOG
