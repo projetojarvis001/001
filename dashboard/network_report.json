@@ -1,13 +1,13 @@
 {
-  "ts": "2026-04-07 15:50:28",
+  "ts": "2026-04-07 16:47:31",
   "public_ip": "45.170.99.118",
   "isp": "AS268157 ELEVAR TELECOM LTDA",
   "city": "Campinas",
   "latency_cf_ms": "5",
-  "latency_telegram_ms": "211",
+  "latency_telegram_ms": "212",
   "internet": "301",
-  "bandwidth_kb": 16,
-  "conn_total": 9,
+  "bandwidth_kb": 15,
+  "conn_total": 7,
   "conn_external": 0,
   "unusual": "|"
 }
