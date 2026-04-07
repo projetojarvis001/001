@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# PAUSA — se arquivo existir, não notifica
+if [ -f /tmp/jarvis_pausado ]; then
+  echo "[$(date)] Guardian em pausa — skip notificações"
+  exit 0
+fi
 BOT="8036971657:AAEGIF9BxetgE226XwQXTPYSwFvw4smX-_8"
 CHAT="8206117553"
 LOG="/tmp/guardian.log"

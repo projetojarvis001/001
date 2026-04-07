@@ -44,6 +44,26 @@ async function telegramPolling(): Promise<void> {
         const cmd = msg.toLowerCase().trim();
 
         console.log('[CMD]', cmd, '| ajuda match:', cmd === '/ajuda' || cmd === '/help');
+
+        if (cmd === '/pausar' || cmd === '/pause') {
+          const fs = require('fs');
+          fs.writeFileSync('/tmp/jarvis_pausado', new Date().toISOString());
+          await sendTelegram('Sistema em pausa. Notificacoes desativadas. Use /retomar para reativar.');
+          continue;
+        }
+        if (cmd === '/retomar' || cmd === '/resume') {
+          const fs = require('fs');
+          try { fs.unlinkSync('/tmp/jarvis_pausado'); } catch(e) {}
+          await sendTelegram('Sistema reativado. Notificacoes voltaram ao normal.');
+          continue;
+        }
+        if (cmd === '/silenciar') {
+          const fs = require('fs');
+          fs.writeFileSync('/tmp/jarvis_pausado', new Date().toISOString());
+          setTimeout(() => { try { fs.unlinkSync('/tmp/jarvis_pausado'); } catch(e) {} }, 3600000);
+          await sendTelegram('Silenciado por 1 hora. Retoma automaticamente.');
+          continue;
+        }
         if (cmd === '/ajuda' || cmd === '/help') {
           await sendTelegram('🤖 Comandos JARVIS\n\n/status — health do sistema\n/homebridge\\_start — liga HomeKit\n/homebridge\\_stop — desliga HomeKit\n/homebridge\\_status — status HomeKit\n/purge\\_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
           continue;
