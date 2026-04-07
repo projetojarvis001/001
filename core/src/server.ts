@@ -97,6 +97,38 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+
+      if (msg.startsWith('/')) {
+        const cmd = msg.toLowerCase().trim();
+        const visionCmd: Record<string,string> = {
+          '/homebridge_start':  'homebridge_start',
+          '/homebridge_stop':   'homebridge_stop',
+          '/homebridge_status': 'homebridge_status',
+          '/purge_mac2':        'memory_purge',
+        };
+        if (visionCmd[cmd]) {
+          await sendTelegram('⏳ Executando ' + cmd + '...');
+          try {
+            const r = await axios.post(`http://${process.env.VISION_HOST}:5006/cmd`,
+              { cmd: visionCmd[cmd] }, { timeout: 35000 });
+            await sendTelegram('✅ ' + cmd + ' executado\n' + (r.data.stdout||'').slice(0,200));
+          } catch(e:any) { await sendTelegram('❌ Erro: '+e.message); }
+          continue;
+        }
+        if (cmd === '/status') {
+          try {
+            const h = await axios.get('http://localhost:3000/health');
+            const v = await axios.get(`http://${process.env.VISION_HOST}:5006/health`);
+            await sendTelegram(`📊 *Status JARVIS*\nCore: ✅ online\nVISION: ✅ online\nTunnel: ${process.env.ZEROCLAW_URL||'ativo'}`);
+          } catch(e:any) { await sendTelegram('📊 Sistema operacional'); }
+          continue;
+        }
+        if (cmd === '/ajuda' || cmd === '/help') {
+          await sendTelegram('🤖 *Comandos JARVIS*\n\n/status — health do sistema\n/homebridge_start — liga HomeKit\n/homebridge_stop — desliga HomeKit\n/homebridge_status — status HomeKit\n/purge_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
+          continue;
+        }
+      }
+
       if (!msg || fromChatId !== CHAT_ID) continue;
       try {
         await sendTelegram('⏳ Processando...');
