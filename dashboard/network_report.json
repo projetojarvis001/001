@@ -1,12 +1,12 @@
 {
-  "ts": "2026-04-07 12:49:06",
+  "ts": "2026-04-07 13:51:18",
   "public_ip": "186.209.45.40",
   "isp": "AS53158 Net Turbo Telecom",
   "city": "Itatiba",
-  "latency_cf_ms": "3",
+  "latency_cf_ms": "4",
   "latency_telegram_ms": "171",
   "internet": "301",
-  "bandwidth_kb": 10,
+  "bandwidth_kb": 8,
   "conn_total": 3,
   "conn_external": 0,
   "unusual": "|"
