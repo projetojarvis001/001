@@ -98,7 +98,7 @@ async function telegramPolling(): Promise<void> {
       }
 
 
-      if (msg.startsWith('/')) {
+      if (msg.startsWith('/') && fromChatId === CHAT_ID) {
         const cmd = msg.toLowerCase().trim();
         const visionCmd: Record<string,string> = {
           '/homebridge_start':  'homebridge_start',
