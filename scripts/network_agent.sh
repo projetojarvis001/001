@@ -53,3 +53,16 @@ JSONEOF
 echo "[$(date)] IP: $PUBLIC_IP | Latência: ${LATENCY_CF}ms | Banda: ${BANDWIDTH_KB}KB/s | Conn: $CONN_COUNT" >> $LOG
 cp /tmp/network_report.json /Users/jarvis001/jarvis/dashboard/network_report.json 2>/dev/null
 cp /tmp/network_report.json /Users/jarvis001/jarvis/core/dashboard/network_report.json 2>/dev/null
+
+# Monitora IP secundário
+IP2_INFO=$(curl -s --max-time 5 "http://ip-api.com/json/45.170.99.120" 2>/dev/null)
+IP2_STATUS=$(echo $IP2_INFO | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status','fail'))" 2>/dev/null)
+python3 -c "
+import json,sys
+with open('/tmp/network_report.json') as f: d=json.load(f)
+d['link2_ip']='45.170.99.120'
+d['link2_isp']='Elevar Telecom'
+d['link2_status']='$IP2_STATUS'
+with open('/tmp/network_report.json','w') as f: json.dump(d,f,ensure_ascii=True)
+with open('/Users/jarvis001/jarvis/core/dashboard/network_report.json','w') as f: json.dump(d,f,ensure_ascii=True)
+" 2>/dev/null
