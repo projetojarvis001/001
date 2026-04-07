@@ -19,9 +19,9 @@ async function sendTelegram(text: string) {
   if (!BOT_TOKEN || !CHAT_ID) return;
   try {
     await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      chat_id: CHAT_ID, text, parse_mode: 'Markdown'
+      chat_id: CHAT_ID, text, parse_mode: 'HTML'
     });
-  } catch(e) {}
+  } catch(e: any) { console.log('[TG-SEND-ERR]', e.response?.data || e.message); }
 }
 
 let lastUpdateId = 0;
@@ -44,7 +44,7 @@ async function telegramPolling(): Promise<void> {
         const cmd = msg.toLowerCase().trim();
 
         if (cmd === '/ajuda' || cmd === '/help') {
-          await sendTelegram('🤖 *Comandos JARVIS*\n\n/status — health do sistema\n/homebridge\\_start — liga HomeKit\n/homebridge\\_stop — desliga HomeKit\n/homebridge\\_status — status HomeKit\n/purge\\_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
+          await sendTelegram('🤖 Comandos JARVIS\n\n/status — health do sistema\n/homebridge\\_start — liga HomeKit\n/homebridge\\_stop — desliga HomeKit\n/homebridge\\_status — status HomeKit\n/purge\\_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
           continue;
         }
 
@@ -52,7 +52,7 @@ async function telegramPolling(): Promise<void> {
           try {
             const h = await axios.get('http://localhost:3000/health', {timeout:5000});
             const v = await axios.get(`http://${VISION_HOST}:5006/health`, {timeout:5000});
-            await sendTelegram(`📊 *Status JARVIS*\nCore: ✅ online\nVISION: ✅ online`);
+            await sendTelegram(`📊 Status JARVIS\nCore: ✅ online\nVISION: ✅ online`);
           } catch(e:any) {
             await sendTelegram('📊 Sistema operacional');
           }
@@ -92,7 +92,7 @@ async function telegramPolling(): Promise<void> {
           form.append('file', Buffer.from(imgRes.data), { filename: 'image.jpg', contentType: 'image/jpeg' });
           form.append('prompt', update.message?.caption || 'Descreva esta imagem em português.');
           const vRes = await axios.post(`http://${VISION_HOST}:5006/analyze-image`, form, { headers: form.getHeaders(), timeout: 120000 });
-          await sendTelegram(`👁️ *Análise VISION:*\n\n${vRes.data.description.slice(0, 1000)}`);
+          await sendTelegram(`👁️ Análise VISION:\n\n${vRes.data.description.slice(0, 1000)}`);
         } catch(e:any) {
           await sendTelegram(`❌ Erro na análise: ${e.message}`);
         }
@@ -112,7 +112,7 @@ async function telegramPolling(): Promise<void> {
           form.append('file', Buffer.from(audioRes.data), { filename: 'audio.ogg', contentType: 'audio/ogg' });
           const tRes = await axios.post(`http://${VISION_HOST}:5007/transcribe`, form, { headers: form.getHeaders(), timeout: 60000 });
           const transcript = tRes.data.text;
-          await sendTelegram(`📝 *Transcrição:* ${transcript}`);
+          await sendTelegram(`📝 Transcrição: ${transcript}`);
           const result: any = await dispatch(transcript, 'chat');
           const reply = result?.response || result?.text || result?.answer || JSON.stringify(result).slice(0, 500);
           await sendTelegram(reply);
