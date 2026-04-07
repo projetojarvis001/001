@@ -59,6 +59,6 @@ MEM_MB=$((MEM * 4096 / 1048576))
 [ "$DISK" -gt 85 ] && docker system prune -f >> $LOG 2>&1 && notify "🧹 *Guardian:* Limpeza disco executada (${DISK}%)"
 MEM_INACTIVE=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | tr -d "." | head -1)
 MEM_INACTIVE_MB=$((MEM_INACTIVE * 4096 / 1048576))
-[ "$MEM_EFFECTIVE_MB" -lt 200 ] && notify "⚠️ *Guardian:* Memória baixa — ${MEM_MB}MB livre"
+[ -n "$MEM_EFFECTIVE_MB" ] && [ "$MEM_EFFECTIVE_MB" -lt 200 ] && notify "⚠️ *Guardian:* Memória baixa — ${MEM_MB}MB livre"
 
 [ $ERROS -eq 0 ] && echo "[$(date)] Guardian OK — tudo saudável" >> $LOG
