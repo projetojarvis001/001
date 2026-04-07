@@ -43,6 +43,7 @@ async function telegramPolling(): Promise<void> {
       if (msg.startsWith('/') && fromChatId === CHAT_ID) {
         const cmd = msg.toLowerCase().trim();
 
+        console.log('[CMD]', cmd, '| ajuda match:', cmd === '/ajuda' || cmd === '/help');
         if (cmd === '/ajuda' || cmd === '/help') {
           await sendTelegram('🤖 Comandos JARVIS\n\n/status — health do sistema\n/homebridge\\_start — liga HomeKit\n/homebridge\\_stop — desliga HomeKit\n/homebridge\\_status — status HomeKit\n/purge\\_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
           continue;
