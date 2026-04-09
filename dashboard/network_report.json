@@ -1,13 +1,13 @@
 {
-  "ts": "2026-04-09 15:16:57",
-  "public_ip": "45.170.99.118",
-  "isp": "AS268157 ELEVAR TELECOM LTDA",
-  "city": "Campinas",
-  "latency_cf_ms": "5",
-  "latency_telegram_ms": "208",
+  "ts": "2026-04-09 16:15:52",
+  "public_ip": "186.209.45.40",
+  "isp": "AS53158 Net Turbo Telecom",
+  "city": "Itatiba",
+  "latency_cf_ms": "3",
+  "latency_telegram_ms": "171",
   "internet": "301",
-  "bandwidth_kb": 9,
-  "conn_total": 7,
+  "bandwidth_kb": 11,
+  "conn_total": 8,
   "conn_external": 0,
   "unusual": "|"
 }
