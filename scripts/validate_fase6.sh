@@ -29,7 +29,7 @@ echo "===== COM HEADER ====="
 CODE_YES=$(curl -s -o /tmp/yeshdr.out -w "%{http_code}" \
   -X POST http://127.0.0.1:3000/semantic-proxy/cmd \
   -H "Content-Type: application/json" \
-  -H "x-internal-key: jarvis-internal-2026-fase6" \
+  -H "x-internal-key: ${INTERNAL_API_KEY}" \
   -d '{"prompt":"teste","model":"qwen2.5:7b"}')
 echo "HTTP=$CODE_YES"
 cat /tmp/yeshdr.out

@@ -14,7 +14,7 @@ sleep 12
 
 echo
 echo "===== VALIDACAO ====="
-./scripts/validate_fase5.sh
+./scripts/validate_fase6.sh
 
 echo
 echo "[OK] stack vision pronta"
