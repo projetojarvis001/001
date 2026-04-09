@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 
 if [ -f .env ]; then
   export $(grep -E '^(INTERNAL_API_KEY)=' .env | xargs)

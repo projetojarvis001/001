@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 
 STAMP=$(date +%Y%m%d-%H%M%S)
 OUT_DIR="logs/ops"
@@ -12,7 +14,12 @@ mkdir -p "${OUT_DIR}"
   date
   echo
 
-  echo "===== GIT ====="
+  if ! command -v docker >/dev/null 2>&1; then
+  echo "[ERRO] docker nao encontrado no PATH"
+  exit 1
+fi
+
+echo "===== GIT ====="
   git log --oneline -n 3
   echo
 

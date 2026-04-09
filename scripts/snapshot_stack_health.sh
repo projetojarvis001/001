@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -e
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
 
 STAMP=$(date +%Y%m%d-%H%M%S)
 OUT_DIR="logs/stack_health"
