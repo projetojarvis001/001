@@ -10,3 +10,14 @@ coverage/
 .vscode/
 .env.backup*
 .env*
+
+# artefatos operacionais
+backups_fase*/
+baseline_ok_*/
+release_snapshot_*/
+*.bak
+*.tmp
+
+network_report.json
+core/dashboard/network_report.json
+dashboard/network_report.json
