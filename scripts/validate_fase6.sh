@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
+if [ -f .env ]; then
+  export $(grep -E '^(INTERNAL_API_KEY)=' .env | xargs)
+fi
+
+if [ -z "${INTERNAL_API_KEY}" ]; then
+  echo "[ERRO] INTERNAL_API_KEY nao definida"
+  exit 1
+fi
+
 echo "===== REGRESSAO ====="
 ./scripts/check_vision_regression.sh
 
