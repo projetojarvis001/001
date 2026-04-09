@@ -21,3 +21,6 @@ release_snapshot_*/
 network_report.json
 core/dashboard/network_report.json
 dashboard/network_report.json
+
+# logs operacionais
+logs/
