@@ -14,6 +14,69 @@ app.use(express.json());
 
 app.use('/dashboard', express.static('/app/dashboard'));
 
+function requireInternalKey(req: any, res: any, next: any) {
+  const expected = process.env.INTERNAL_API_KEY;
+  if (!expected) {
+    return res.status(500).json({ ok: false, error: 'INTERNAL_API_KEY nao configurada' });
+  }
+
+  const received = req.headers['x-internal-key'];
+  if (received !== expected) {
+    return res.status(401).json({ ok: false, error: 'unauthorized' });
+  }
+
+  next();
+}
+
+app.get('/stack/health', async (_req, res) => {
+  const visionHost = process.env.VISION_HOST;
+  const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (visionHost ? `http://${visionHost}:5006` : undefined);
+  const whisperBaseUrl = process.env.VISION_WHISPER_URL || (visionHost ? `http://${visionHost}:5007` : undefined);
+  const bridgeUrl = process.env.VISION_BRIDGE_URL || (visionHost ? `http://${visionHost}:5005/process` : undefined);
+
+  const result: any = {
+    ok: true,
+    service: 'jarvis-stack',
+    timestamp: new Date().toISOString(),
+    checks: {
+      core: { ok: true }
+    }
+  };
+
+  try {
+    if (!semanticBaseUrl) throw new Error('semantic nao configurado');
+    const r = await axios.get(`${semanticBaseUrl}/health`, { timeout: 5000 });
+    result.checks.semantic = { ok: true, data: r.data };
+  } catch (e: any) {
+    result.ok = false;
+    result.checks.semantic = { ok: false, error: e?.message || 'erro semantic' };
+  }
+
+  try {
+    if (!whisperBaseUrl) throw new Error('whisper nao configurado');
+    const r = await axios.get(`${whisperBaseUrl}/health`, { timeout: 5000 });
+    result.checks.whisper = { ok: true, data: r.data };
+  } catch (e: any) {
+    result.ok = false;
+    result.checks.whisper = { ok: false, error: e?.message || 'erro whisper' };
+  }
+
+  try {
+    if (!bridgeUrl) throw new Error('bridge nao configurado');
+    const r = await axios.post(
+      bridgeUrl,
+      { prompt: 'Responda apenas OK_STACK_HEALTH', model: 'qwen2.5:7b' },
+      { timeout: 15000 }
+    );
+    result.checks.bridge = { ok: true, data: r.data };
+  } catch (e: any) {
+    result.ok = false;
+    result.checks.bridge = { ok: false, error: e?.message || 'erro bridge' };
+  }
+
+  return res.status(result.ok ? 200 : 503).json(result);
+});
+
 app.get('/semantic-proxy/health', async (_req, res) => {
   try {
     const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
@@ -28,7 +91,7 @@ app.get('/semantic-proxy/health', async (_req, res) => {
   }
 });
 
-app.post('/semantic-proxy/cmd', async (req, res) => {
+app.post('/semantic-proxy/cmd', requireInternalKey, async (req, res) => {
   try {
     const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
     if (!semanticBaseUrl) {
@@ -42,7 +105,7 @@ app.post('/semantic-proxy/cmd', async (req, res) => {
   }
 });
 
-app.post('/semantic-proxy/analyze-image', upload.single('image'), async (req, res) => {
+app.post('/semantic-proxy/analyze-image', requireInternalKey, upload.single('image'), async (req, res) => {
   try {
     const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
     if (!semanticBaseUrl) {
@@ -74,7 +137,7 @@ app.post('/semantic-proxy/analyze-image', upload.single('image'), async (req, re
   }
 });
 
-app.post('/whisper-proxy/transcribe', upload.single('audio'), async (req, res) => {
+app.post('/whisper-proxy/transcribe', requireInternalKey, upload.single('audio'), async (req, res) => {
   try {
     const whisperBaseUrl = process.env.VISION_WHISPER_URL || (VISION_HOST ? `http://${VISION_HOST}:5007` : undefined);
     if (!whisperBaseUrl) {
