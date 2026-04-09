@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+echo "===== REGRESSAO ====="
+./scripts/check_vision_regression.sh
+
+echo
+echo "===== HEALTH CORE ====="
+curl -fsS http://127.0.0.1:3000/health >/dev/null && echo "[OK] core"
+
+echo
+echo "===== TESTE BRIDGE ====="
+curl -fsS -X POST http://192.168.8.124:5005/process \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"Responda apenas OK_VALIDATE","model":"qwen2.5:7b"}' | grep -q 'OK_VALIDATE' && echo "[OK] bridge"
+
+echo
+echo "===== SENTINEL LOGS ====="
+docker logs --tail 120 jarvis-jarvis-core-1 2>&1 | grep -E 'VISION: ONLINE|Sentinel' || true
+
+echo
+echo "[OK] validacao concluida"

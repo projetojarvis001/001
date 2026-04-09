@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+echo "===== CHECAGEM REGRESSAO VISION ====="
+
+BAD=$(grep -RniE '11434/api|192\.168\.8\.124' core/src core/dist core/dashboard 2>/dev/null || true)
+
+if [ -n "$BAD" ]; then
+  echo "[ERRO] Encontrados hardcodes/regressao:"
+  echo "$BAD"
+  exit 1
+fi
+
+echo "[OK] sem hardcodes proibidos"

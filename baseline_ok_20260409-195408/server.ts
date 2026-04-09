@@ -3,106 +3,13 @@ dotenv.config();
 
 import express from 'express';
 import axios from 'axios';
-import multer from 'multer';
 import { dispatch } from './dispatcher';
 import { pool } from './logger';
 import './agents/sentinel';
 
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
 app.use(express.json());
-
 app.use('/dashboard', express.static('/app/dashboard'));
-
-app.get('/semantic-proxy/health', async (_req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-
-    const r = await axios.get(`${semanticBaseUrl}/health`, { timeout: 5000 });
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic proxy failed' });
-  }
-});
-
-app.post('/semantic-proxy/cmd', async (req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-
-    const r = await axios.post(`${semanticBaseUrl}/cmd`, req.body, { timeout: 120000 });
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic cmd proxy failed' });
-  }
-});
-
-app.post('/semantic-proxy/analyze-image', upload.single('image'), async (req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-    const file = (req as any).file;
-    if (!file) {
-      return res.status(400).json({ ok: false, error: 'arquivo image ausente' });
-    }
-
-    const FormData = require('form-data');
-    const form = new FormData();
-    form.append('image', file.buffer, {
-      filename: file.originalname || 'image.jpg',
-      contentType: file.mimetype || 'application/octet-stream'
-    });
-
-    if (req.body?.prompt) form.append('prompt', req.body.prompt);
-    if (req.body?.model) form.append('model', req.body.model);
-
-    const r = await axios.post(`${semanticBaseUrl}/analyze-image`, form, {
-      headers: form.getHeaders(),
-      timeout: 120000
-    });
-
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic analyze-image proxy failed' });
-  }
-});
-
-app.post('/whisper-proxy/transcribe', upload.single('audio'), async (req, res) => {
-  try {
-    const whisperBaseUrl = process.env.VISION_WHISPER_URL || (VISION_HOST ? `http://${VISION_HOST}:5007` : undefined);
-    if (!whisperBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_WHISPER_URL/VISION_HOST nao configurado' });
-    }
-    const file = (req as any).file;
-    if (!file) {
-      return res.status(400).json({ ok: false, error: 'arquivo audio ausente' });
-    }
-
-    const FormData = require('form-data');
-    const form = new FormData();
-    form.append('audio', file.buffer, {
-      filename: file.originalname || 'audio.wav',
-      contentType: file.mimetype || 'application/octet-stream'
-    });
-
-    const r = await axios.post(`${whisperBaseUrl}/transcribe`, form, {
-      headers: form.getHeaders(),
-      timeout: 120000
-    });
-
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'whisper proxy failed' });
-  }
-});
-
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';

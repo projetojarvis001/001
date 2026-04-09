@@ -21,7 +21,7 @@ async function sendTelegram(msg: string) {
 async function getIAAnalysis(report: string) {
   try {
     const res = await axios.post(
-      `http://${process.env.VISION_HOST}:5005/process`,
+      `http://${process.env.VISION_HOST}:11434/api/generate`,
       {
         model: 'qwen2.5:7b',
         prompt: `Resuma em uma frase executiva para o gestor: ${report}`,

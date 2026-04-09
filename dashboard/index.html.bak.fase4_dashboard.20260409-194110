@@ -107,7 +107,7 @@ body{min-height:100vh;padding:env(safe-area-inset-top) env(safe-area-inset-right
 
 <div class="topbar">
   <div class="topbar-logo">J.A.R.V.I.S.</div>
-  <div class="topbar-sub">Grupo Wagner · Infra distribuída ativa</div>
+  <div class="topbar-sub">Grupo Wagner · Mac1 192.168.8.121 · Mac2 192.168.8.124</div>
   <div class="topbar-ts" id="ts">--:--</div>
   <div class="topbar-score" id="top-score" style="color:var(--green);border-color:var(--green)">-- /100</div>
 </div>
@@ -329,7 +329,7 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
-fetch('/semantic-proxy/health').then(r=>r.json()).then(d=>{
+fetch('http://192.168.8.124:5006/health').then(r=>r.json()).then(d=>{
   $('d-ollama').className = 'dot ok';
   $('b-ollama').className = 'svc-badge sb-ok';
   $('b-ollama').textContent = '5 MODELOS';

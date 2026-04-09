@@ -270,7 +270,7 @@ async function executeWithFallback(raw: string, routed: any): Promise<any> {
   const executor = routed?.executor_agent;
   const engine = routed?.selected_engine;
   const taskType = routed?.task_type;
-  const visionUrl = process.env.VISION_BRIDGE_URL || `http://${process.env.VISION_HOST}:5005/process`;
+  const visionUrl = 'http://192.168.8.124:5005/process';
 
   const baseMeta = {
     initial_engine: engine,
@@ -474,7 +474,7 @@ export const dispatch = async (prompt: string, category?: string) => {
   });
 
   const lower = String(prompt || '').toLowerCase();
-  const visionUrl = process.env.VISION_BRIDGE_URL || `http://${process.env.VISION_HOST}:5005/process`;
+  const visionUrl = 'http://192.168.8.124:5005/process';
 
   if (lower.startsWith('devops:')) {
     const command = prompt.replace(/^devops:/i, '').trim();

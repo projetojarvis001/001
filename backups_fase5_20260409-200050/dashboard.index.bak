@@ -329,7 +329,7 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
-fetch('/semantic-proxy/health').then(r=>r.json()).then(d=>{
+fetch((window.VISION_SEMANTIC_URL || '/semantic-proxy') + '/health').then(r=>r.json()).then(d=>{
   $('d-ollama').className = 'dot ok';
   $('b-ollama').className = 'svc-badge sb-ok';
   $('b-ollama').textContent = '5 MODELOS';

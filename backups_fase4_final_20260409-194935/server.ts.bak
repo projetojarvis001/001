@@ -3,106 +3,13 @@ dotenv.config();
 
 import express from 'express';
 import axios from 'axios';
-import multer from 'multer';
 import { dispatch } from './dispatcher';
 import { pool } from './logger';
 import './agents/sentinel';
 
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
 app.use(express.json());
-
 app.use('/dashboard', express.static('/app/dashboard'));
-
-app.get('/semantic-proxy/health', async (_req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-
-    const r = await axios.get(`${semanticBaseUrl}/health`, { timeout: 5000 });
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic proxy failed' });
-  }
-});
-
-app.post('/semantic-proxy/cmd', async (req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-
-    const r = await axios.post(`${semanticBaseUrl}/cmd`, req.body, { timeout: 120000 });
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic cmd proxy failed' });
-  }
-});
-
-app.post('/semantic-proxy/analyze-image', upload.single('image'), async (req, res) => {
-  try {
-    const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-    if (!semanticBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_SEMANTIC_URL/VISION_HOST nao configurado' });
-    }
-    const file = (req as any).file;
-    if (!file) {
-      return res.status(400).json({ ok: false, error: 'arquivo image ausente' });
-    }
-
-    const FormData = require('form-data');
-    const form = new FormData();
-    form.append('image', file.buffer, {
-      filename: file.originalname || 'image.jpg',
-      contentType: file.mimetype || 'application/octet-stream'
-    });
-
-    if (req.body?.prompt) form.append('prompt', req.body.prompt);
-    if (req.body?.model) form.append('model', req.body.model);
-
-    const r = await axios.post(`${semanticBaseUrl}/analyze-image`, form, {
-      headers: form.getHeaders(),
-      timeout: 120000
-    });
-
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'semantic analyze-image proxy failed' });
-  }
-});
-
-app.post('/whisper-proxy/transcribe', upload.single('audio'), async (req, res) => {
-  try {
-    const whisperBaseUrl = process.env.VISION_WHISPER_URL || (VISION_HOST ? `http://${VISION_HOST}:5007` : undefined);
-    if (!whisperBaseUrl) {
-      return res.status(500).json({ ok: false, error: 'VISION_WHISPER_URL/VISION_HOST nao configurado' });
-    }
-    const file = (req as any).file;
-    if (!file) {
-      return res.status(400).json({ ok: false, error: 'arquivo audio ausente' });
-    }
-
-    const FormData = require('form-data');
-    const form = new FormData();
-    form.append('audio', file.buffer, {
-      filename: file.originalname || 'audio.wav',
-      contentType: file.mimetype || 'application/octet-stream'
-    });
-
-    const r = await axios.post(`${whisperBaseUrl}/transcribe`, form, {
-      headers: form.getHeaders(),
-      timeout: 120000
-    });
-
-    return res.status(r.status).json(r.data);
-  } catch (e: any) {
-    return res.status(502).json({ ok: false, error: e?.message || 'whisper proxy failed' });
-  }
-});
-
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
@@ -165,7 +72,7 @@ async function telegramPolling(): Promise<void> {
         if (cmd === '/status') {
           try {
             const h = await axios.get('http://localhost:3000/health', {timeout:5000});
-            const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
+            const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || `http://${VISION_HOST}:5006`;
             const v = await axios.get(`${semanticBaseUrl}/health`, {timeout:5000});
             await sendTelegram(`📊 Status JARVIS\nCore: ✅ online\nVISION: ✅ online`);
           } catch(e:any) {
@@ -183,9 +90,7 @@ async function telegramPolling(): Promise<void> {
         if (visionCmds[cmd]) {
           await sendTelegram(`⏳ Executando ${cmd}...`);
           try {
-            const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-            if (!semanticBaseUrl) throw new Error('VISION_SEMANTIC_URL/VISION_HOST nao configurado');
-            const r = await axios.post(`${semanticBaseUrl}/cmd`,
+            const r = await axios.post(`http://${VISION_HOST}:5006/cmd`,
               { cmd: visionCmds[cmd] }, { timeout: 35000 });
             await sendTelegram(`✅ Concluído\n${(r.data.stdout||'').slice(0,200)}`);
           } catch(e:any) {
@@ -208,9 +113,7 @@ async function telegramPolling(): Promise<void> {
           const form = new FormData();
           form.append('file', Buffer.from(imgRes.data), { filename: 'image.jpg', contentType: 'image/jpeg' });
           form.append('prompt', update.message?.caption || 'Descreva esta imagem em português.');
-          const visionAnalyzeBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-          if (!visionAnalyzeBaseUrl) throw new Error('VISION_SEMANTIC_URL/VISION_HOST nao configurado');
-          const vRes = await axios.post(`${visionAnalyzeBaseUrl}/analyze-image`, form, { headers: form.getHeaders(), timeout: 120000 });
+          const vRes = await axios.post(`http://${VISION_HOST}:5006/analyze-image`, form, { headers: form.getHeaders(), timeout: 120000 });
           await sendTelegram(`👁️ Análise VISION:\n\n${vRes.data.description.slice(0, 1000)}`);
         } catch(e:any) {
           await sendTelegram(`❌ Erro na análise: ${e.message}`);
@@ -229,8 +132,7 @@ async function telegramPolling(): Promise<void> {
           const FormData = require('form-data');
           const form = new FormData();
           form.append('file', Buffer.from(audioRes.data), { filename: 'audio.ogg', contentType: 'audio/ogg' });
-          const whisperBaseUrl = process.env.VISION_WHISPER_URL || (VISION_HOST ? `http://${VISION_HOST}:5007` : undefined);
-          if (!whisperBaseUrl) throw new Error('VISION_WHISPER_URL/VISION_HOST nao configurado');
+          const whisperBaseUrl = process.env.VISION_WHISPER_URL || `http://${VISION_HOST}:5007`;
           const tRes = await axios.post(`${whisperBaseUrl}/transcribe`, form, { headers: form.getHeaders(), timeout: 60000 });
           const transcript = tRes.data.text;
           await sendTelegram(`📝 Transcrição: ${transcript}`);
