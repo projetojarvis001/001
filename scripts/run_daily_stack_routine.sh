@@ -44,4 +44,12 @@ echo "===== BACKUP OPERACIONAL ====="
 ./scripts/backup_operational_state.sh
 
 echo
+echo "===== BACKUP POSTGRES ====="
+./scripts/backup_postgres.sh
+
+echo
+echo "===== BACKUP ENV ====="
+./scripts/backup_env_secure.sh
+
+echo
 echo "[OK] rotina diaria concluida"

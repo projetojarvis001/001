@@ -26,3 +26,7 @@ dashboard/network_report.json
 logs/
 
 .env
+
+backups/
+.env.bak*
+.env.restore*
