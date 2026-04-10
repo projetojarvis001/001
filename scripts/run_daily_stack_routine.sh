@@ -28,4 +28,8 @@ echo "===== RESUMO DIARIO ====="
 ./scripts/send_daily_stack_summary.sh
 
 echo
+echo "===== BRIEFING EXECUTIVO ====="
+./scripts/send_morning_exec_briefing.sh
+
+echo
 echo "[OK] rotina diaria concluida"
