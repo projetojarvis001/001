@@ -11,6 +11,10 @@ if [ ! -f "${JSON_FILE}" ]; then
   echo '[]' > "${JSON_FILE}"
 fi
 
+if ! jq empty "${JSON_FILE}" >/dev/null 2>&1; then
+  echo '[]' > "${JSON_FILE}"
+fi
+
 jq -r '
   (["date","availability_percent","downtime_seconds","incident_count","last_downtime_seconds","status","target_percent","collected_at"]),
   (.[] | [

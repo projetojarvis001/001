@@ -16,12 +16,21 @@ test -f logs/history/stack_daily_history.csv
 echo "[OK] csv existe"
 
 echo
+echo "===== AGUARDA ENDPOINT ====="
+for i in $(seq 1 20); do
+  if curl -fsS http://127.0.0.1:3000/stack/history/export >/tmp/stack_history_export_f17.json 2>/dev/null; then
+    echo "[OK] endpoint respondeu no ciclo ${i}"
+    break
+  fi
+  sleep 2
+done
+
+echo
 echo "===== HISTORY EXPORT ENDPOINT ====="
-curl -fsS http://127.0.0.1:3000/stack/history/export | jq .
+cat /tmp/stack_history_export_f17.json | jq .
 
 echo
 echo "===== CHECK EXPORT ENDPOINT ====="
-curl -fsS http://127.0.0.1:3000/stack/history/export > /tmp/stack_history_export_f17.json
 jq -e '.ok == true' /tmp/stack_history_export_f17.json >/dev/null
 jq -e '.json_path != null' /tmp/stack_history_export_f17.json >/dev/null
 jq -e '.csv_path != null' /tmp/stack_history_export_f17.json >/dev/null
