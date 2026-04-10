@@ -44,12 +44,12 @@ JSON
 echo "[OK] approvals de teste criadas"
 
 echo
-echo "===== TESTE RESOLVE MAIS RECENTE ====="
-./scripts/exception_approval_resolve.sh promotion_override
+echo "===== TESTE RESOLVE MAIS RECENTE POR ATOR ====="
+ACTOR_FILTER="alice" ./scripts/exception_approval_resolve.sh promotion_override
 LATEST_RESOLVE=$(ls -1t logs/readiness/exception_resolve_*.json | head -n 1)
 
 jq -e '.selected_file | endswith("exception_approval_20260410-020500.json")' "${LATEST_RESOLVE}" >/dev/null
-echo "[OK] resolve escolheu approval mais recente"
+echo "[OK] resolve escolheu approval mais recente do ator"
 
 echo
 echo "===== TESTE RESOLVE COM FILTRO DE ATOR ====="
@@ -71,7 +71,7 @@ echo "[OK] approval check usa approval correta"
 echo
 echo "===== TESTE ESCOPO INEXISTENTE ====="
 set +e
-./scripts/exception_approval_resolve.sh escopo_que_nao_existe >/tmp/f44_resolve_fail.out 2>&1
+ACTOR_FILTER="alice" ./scripts/exception_approval_resolve.sh escopo_que_nao_existe >/tmp/f44_resolve_fail.out 2>&1
 RC=$?
 set -e
 
