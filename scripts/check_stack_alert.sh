@@ -81,6 +81,7 @@ if [ "${CURRENT_STATE}" = "down" ] && [ "${LAST_STATE}" != "down" ]; then
   echo "${MSG}" | tee -a "${OUT_FILE}"
   echo "${DETAIL}" | tee -a "${OUT_FILE}"
   ./scripts/send_telegram_alert.sh "${MSG}"$'\n'"${DETAIL}" || true
+  ./scripts/auto_heal_stack.sh || true
 fi
 
 if [ "${CURRENT_STATE}" = "up" ] && [ "${LAST_STATE}" = "down" ]; then
