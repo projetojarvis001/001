@@ -9,21 +9,27 @@ OUT_JSON="logs/executive/phase90_odoo_monitoring_infra_probe_${TS}.json"
 OUT_MD="docs/generated/phase90_odoo_monitoring_infra_probe_${TS}.md"
 
 sshpass -p "${ODOO_SSH_PASS}" ssh -tt -o StrictHostKeyChecking=no -p "${ODOO_PORT}" "${ODOO_SSH_USER}@${ODOO_HOST}" "
-echo '===== SYSTEMD ====='
-echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active odoo || true
-echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active nginx || true
-echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active postgresql || true
+echo '===== ODOO_ACTIVE ====='
+echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active odoo 2>/dev/null || true
+
+echo
+echo '===== NGINX_ACTIVE ====='
+echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active nginx 2>/dev/null || true
+
+echo
+echo '===== PG_ACTIVE ====='
+echo '${ODOO_SSH_PASS}' | sudo -S systemctl is-active postgresql 2>/dev/null || true
 
 echo
 echo '===== LISTEN ====='
-echo '${ODOO_SSH_PASS}' | sudo -S ss -ltnp | grep -E ':8069|:8070|:5432|nginx|python|postgres' || true
+echo '${ODOO_SSH_PASS}' | sudo -S ss -ltnp 2>/dev/null | grep -E ':8069|:8070|:5432|nginx|python|postgres' || true
 
 echo
-echo '===== CURL LOCAL NGINX ====='
+echo '===== CURL_LOCAL_NGINX ====='
 curl -I -s http://127.0.0.1:8069 | sed -n '1,20p' || true
 
 echo
-echo '===== CURL LOCAL ODOO ====='
+echo '===== CURL_LOCAL_ODOO ====='
 curl -I -s http://127.0.0.1:8070 | sed -n '1,20p' || true
 " > "${RAW_FILE}"
 
@@ -34,9 +40,9 @@ HAS_NGINX_8069=false
 HAS_ODOO_8070=false
 HAS_PG_LOCAL=false
 
-grep -q '^active$' <(awk '/===== SYSTEMD =====/{getline; print}' "${RAW_FILE}") && ODOO_ACTIVE=true || true
-grep -q '^active$' <(awk '/===== SYSTEMD =====/{getline; getline; print}' "${RAW_FILE}") && NGINX_ACTIVE=true || true
-grep -q '^active$' <(awk '/===== SYSTEMD =====/{getline; getline; getline; print}' "${RAW_FILE}") && PG_ACTIVE=true || true
+grep -A1 '^===== ODOO_ACTIVE =====' "${RAW_FILE}" | grep -q '^active$' && ODOO_ACTIVE=true || true
+grep -A1 '^===== NGINX_ACTIVE =====' "${RAW_FILE}" | grep -q '^active$' && NGINX_ACTIVE=true || true
+grep -A1 '^===== PG_ACTIVE =====' "${RAW_FILE}" | grep -q '^active$' && PG_ACTIVE=true || true
 
 grep -q 'nginx' "${RAW_FILE}" && grep -q ':8069' "${RAW_FILE}" && HAS_NGINX_8069=true || true
 grep -q 'python3' "${RAW_FILE}" && grep -q ':8070' "${RAW_FILE}" && HAS_ODOO_8070=true || true
@@ -69,7 +75,7 @@ jq -nc \
   }' > "${OUT_JSON}"
 
 cat > "${OUT_MD}" <<MD
-# FASE 90 — ODOO Monitoring Infra Probe
+# FASE 90A — ODOO Monitoring Infra Probe Fix
 
 ## Probe
 - raw_file: ${RAW_FILE}
@@ -85,5 +91,5 @@ cat > "${OUT_MD}" <<MD
 - production_changed: false
 MD
 
-echo "[OK] monitoring infra probe gerado em ${OUT_JSON}"
+echo "[OK] monitoring infra probe 90A gerado em ${OUT_JSON}"
 cat "${OUT_JSON}" | jq .
