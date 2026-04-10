@@ -1,0 +1,68 @@
+===== HOSTNAME =====
+wps-odoo-001
+
+===== PUBLIC IP CHECK =====
+177.104.176.69
+
+===== LISTEN PORTS =====
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*    users:(("postgres",pid=250265,fd=6))                     
+LISTEN 0      128          0.0.0.0:8069      0.0.0.0:*    users:(("python3",pid=255236,fd=4))                      
+
+===== FULL LISTEN GREP =====
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*    users:(("postgres",pid=250265,fd=6))                     
+LISTEN 0      128          0.0.0.0:8069      0.0.0.0:*    users:(("python3",pid=255236,fd=4))                      
+
+===== IPTABLES =====
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 58069 -j ACCEPT
+
+===== UFW =====
+Status: inactive
+
+===== NGINX SYSTEMD =====
+
+===== APACHE SYSTEMD =====
+
+===== PROXY CONFIG FILES =====
+/etc/apache2/conf-available/javascript-common.conf
+
+===== GREP ODOO IN PROXY FILES =====
+
+===== DOCKER =====
+
+===== ODOO SERVICE FILE =====
+# /etc/systemd/system/odoo.service
+[Unit]
+Description=Odoo
+After=postgresql.service
+
+[Service]
+Type=simple
+User=wps
+Group=wps
+ExecStart= /home/wps/odoo/venv/bin/python3 /home/wps/odoo/odoo-bin -c /etc/odoo.conf
+WorkingDirectory=/home/wps/odoo
+StandardOutput=journal
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+===== ODOO CONF SAFE =====
+[options]
+admin_passwd = [REDACTED]
+db_host = localhost
+db_port = 5432
+db_user = odoo
+db_name = WPS
+list_db = False
+db_password = [REDACTED]
+
+; Esta é a porta que você vai digitar no navegador
+
+addons_path = /home/wps/odoo/odoo/addons,/home/wps/odoo/addons,/home/wps/odoo/custom_addons/web,
+proxy_mode = True
+dbfilter = ^WPS$

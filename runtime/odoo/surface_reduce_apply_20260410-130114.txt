@@ -1,0 +1,50 @@
+[sudo] password for wps: [OK] odoo.conf atualizado na phase84
+===== BACKUP FILE =====
+/etc/odoo.conf.bak.phase84.20260410-130114
+
+===== SAFE CONF VIEW =====
+[options]
+admin_passwd = [REDACTED]
+db_host = localhost
+db_port = 5432
+db_user = odoo
+db_name = WPS
+list_db = False
+db_password = [REDACTED]
+
+; Esta é a porta que você vai digitar no navegador
+
+addons_path = /home/wps/odoo/odoo/addons,/home/wps/odoo/addons,/home/wps/odoo/custom_addons/web,
+proxy_mode = True
+dbfilter = ^WPS$
+
+===== RESTART =====
+
+===== STATUS =====
+● odoo.service - Odoo
+     Loaded: loaded (/etc/systemd/system/odoo.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-04-10 16:01:16 UTC; 3s ago
+   Main PID: 255236 (python3)
+      Tasks: 2 (limit: 114202)
+     Memory: 92.8M (peak: 92.8M)
+        CPU: 2.981s
+     CGroup: /system.slice/odoo.service
+             └─255236 /home/wps/odoo/venv/bin/python3 /home/wps/odoo/odoo-bin -c /etc/odoo.conf
+
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,078 255236 INFO ? odoo: Odoo version 16.0
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,079 255236 INFO ? odoo: Using configuration file at /etc/odoo.conf
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,079 255236 INFO ? odoo: addons paths: ['/home/wps/odoo/odoo/addons', '/home/wps/.local/share/Odoo/addons/16.0', '/home/wps/odoo/addons', '/home/wps/odoo/custom_addons/web']
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,079 255236 INFO ? odoo: database: odoo@localhost:5432
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,368 255236 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /usr/bin/wkhtmltopdf
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,822 255236 INFO ? odoo.service.server: HTTP service (werkzeug) running on wps-odoo-001:8069
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,894 255236 INFO WPS odoo.modules.loading: loading 1 modules...
+Apr 10 16:01:18 wps-odoo-001 python3[255236]: 2026-04-10 16:01:18,917 255236 INFO WPS odoo.modules.loading: 1 modules loaded in 0.02s, 0 queries (+0 extra)
+Apr 10 16:01:19 wps-odoo-001 python3[255236]: 2026-04-10 16:01:19,044 255236 INFO WPS odoo.modules.loading: loading 91 modules...
+Apr 10 16:01:19 wps-odoo-001 python3[255236]: 2026-04-10 16:01:19,053 255236 WARNING WPS odoo.addons.attachment_indexation.models.ir_attachment: Attachment indexation of PDF documents is unavailable because the 'pdfminer' Python library cannot be found on the system. You may install it from https://pypi.org/project/pdfminer.six/ (e.g. `pip3 install pdfminer.six`)
+
+===== PORT CHECK =====
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*    users:(("postgres",pid=250265,fd=6))                     
+LISTEN 0      128          0.0.0.0:8069      0.0.0.0:*    users:(("python3",pid=255236,fd=4))                      
+
+===== UFW =====
+Status: inactive

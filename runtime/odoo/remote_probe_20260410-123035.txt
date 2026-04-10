@@ -1,0 +1,94 @@
+===== HOSTNAME =====
+wps-odoo-001
+
+===== OS =====
+Linux wps-odoo-001 6.8.0-101-generic #101-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb  9 10:15:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+
+===== UPTIME =====
+ 15:30:36 up 42 days, 22:31,  2 users,  load average: 0.08, 0.02, 0.01
+
+===== ODOO SERVICE =====
+● odoo.service - Odoo
+     Loaded: loaded (/etc/systemd/system/odoo.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-04-10 06:44:49 UTC; 8h ago
+   Main PID: 250274 (python3)
+      Tasks: 6 (limit: 114202)
+     Memory: 293.3M (peak: 345.4M)
+        CPU: 2min 36.414s
+     CGroup: /system.slice/odoo.service
+             └─250274 /home/wps/odoo/venv/bin/python3 /home/wps/odoo/odoo-bin -c /etc/odoo.conf
+
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,069 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "GET /web/image?model=res.users&field=avatar_128&id=7 HTTP/1.1" 200 - 16 0.028 0.025
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,132 250274 INFO ? werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "GET /mail/static/src/audio/ting.ogg HTTP/1.1" 206 - 0 0.000 0.006
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,158 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "POST /web/dataset/call_kw/res.users/systray_get_activities HTTP/1.1" 200 - 11 0.023 0.017
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,260 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "POST /mail/init_messaging HTTP/1.1" 200 - 54 0.083 0.060
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,320 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "POST /mail/load_message_failures HTTP/1.1" 200 - 3 0.012 0.013
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,339 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "POST /mail/inbox/messages HTTP/1.1" 200 - 8 0.031 0.016
+Apr 10 15:24:18 wps-odoo-001 python3[250274]: 2026-04-10 15:24:18,340 250274 INFO WPS werkzeug: 179.246.142.67 - - [10/Apr/2026 15:24:18] "GET /web/image/res.partner/2/avatar_128 HTTP/1.1" 200 - 7 0.015 0.026
+Apr 10 15:25:03 wps-odoo-001 python3[250274]: 2026-04-10 15:25:03,244 250274 INFO WPS odoo.addons.base.models.ir_cron: Starting job `payment: post-process transactions`.
+Apr 10 15:25:03 wps-odoo-001 python3[250274]: 2026-04-10 15:25:03,253 250274 INFO WPS odoo.addons.base.models.ir_cron: Job `payment: post-process transactions` done.
+Apr 10 15:30:35 wps-odoo-001 python3[250274]: 2026-04-10 15:30:35,478 250274 INFO None werkzeug: 186.209.45.40 - - [10/Apr/2026 15:30:35] "POST /xmlrpc/2/db HTTP/1.1" 200 - 1 0.001 0.007
+
+===== ODOO PROCESS =====
+avahi     137292  0.0  0.0   8688  4580 ?        Ss   Mar24   0:00 avahi-daemon: running [wps-odoo-001.local]
+wps       250274  0.4  0.3 441120 325072 ?       Ssl  06:44   2:36 /home/wps/odoo/venv/bin/python3 /home/wps/odoo/odoo-bin -c /etc/odoo.conf
+postgres  250317  0.0  0.0 234392 62572 ?        Ss   06:44   0:03 postgres: 16/main: odoo WPS 127.0.0.1(32916) idle
+postgres  250333  0.0  0.0 224968 17624 ?        Ss   06:44   0:00 postgres: 16/main: odoo postgres 127.0.0.1(32932) idle
+postgres  250334  0.0  0.0 224968 17760 ?        Ss   06:44   0:00 postgres: 16/main: odoo postgres 127.0.0.1(32948) idle
+postgres  250571  0.0  0.0 232412 57056 ?        Ss   06:45   0:02 postgres: 16/main: odoo WPS 127.0.0.1(59372) idle
+postgres  250572  0.0  0.1 384068 165656 ?       Ss   06:45   0:21 postgres: 16/main: odoo WPS 127.0.0.1(59376) idle
+postgres  251997  0.1  0.1 376216 153752 ?       Ss   11:55   0:20 postgres: 16/main: odoo WPS 127.0.0.1(40386) idle
+postgres  252007  0.0  0.0 224968 16468 ?        Ss   11:55   0:00 postgres: 16/main: odoo postgres 127.0.0.1(38632) idle
+postgres  252143  0.0  0.0 232220 53352 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40542) idle
+postgres  252149  0.0  0.0 229924 46184 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40546) idle
+postgres  252150  0.0  0.0 232316 54396 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40550) idle
+
+===== POSTGRES PROCESS =====
+postgres  250265  0.0  0.0 222864 31636 ?        Ss   06:44   0:04 /usr/lib/postgresql/16/bin/postgres -D /var/lib/postgresql/16/main -c config_file=/etc/postgresql/16/main/postgresql.conf
+postgres  250267  0.0  0.0 223400 55828 ?        Ss   06:44   0:02 postgres: 16/main: checkpointer 
+postgres  250268  0.0  0.0 223020  9680 ?        Ss   06:44   0:00 postgres: 16/main: background writer 
+postgres  250270  0.0  0.0 222864 10652 ?        Ss   06:44   0:03 postgres: 16/main: walwriter 
+postgres  250271  0.0  0.0 224472  9428 ?        Ss   06:44   0:00 postgres: 16/main: autovacuum launcher 
+postgres  250272  0.0  0.0 224448  8808 ?        Ss   06:44   0:00 postgres: 16/main: logical replication launcher 
+postgres  250317  0.0  0.0 234392 62572 ?        Ss   06:44   0:03 postgres: 16/main: odoo WPS 127.0.0.1(32916) idle
+postgres  250333  0.0  0.0 224968 17624 ?        Ss   06:44   0:00 postgres: 16/main: odoo postgres 127.0.0.1(32932) idle
+postgres  250334  0.0  0.0 224968 17760 ?        Ss   06:44   0:00 postgres: 16/main: odoo postgres 127.0.0.1(32948) idle
+postgres  250571  0.0  0.0 232412 57056 ?        Ss   06:45   0:02 postgres: 16/main: odoo WPS 127.0.0.1(59372) idle
+postgres  250572  0.0  0.1 384068 165656 ?       Ss   06:45   0:21 postgres: 16/main: odoo WPS 127.0.0.1(59376) idle
+postgres  251997  0.1  0.1 376216 153752 ?       Ss   11:55   0:20 postgres: 16/main: odoo WPS 127.0.0.1(40386) idle
+postgres  252007  0.0  0.0 224968 16468 ?        Ss   11:55   0:00 postgres: 16/main: odoo postgres 127.0.0.1(38632) idle
+postgres  252143  0.0  0.0 232220 53352 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40542) idle
+postgres  252149  0.0  0.0 229924 46184 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40546) idle
+postgres  252150  0.0  0.0 232316 54396 ?        Ss   12:01   0:00 postgres: 16/main: odoo WPS 127.0.0.1(40550) idle
+
+===== LISTEN PORTS =====
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*                                       
+LISTEN 0      128          0.0.0.0:8069      0.0.0.0:*    users:(("python3",pid=250274,fd=3))
+
+===== ODOO CONF CANDIDATES =====
+/etc/odoo.conf
+
+===== TOP DIRS =====
+total 8
+drwxr-xr-x  2 root root 4096 Aug  5  2025 .
+drwxr-xr-x 23 root root 4096 Feb 26 16:44 ..
+total 8
+drwxr-xr-x  2 root root 4096 Aug  5  2025 .
+drwxr-xr-x 23 root root 4096 Feb 26 16:44 ..
+total 12
+drwxr-xr-x  3 root root 4096 Feb 26 16:44 .
+drwxr-xr-x 23 root root 4096 Feb 26 16:44 ..
+drwxr-x---  6 wps  wps  4096 Apr  9 20:27 wps

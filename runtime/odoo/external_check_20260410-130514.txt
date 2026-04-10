@@ -1,0 +1,45 @@
+===== CURL ROOT =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0   214    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0   226    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.0 303 SEE OTHER
+Content-Type: text/html; charset=utf-8
+Content-Length: 214
+Location: http://177.104.176.69:58069/web
+Set-Cookie: session_id=03e9be97cca2c672aa62dde6e8121329ea9d51c0; Expires=Fri, 17 Apr 2026 16:05:14 GMT; Max-Age=604800; HttpOnly; Path=/
+Server: Werkzeug/2.0.2 Python/3.12.3
+Date: Fri, 10 Apr 2026 16:05:14 GMT
+
+HTTP/1.0 303 SEE OTHER
+Content-Type: text/html; charset=utf-8
+Content-Length: 226
+Location: http://177.104.176.69:58069/web/login
+Set-Cookie: session_id=91210af731593169a2b5970592c082c14c1f771e; Expires=Fri, 17 Apr 2026 16:05:14 GMT; Max-Age=604800; HttpOnly; Path=/
+Server: Werkzeug/2.0.2 Python/3.12.3
+Date: Fri, 10 Apr 2026 16:05:14 GMT
+
+HTTP/1.0 200 OK
+Content-Type: text/html; charset=utf-8
+Cache-Control: no-cache
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: frame-ancestors 'self'
+Set-Cookie: session_id=7476d1152d2df99effff8b3d17989c7d4c628f54; Expires=Fri, 17 Apr 2026 16:05:14 GMT; Max-Age=604800; HttpOnly; Path=/
+Server: Werkzeug/2.0.2 Python/3.12.3
+Date: Fri, 10 Apr 2026 16:05:14 GMT
+
+
+===== CURL LOGIN =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.0 200 OK
+Content-Type: text/html; charset=utf-8
+Cache-Control: no-cache
+X-Frame-Options: SAMEORIGIN
+Content-Security-Policy: frame-ancestors 'self'
+Set-Cookie: session_id=5adcf3fd558bbd5c211338d05f589bb477f33074; Expires=Fri, 17 Apr 2026 16:05:14 GMT; Max-Age=604800; HttpOnly; Path=/
+Server: Werkzeug/2.0.2 Python/3.12.3
+Date: Fri, 10 Apr 2026 16:05:14 GMT
+

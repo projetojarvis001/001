@@ -1,0 +1,172 @@
+===== ODOO CONF PATHS =====
+/etc/odoo.conf
+/home/wps/odoo/debian/odoo.conf
+
+===== SELECTED CONF =====
+/etc/odoo.conf
+
+===== CONF SAFE VIEW =====
+[options]
+admin_passwd = [REDACTED]
+db_host = localhost
+db_port = 5432
+db_user = odoo
+db_name = WPS
+list_db = True
+db_password = [REDACTED]
+
+; Esta é a porta que você vai digitar no navegador
+
+addons_path = /home/wps/odoo/odoo/addons,/home/wps/odoo/addons,/home/wps/odoo/custom_addons/web,
+
+===== SYSTEMD ODOO =====
+# /etc/systemd/system/odoo.service
+[Unit]
+Description=Odoo
+After=postgresql.service
+
+[Service]
+Type=simple
+User=wps
+Group=wps
+ExecStart= /home/wps/odoo/venv/bin/python3 /home/wps/odoo/odoo-bin -c /etc/odoo.conf
+WorkingDirectory=/home/wps/odoo
+StandardOutput=journal
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+===== NGINX / APACHE =====
+/etc/apache2/conf-available/javascript-common.conf
+
+===== NGINX CONFIG HINTS =====
+
+===== FIREWALL =====
+
+===== LISTEN PORTS =====
+LISTEN 0      200        127.0.0.1:5432      0.0.0.0:*                                       
+LISTEN 0      128          0.0.0.0:8069      0.0.0.0:*    users:(("python3",pid=250274,fd=3))
+
+===== DB MANAGER CHECK HINT =====
+/etc/odoo.conf:2:admin_passwd = odoowps
+/etc/odoo.conf:7:list_db = True
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:236:   :header: "kind", "sax", "etree", "minidom", "pulldom", "xmlrpc", "lxml", "genshi"
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:304:original module. Merely `defusedxml.xmlrpc`_ is implemented as monkey patch.
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:391:defusedxml.xmlrpc
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:394:The fix is implemented as monkey patch for the stdlib's xmlrpc package (3.x)
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:395:or xmlrpclib module (2.x). The function `monkey_patch()` enables the fixes,
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:567:``xmlrpclib``. The module is vulnerable <https://bugs.python.org/issue16043>
+/home/wps/.cache/pip/http-v2/c/e/9/1/2/ce912edf3c60d9041896cac1196277971e733f305597f57d2d9a294b.body:969:- Add protection against XML and gzip attacks to xmlrpclib
+/home/wps/.bash_history:268:grep -E "db_port|xmlrpc_port" /etc/odoo.conf
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/__init__.py:37:    from . import xmlrpc
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/__init__.py:39:    xmlrpc.monkey_patch()
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/__init__.py:40:    defused[xmlrpc] = None
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:6:"""Defused xmlrpclib
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:17:    __origin__ = "xmlrpc.client"
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:18:    from xmlrpc.client import ExpatParser
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:19:    from xmlrpc import client as xmlrpc_client
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:20:    from xmlrpc import server as xmlrpc_server
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:21:    from xmlrpc.client import gzip_decode as _orig_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:22:    from xmlrpc.client import GzipDecodedResponse as _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:24:    __origin__ = "xmlrpclib"
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:25:    from xmlrpclib import ExpatParser
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:26:    import xmlrpclib as xmlrpc_client
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:28:    xmlrpc_server = None
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:29:    from xmlrpclib import gzip_decode as _orig_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:30:    from xmlrpclib import GzipDecodedResponse as _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:141:    xmlrpc_client.FastParser = DefusedExpatParser
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:142:    xmlrpc_client.GzipDecodedResponse = DefusedGzipDecodedResponse
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:143:    xmlrpc_client.gzip_decode = defused_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:144:    if xmlrpc_server:
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:145:        xmlrpc_server.gzip_decode = defused_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:149:    xmlrpc_client.FastParser = None
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:150:    xmlrpc_client.GzipDecodedResponse = _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:151:    xmlrpc_client.gzip_decode = _orig_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:152:    if xmlrpc_server:
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml/xmlrpc.py:153:        xmlrpc_server.gzip_decode = _orig_gzip_decode
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1985:        '_xmlrpc_exconverter',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1986:        '_xmlrpc_inconverter',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1987:        '_xmlrpc_xmlinconverter',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:1564:           'mysql_list_dbs',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3010: 'XML-RPC': ('xmlrpc_decode_request',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3011:             'xmlrpc_decode',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3012:             'xmlrpc_encode_request',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3013:             'xmlrpc_encode',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3014:             'xmlrpc_get_type',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3015:             'xmlrpc_is_fault',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3016:             'xmlrpc_parse_method_descriptions',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3017:             'xmlrpc_server_add_introspection_data',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3018:             'xmlrpc_server_call_method',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3019:             'xmlrpc_server_create',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3020:             'xmlrpc_server_destroy',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3021:             'xmlrpc_server_register_introspection_callback',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3022:             'xmlrpc_server_register_method',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pygments/lexers/_php_builtins.py:3023:             'xmlrpc_set_type'),
+/home/wps/odoo/venv/lib64/python3.12/site-packages/docutils/utils/urischemes.py:133:      'xmlrpc.beep': 'RFC 3529',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/docutils/utils/urischemes.py:134:      'xmlrpc.beeps': 'RFC 3529',
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/network/xmlrpc.py:1:"""xmlrpclib.Transport implementation"""
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/network/xmlrpc.py:5:import xmlrpc.client
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/network/xmlrpc.py:13:    from xmlrpc.client import _HostType, _Marshallable
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/network/xmlrpc.py:20:class PipXmlrpcTransport(xmlrpc.client.Transport):
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/network/xmlrpc.py:21:    """Provide a `xmlrpclib.Transport` implementation via a `PipSession`
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:7:import xmlrpc.client
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:21:from pip._internal.network.xmlrpc import PipXmlrpcTransport
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:75:        transport = PipXmlrpcTransport(index_url, session)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:76:        pypi = xmlrpc.client.ServerProxy(index_url, transport)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:79:        except xmlrpc.client.Fault as fault:
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_internal/commands/search.py:81:                f"XMLRPC request failed [code: {fault.faultCode}]\n{fault.faultString}"
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:35:                     xmlrpclib, HTTPHandler, BaseConfigurator, valid_ident, Container, configparser, URLError, ZipFile,
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1543:class Transport(xmlrpclib.Transport):
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1547:        xmlrpclib.Transport.__init__(self, use_datetime)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1559:    class SafeTransport(xmlrpclib.SafeTransport):
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1563:            xmlrpclib.SafeTransport.__init__(self, use_datetime)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1576:class ServerProxy(xmlrpclib.ServerProxy):
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/util.py:1592:        xmlrpclib.ServerProxy.__init__(self, uri, **kwargs)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/compat.py:42:    import xmlrpclib
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/distlib/compat.py:81:    import xmlrpc.client as xmlrpclib
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/urllib3/packages/six.py:331:    MovedModule("xmlrpc_client", "xmlrpclib", "xmlrpc.client"),
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip/_vendor/urllib3/packages/six.py:332:    MovedModule("xmlrpc_server", "SimpleXMLRPCServer", "xmlrpc.server"),
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip-26.0.1.dist-info/RECORD:194:pip/_internal/network/__pycache__/xmlrpc.cpython-312.pyc,,
+/home/wps/odoo/venv/lib64/python3.12/site-packages/pip-26.0.1.dist-info/RECORD:201:pip/_internal/network/xmlrpc.py,sha256=_-Rnk3vOff8uF9hAGmT6SLALflY1gMBcbGwS12fb_Y4,1830
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/RECORD:19:defusedxml/__pycache__/xmlrpc.cpython-312.pyc,,
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/RECORD:28:defusedxml/xmlrpc.py,sha256=7rZQey3tqXcc1hrrM3RprOICU6fiFny9B9l4nmTioxA,5364
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:236:   :header: "kind", "sax", "etree", "minidom", "pulldom", "xmlrpc", "lxml", "genshi"
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:304:original module. Merely `defusedxml.xmlrpc`_ is implemented as monkey patch.
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:391:defusedxml.xmlrpc
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:394:The fix is implemented as monkey patch for the stdlib's xmlrpc package (3.x)
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:395:or xmlrpclib module (2.x). The function `monkey_patch()` enables the fixes,
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:567:``xmlrpclib``. The module is vulnerable <https://bugs.python.org/issue16043>
+/home/wps/odoo/venv/lib64/python3.12/site-packages/defusedxml-0.7.1.dist-info/METADATA:969:- Add protection against XML and gzip attacks to xmlrpclib
+/home/wps/odoo/venv/lib64/python3.12/site-packages/six.py:319:    MovedModule("xmlrpc_client", "xmlrpclib", "xmlrpc.client"),
+/home/wps/odoo/venv/lib64/python3.12/site-packages/six.py:320:    MovedModule("xmlrpc_server", "SimpleXMLRPCServer", "xmlrpc.server"),
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/__init__.py:37:    from . import xmlrpc
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/__init__.py:39:    xmlrpc.monkey_patch()
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/__init__.py:40:    defused[xmlrpc] = None
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:6:"""Defused xmlrpclib
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:17:    __origin__ = "xmlrpc.client"
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:18:    from xmlrpc.client import ExpatParser
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:19:    from xmlrpc import client as xmlrpc_client
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:20:    from xmlrpc import server as xmlrpc_server
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:21:    from xmlrpc.client import gzip_decode as _orig_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:22:    from xmlrpc.client import GzipDecodedResponse as _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:24:    __origin__ = "xmlrpclib"
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:25:    from xmlrpclib import ExpatParser
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:26:    import xmlrpclib as xmlrpc_client
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:28:    xmlrpc_server = None
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:29:    from xmlrpclib import gzip_decode as _orig_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:30:    from xmlrpclib import GzipDecodedResponse as _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:141:    xmlrpc_client.FastParser = DefusedExpatParser
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:142:    xmlrpc_client.GzipDecodedResponse = DefusedGzipDecodedResponse
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:143:    xmlrpc_client.gzip_decode = defused_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:144:    if xmlrpc_server:
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:145:        xmlrpc_server.gzip_decode = defused_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:149:    xmlrpc_client.FastParser = None
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:150:    xmlrpc_client.GzipDecodedResponse = _OrigGzipDecodedResponse
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:151:    xmlrpc_client.gzip_decode = _orig_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:152:    if xmlrpc_server:
+/home/wps/odoo/venv/lib/python3.12/site-packages/defusedxml/xmlrpc.py:153:        xmlrpc_server.gzip_decode = _orig_gzip_decode
+/home/wps/odoo/venv/lib/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1985:        '_xmlrpc_exconverter',
+/home/wps/odoo/venv/lib/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1986:        '_xmlrpc_inconverter',
+/home/wps/odoo/venv/lib/python3.12/site-packages/pygments/lexers/_lasso_builtins.py:1987:        '_xmlrpc_xmlinconverter',
