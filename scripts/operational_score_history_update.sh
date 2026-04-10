@@ -8,7 +8,7 @@ TMP_FILE="${OUT_DIR}/operational_score_history.tmp.json"
 
 mkdir -p "${OUT_DIR}"
 
-LATEST_SCORE_FILE="$(ls -1t ${OUT_DIR}/operational_score_*.json 2>/dev/null | head -n 1 || true)"
+LATEST_SCORE_FILE="$(find "${OUT_DIR}" -maxdepth 1 -type f -name "operational_score_*.json" ! -name "operational_score_history.json" | sort | tail -n 1)"
 if [ -z "${LATEST_SCORE_FILE}" ] || [ ! -f "${LATEST_SCORE_FILE}" ]; then
   echo "[ERRO] sem operational_score recente"
   exit 1
