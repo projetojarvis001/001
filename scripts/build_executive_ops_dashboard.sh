@@ -28,15 +28,15 @@ AUTOHEAL_STATE_FILE="logs/state/auto_heal_state.json"
 
 if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
   if [ -n "${RISK_FILE}" ] && [ -f "${RISK_FILE}" ]; then
-    RISK_LEVEL=$(jq -r '.decision.risk_level // ""' "${RISK_FILE}")
-    GO_LIVE_STATUS=$(jq -r '.decision.go_live_status // ""' "${RISK_FILE}")
-    CHANGE_POLICY=$(jq -r '.decision.change_policy // ""' "${RISK_FILE}")
-    OPERATOR_NOTE=$(jq -r '.decision.operator_note // ""' "${RISK_FILE}")
+    RISK_LEVEL=$(jq -r '.decision.risk_level // "UNKNOWN"' "${RISK_FILE}")
+    GO_LIVE_STATUS=$(jq -r '.decision.go_live_status // "BLOQUEAR"' "${RISK_FILE}")
+    CHANGE_POLICY=$(jq -r '.decision.change_policy // "FREEZE"' "${RISK_FILE}")
+    OPERATOR_NOTE=$(jq -r '.decision.operator_note // "Sem nota operacional"' "${RISK_FILE}")
   else
-    RISK_LEVEL=""
-    GO_LIVE_STATUS=""
-    CHANGE_POLICY=""
-    OPERATOR_NOTE=""
+    RISK_LEVEL="UNKNOWN"
+    GO_LIVE_STATUS="BLOQUEAR"
+    CHANGE_POLICY="FREEZE"
+    OPERATOR_NOTE="Sem gate de risco. Nao liberar."
   fi
 
   jq -n \
