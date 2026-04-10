@@ -84,6 +84,10 @@ echo "===== DAILY CHANGE SUMMARY ====="
 ./scripts/daily_change_summary.sh
 
 echo
+echo "===== OPERATIONAL SCORE ====="
+./scripts/operational_score_daily.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
