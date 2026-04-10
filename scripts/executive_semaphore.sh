@@ -63,12 +63,14 @@ if [ -n "${PROMOTION_FILE}" ] && [ -f "${PROMOTION_FILE}" ]; then
   ROLLBACK_STATUS="$(jq -r '.rollback.status // "NOT_RUN"' "${PROMOTION_FILE}")"
 fi
 
+PROMOTION_FINAL_STATUS=""
+if [ -n "${PROMOTION_FILE}" ] && [ -f "${PROMOTION_FILE}" ]; then
+  PROMOTION_FINAL_STATUS="$(jq -r '.result.final_status // "BLOQUEAR"' "${PROMOTION_FILE}")"
+fi
+
 if [ -n "${MANIFEST_FILE}" ] && [ -f "${MANIFEST_FILE}" ]; then
   if [ -z "${POST_FILE}" ]; then
     POST_FILE="$(jq -r '.sources.post_deploy_file // ""' "${MANIFEST_FILE}")"
-  fi
-  if [ -z "${AUTO_ROLLBACK_FILE}" ]; then
-    AUTO_ROLLBACK_FILE="$(jq -r '.sources.auto_rollback_file // ""' "${MANIFEST_FILE}")"
   fi
 fi
 
@@ -76,10 +78,15 @@ if [ -n "${POST_FILE}" ] && [ -f "${POST_FILE}" ]; then
   POST_DEPLOY_STATUS="$(jq -r '.result.status // "NOT_RUN"' "${POST_FILE}")"
 fi
 
-if [ -n "${AUTO_ROLLBACK_FILE}" ] && [ -f "${AUTO_ROLLBACK_FILE}" ]; then
-  AUTO_ROLLBACK_STATUS="$(jq -r '.result.final_status // "NOT_RUN"' "${AUTO_ROLLBACK_FILE}")"
+if [ "${PROMOTION_FINAL_STATUS}" = "LIBERAR" ] || [ "${PROMOTION_FINAL_STATUS}" = "LIBERAR_COM_RISCO" ]; then
+  AUTO_ROLLBACK_STATUS="NOT_RUN"
 elif [ "${ROLLBACK_STATUS}" = "EXECUTADO" ] || [ "${ROLLBACK_STATUS}" = "FALHOU" ]; then
   AUTO_ROLLBACK_STATUS="${ROLLBACK_STATUS}"
+elif [ -n "${MANIFEST_FILE}" ] && [ -f "${MANIFEST_FILE}" ]; then
+  AUTO_ROLLBACK_FILE="$(jq -r '.sources.auto_rollback_file // ""' "${MANIFEST_FILE}")"
+  if [ -n "${AUTO_ROLLBACK_FILE}" ] && [ -f "${AUTO_ROLLBACK_FILE}" ]; then
+    AUTO_ROLLBACK_STATUS="$(jq -r '.result.final_status // "NOT_RUN"' "${AUTO_ROLLBACK_FILE}")"
+  fi
 fi
 
 if [ -n "${SCORE_FILE}" ] && [ -f "${SCORE_FILE}" ]; then
