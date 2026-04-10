@@ -14,6 +14,7 @@ HISTORY_JSON="$(curl -fsS http://127.0.0.1:3000/stack/history/compact || echo '{
 METRICS_JSON="$(curl -fsS http://127.0.0.1:3000/stack/metrics || echo '{}')"
 
 READINESS_FILE="$(ls -1t logs/readiness/readiness_*.json 2>/dev/null | head -n 1 || true)"
+RISK_FILE="$(ls -1t logs/readiness/operational_risk_*.json 2>/dev/null | head -n 1 || true)"
 CHAOS_FILE="$(ls -1t logs/chaos_suite/chaos_suite_*.json 2>/dev/null | head -n 1 || true)"
 PG_FILE="$(ls -1t backups/postgres/*.sql.gz 2>/dev/null | head -n 1 || true)"
 REDIS_FILE="$(ls -1t backups/redis/*.rdb 2>/dev/null | head -n 1 || true)"
