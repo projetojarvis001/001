@@ -44,6 +44,10 @@ echo "===== RELATORIO DE RETENCAO ====="
 ./scripts/logs_retention_report.sh
 
 echo
+echo "===== EXCEPTION CLEANUP ====="
+./scripts/exception_approval_cleanup.sh
+
+echo
 echo "===== BACKUP OPERACIONAL ====="
 ./scripts/backup_operational_state.sh
 
