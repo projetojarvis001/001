@@ -1,4 +1,8 @@
 #!/bin/bash
+if ./scripts/telegram_guard.sh; then
+  exit 0
+fi
+
 source /Users/jarvis001/jarvis/.env
 DATE=$(date '+%Y-%m-%d_%H-%M')
 BACKUP_DIR="/Volumes/JARVIS-COLD/backups/${DATE}"

@@ -1,4 +1,8 @@
 #!/bin/bash
+if ./scripts/telegram_guard.sh; then
+  exit 0
+fi
+
 BOT="8036971657:AAEGIF9BxetgE226XwQXTPYSwFvw4smX-_8"
 CHAT="8206117553"
 

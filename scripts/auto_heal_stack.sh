@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if ./scripts/telegram_guard.sh; then
+  exit 0
+fi
+
 set -e
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 

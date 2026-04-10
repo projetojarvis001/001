@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+
+from pathlib import Path
+import os
+
+if os.getenv("TELEGRAM_ALERTS_ENABLED", "1") == "0" or Path("runtime/TELEGRAM_MUTE").exists():
+    print("[MUTED] Telegram bloqueado por chave operacional")
+    raise SystemExit(0)
+
 import sys, json, subprocess, urllib.request, urllib.parse
 from datetime import datetime
 

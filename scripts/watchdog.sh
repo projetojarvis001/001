@@ -1,4 +1,8 @@
 #!/bin/bash
+if ./scripts/telegram_guard.sh; then
+  exit 0
+fi
+
 LOG="/Volumes/JARVIS-COLD/logs-warm/watchdog.log"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 

@@ -1,4 +1,8 @@
 #!/bin/bash
+if ./scripts/telegram_guard.sh; then
+  exit 0
+fi
+
 
 # PAUSA — se arquivo existir, não notifica
 if [ -f /tmp/jarvis_pausado ]; then
