@@ -329,6 +329,32 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
+fetch('/stack/slo').then(r=>r.json()).then(d=>{
+  const av = document.getElementById('slo-availability');
+  const tg = document.getElementById('slo-target');
+  const dt = document.getElementById('slo-downtime');
+  const up = document.getElementById('slo-uptime');
+  const dot = document.getElementById('d-slo');
+  const badge = document.getElementById('b-slo');
+
+  if (av) av.textContent = `${d.availability_percent ?? '--'}%`;
+  if (tg) tg.textContent = `${d.target_percent ?? '99.9'}%`;
+  if (dt) dt.textContent = String(d.downtime_seconds ?? '--');
+  if (up) up.textContent = String(d.uptime_seconds ?? '--');
+
+  if (dot) dot.className = 'dot';
+  if (badge) badge.className = 'svc-badge';
+
+  if (d.status === 'green') {
+    if (dot) dot.classList.add('ok');
+    if (badge) { badge.classList.add('sb-ok'); badge.textContent = 'OK'; }
+  } else if (d.status === 'yellow') {
+    if (badge) badge.textContent = 'WARN';
+  } else {
+    if (badge) badge.textContent = 'RISK';
+  }
+}).catch(()=>{});
+
 fetch('/stack/metrics').then(r=>r.json()).then(d=>{
   const metrics = d.metrics || {};
   const autoHeal = d.autoHeal || {};

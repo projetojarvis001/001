@@ -68,6 +68,47 @@ app.get('/stack/metrics', async (_req, res) => {
   }
 });
 
+app.get('/stack/slo', async (_req, res) => {
+  try {
+    const metricsCandidates = [
+      '/host_jarvis/logs/state/stack_metrics.json',
+      path.resolve('logs/state/stack_metrics.json')
+    ];
+
+    const metricsPath = metricsCandidates.find(p => fs.existsSync(p));
+    const metrics = metricsPath
+      ? JSON.parse(fs.readFileSync(metricsPath, 'utf8'))
+      : null;
+
+    const totalWindowSeconds = 86400;
+    const downtimeSeconds = Number(metrics?.total_downtime_seconds || 0);
+    const uptimeSeconds = Math.max(totalWindowSeconds - downtimeSeconds, 0);
+    const availability = Number(((uptimeSeconds / totalWindowSeconds) * 100).toFixed(5));
+
+    let status = 'green';
+    if (availability < 99.0) status = 'red';
+    else if (availability < 99.9) status = 'yellow';
+
+    return res.json({
+      ok: true,
+      service: 'jarvis-stack-slo',
+      timestamp: new Date().toISOString(),
+      date: metrics?.date || null,
+      total_window_seconds: totalWindowSeconds,
+      downtime_seconds: downtimeSeconds,
+      uptime_seconds: uptimeSeconds,
+      availability_percent: availability,
+      target_percent: 99.9,
+      status
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || 'erro ao calcular stack slo'
+    });
+  }
+});
+
 app.get('/stack/health', async (_req, res) => {
   const visionHost = process.env.VISION_HOST;
   const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (visionHost ? `http://${visionHost}:5006` : undefined);
