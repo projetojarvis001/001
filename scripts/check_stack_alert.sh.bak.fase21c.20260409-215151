@@ -60,11 +60,11 @@ fi
 LAST_STATE="unknown"
 [ -f "${STATE_FILE}" ] && LAST_STATE=$(cat "${STATE_FILE}" 2>/dev/null || echo unknown)
 
-CLASS_JSON="$(./scripts/classify_stack_alert.sh)"
-SEVERITY="$(printf "%s" "${CLASS_JSON}" | jq -r '.severity // "WARN"')"
-ALERT_KEY="$(printf "%s" "${CLASS_JSON}" | jq -r '.alert_key // "unknown"')"
-TITLE="$(printf "%s" "${CLASS_JSON}" | jq -r '.title // "falha não classificada"')"
-DETAIL="$(printf "%s" "${CLASS_JSON}" | jq -r '.detail // ""')"
+CLASSIFIED=$(./scripts/classify_stack_alert.sh)
+SEVERITY=$(printf "%s" "$CLASSIFIED" | jq -r '.severity')
+ALERT_KEY=$(printf "%s" "$CLASSIFIED" | jq -r '.alert_key')
+TITLE=$(printf "%s" "$CLASSIFIED" | jq -r '.title')
+DETAIL=$(printf "%s" "$CLASSIFIED" | jq -r '.detail')
 
 CURRENT_STATE="up"
 if [ "${ALERT_KEY}" != "healthy" ]; then
@@ -75,7 +75,6 @@ case "${SEVERITY}" in
   WARN) SILENCE_WINDOW=1800 ;;
   HIGH) SILENCE_WINDOW=900 ;;
   CRITICAL) SILENCE_WINDOW=300 ;;
-  INFO) SILENCE_WINDOW=3600 ;;
   *) SILENCE_WINDOW=3600 ;;
 esac
 
@@ -104,25 +103,10 @@ fi
 
 if [ "${CURRENT_STATE}" = "up" ] && [ "${LAST_STATE}" = "down" ]; then
   DOWN_SINCE=$(jq -r '.current_down_since // ""' "${METRICS_FILE}")
-  DOWNTIME=0
-
-  if [ -n "${DOWN_SINCE}" ] && [ "${DOWN_SINCE}" != "null" ]; then
+  DOWN_EPOCH=0
+  if [ -n "${DOWN_SINCE}" ]; then
     DOWN_EPOCH=$(date -j -f "%Y-%m-%d %H:%M:%S" "${DOWN_SINCE}" "+%s" 2>/dev/null || echo 0)
-    if [ "${DOWN_EPOCH}" -gt 0 ]; then
-      DOWNTIME=$((EPOCH_NOW - DOWN_EPOCH))
-      [ "${DOWNTIME}" -lt 0 ] && DOWNTIME=0
-    fi
   fi
-
-  jq     --arg stamp "${STAMP}"     --argjson downtime "${DOWNTIME}"     '
-    .last_recovered_at = $stamp
-    | .last_downtime_seconds = $downtime
-    | .total_downtime_seconds += $downtime
-    | .current_down_since = ""
-    ' "${METRICS_FILE}" > "${METRICS_FILE}.tmp" && mv "${METRICS_FILE}.tmp" "${METRICS_FILE}"
-
-  jq     --argjson ts "${EPOCH_NOW}"     '.last_recovery_at = $ts'     "${ALERT_STATE_FILE}" > "${ALERT_STATE_FILE}.tmp" && mv "${ALERT_STATE_FILE}.tmp" "${ALERT_STATE_FILE}"
-fi
   DOWNTIME=$((EPOCH_NOW - DOWN_EPOCH))
   [ "${DOWNTIME}" -lt 0 ] && DOWNTIME=0
 

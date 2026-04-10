@@ -62,7 +62,7 @@ ACTION=""
 CMD=""
 
 case "${KIND}" in
-  jarvis_core_down|core_local)
+  jarvis_core_down)
     if [ "${ATTEMPTS}" -eq 1 ]; then
       ACTION="light_up_core"
       CMD="docker compose up -d jarvis-core"
@@ -75,8 +75,16 @@ case "${KIND}" in
     fi
     ;;
   vision_remote_bridge)
-    ACTION="remote_bridge_only_alert"
-    CMD='true'
+    if [ "${ATTEMPTS}" -eq 1 ]; then
+      ACTION="validate_local_core"
+      CMD="curl -fsS http://127.0.0.1:3000/health >/dev/null"
+    elif [ "${ATTEMPTS}" -eq 2 ]; then
+      ACTION="restart_core_for_bridge"
+      CMD="docker compose restart jarvis-core"
+    else
+      ACTION="rebuild_core_for_bridge"
+      CMD="docker compose build --no-cache jarvis-core && docker compose up -d jarvis-core"
+    fi
     ;;
   vision_remote_semantic)
     ACTION="remote_semantic_only_alert"
@@ -124,17 +132,10 @@ END_TS=$(date +%s)
 DURATION=$((END_TS - START_TS))
 [ "${DURATION}" -lt 0 ] && DURATION=0
 
-STACK_OK_AFTER="false"
-for i in $(seq 1 6); do
-  STACK_OK_AFTER="$(curl -s http://127.0.0.1:3000/stack/health | jq -r '.ok // false' 2>/dev/null || echo false)"
-  if [ "${STACK_OK_AFTER}" = "true" ]; then
-    break
-  fi
-  sleep 2
-done
+STACK_OK_AFTER="$(curl -s http://127.0.0.1:3000/stack/health | jq -r '.ok // false' 2>/dev/null || echo false)"
 
 RESULT="failed"
-if [ "${KIND}" = "vision_remote_semantic" ] || [ "${KIND}" = "vision_remote_whisper" ] || [ "${KIND}" = "vision_remote_bridge" ]; then
+if [ "${KIND}" = "vision_remote_semantic" ] || [ "${KIND}" = "vision_remote_whisper" ]; then
   RESULT="remote_dependency"
 elif [ "${STACK_OK_AFTER}" = "true" ]; then
   RESULT="success"

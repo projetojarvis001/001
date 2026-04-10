@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -e
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+DIAG=$(./scripts/diagnose_stack.sh)
+
+OK=$(printf "%s" "$DIAG" | jq -r '.ok // false')
+KIND=$(printf "%s" "$DIAG" | jq -r '.kind // "unknown"')
+DETAIL=$(printf "%s" "$DIAG" | jq -r '.detail // "sem detalhe"')
+
+if [ "$OK" = "true" ]; then
+  jq -n \
+    --arg severity "INFO" \
+    --arg alert_key "healthy" \
+    --arg title "stack saudável" \
+    --arg detail "$DETAIL" \
+    '{severity:$severity,alert_key:$alert_key,title:$title,detail:$detail}'
+  exit 0
+fi
+
+case "$KIND" in
+  stack_down)
+    SEV="CRITICAL"
+    TITLE="stack indisponível"
+    ;;
+  vision_remote_semantic)
+    SEV="HIGH"
+    TITLE="semantic offline"
+    ;;
+  vision_remote_whisper)
+    SEV="HIGH"
+    TITLE="whisper offline"
+    ;;
+  vision_remote_bridge)
+    SEV="WARN"
+    TITLE="bridge degradado"
+    ;;
+  *)
+    SEV="WARN"
+    TITLE="falha não classificada"
+    ;;
+esac
+
+jq -n \
+  --arg severity "$SEV" \
+  --arg alert_key "$KIND" \
+  --arg title "$TITLE" \
+  --arg detail "$DETAIL" \
+  '{severity:$severity,alert_key:$alert_key,title:$title,detail:$detail}'

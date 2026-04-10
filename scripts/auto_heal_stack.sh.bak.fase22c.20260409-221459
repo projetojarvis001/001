@@ -75,8 +75,16 @@ case "${KIND}" in
     fi
     ;;
   vision_remote_bridge)
-    ACTION="remote_bridge_only_alert"
-    CMD='true'
+    if [ "${ATTEMPTS}" -eq 1 ]; then
+      ACTION="validate_local_core"
+      CMD="curl -fsS http://127.0.0.1:3000/health >/dev/null"
+    elif [ "${ATTEMPTS}" -eq 2 ]; then
+      ACTION="restart_core_for_bridge"
+      CMD="docker compose restart jarvis-core"
+    else
+      ACTION="rebuild_core_for_bridge"
+      CMD="docker compose build --no-cache jarvis-core && docker compose up -d jarvis-core"
+    fi
     ;;
   vision_remote_semantic)
     ACTION="remote_semantic_only_alert"
