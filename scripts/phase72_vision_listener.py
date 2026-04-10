@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import json
-import time
+import os
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -103,8 +103,23 @@ def main() -> int:
     PROCESSED_LEDGER.touch(exist_ok=True)
 
     processed = load_processed()
-    tasks = sorted(INBOX.glob("task_*.json"))
+    target = os.getenv("VISION_TARGET_TASK_FILE", "").strip()
 
+    if target:
+        task_file = Path(target)
+        if not task_file.exists():
+            print(f"[ERRO] task alvo nao encontrada: {task_file}")
+            return 1
+        if str(task_file) in processed:
+            print(f"[OK] task alvo ja processada: {task_file}")
+            return 0
+        out_file = process_task(task_file)
+        mark_processed(task_file)
+        print(f"[OK] task alvo processada: {task_file}")
+        print(f"[OK] output gerado: {out_file}")
+        return 0
+
+    tasks = sorted(INBOX.glob("task_*.json"))
     for task_file in tasks:
         if str(task_file) in processed:
             continue
