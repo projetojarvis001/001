@@ -27,9 +27,9 @@ echo '===== CURL_LOCAL_ODOO ====='
 curl -I -s http://127.0.0.1:8070 | sed -n '1,20p' || true
 " > "${RAW_FILE}"
 
-ODOO_STATE="$(grep '^ODOO_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | xargs || true)"
-NGINX_STATE="$(grep '^NGINX_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | xargs || true)"
-PG_STATE="$(grep '^PG_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | xargs || true)"
+ODOO_STATE="$(grep '^ODOO_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | tr -d '\r' | xargs || true)"
+NGINX_STATE="$(grep '^NGINX_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | tr -d '\r' | xargs || true)"
+PG_STATE="$(grep '^PG_ACTIVE=' "${RAW_FILE}" | tail -n 1 | cut -d= -f2- | tr -d '\r' | xargs || true)"
 
 ODOO_ACTIVE=false
 NGINX_ACTIVE=false
