@@ -60,4 +60,8 @@ echo "===== BACKUP ENV ====="
 ./scripts/backup_env_secure.sh
 
 echo
+echo "===== DASHBOARD EXECUTIVO ====="
+./scripts/build_executive_ops_dashboard.sh
+
+echo
 echo "[OK] rotina diaria concluida"
