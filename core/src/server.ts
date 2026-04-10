@@ -246,6 +246,41 @@ app.get('/stack/history/compact', async (_req, res) => {
   }
 });
 
+app.get('/stack/history/export', async (_req, res) => {
+  try {
+    const jsonCandidates = [
+      '/host_jarvis/logs/history/stack_daily_history.json',
+      path.resolve('logs/history/stack_daily_history.json')
+    ];
+
+    const csvCandidates = [
+      '/host_jarvis/logs/history/stack_daily_history.csv',
+      path.resolve('logs/history/stack_daily_history.csv')
+    ];
+
+    const jsonPath = jsonCandidates.find(p => fs.existsSync(p)) || jsonCandidates[0];
+    const csvPath = csvCandidates.find(p => fs.existsSync(p)) || csvCandidates[0];
+
+    const history = fs.existsSync(jsonPath)
+      ? JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
+      : [];
+
+    return res.json({
+      ok: true,
+      service: 'jarvis-stack-history-export',
+      timestamp: new Date().toISOString(),
+      json_path: jsonPath,
+      csv_path: csvPath,
+      records: history.length
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || 'erro ao ler export history'
+    });
+  }
+});
+
 app.get('/stack/health', async (_req, res) => {
   const visionHost = process.env.VISION_HOST;
   const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (visionHost ? `http://${visionHost}:5006` : undefined);

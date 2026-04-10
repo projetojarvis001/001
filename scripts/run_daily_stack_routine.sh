@@ -6,6 +6,16 @@ echo "===== SNAPSHOT ====="
 ./scripts/snapshot_stack_health.sh
 
 echo
+echo "===== HISTORICO ====="
+./scripts/record_daily_stack_history.sh >/dev/null
+echo "[OK] historico diario atualizado"
+
+echo
+echo "===== EXPORT CSV ====="
+./scripts/export_stack_history_csv.sh >/dev/null
+echo "[OK] csv diario atualizado"
+
+echo
 echo "===== ALERT CHECK ====="
 ./scripts/check_stack_alert.sh
 
