@@ -274,8 +274,10 @@ if [ "${AUTHORIZED_STR}" = "true" ] && [ "${POST_DEPLOY_STR}" = "PASS" ]; then
   exit 0
 fi
 
-if [ "${FINAL_STR}" = "ROLLBACK_EXECUTADO" ]; then
-  exit 1
-fi
+case "${FINAL_STR}" in
+  BLOQUEAR|FALHA_POS_DEPLOY|ROLLBACK_EXECUTADO|ROLLBACK_FALHOU)
+    exit 1
+    ;;
+esac
 
 exit "${EXIT_CODE_AFTER_JSON}"
