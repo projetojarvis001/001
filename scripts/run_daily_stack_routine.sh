@@ -96,6 +96,10 @@ echo "===== OPERATIONAL SCORE TREND ====="
 ./scripts/operational_score_trend.sh
 
 echo
+echo "===== EXECUTIVE SEMAPHORE ====="
+./scripts/executive_semaphore.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
