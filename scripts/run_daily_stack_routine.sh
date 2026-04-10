@@ -72,6 +72,10 @@ echo "===== OPERATIONAL RISK ====="
 ./scripts/operational_risk_gate.sh
 
 echo
+echo "===== FREEZE EVENT ====="
+./scripts/freeze_on_critical_event.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
