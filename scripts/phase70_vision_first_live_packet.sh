@@ -37,7 +37,7 @@ jq -nc \
   --arg flow_file "${FLOW_FILE}" \
   --arg classification_out "${CLASSIFICATION_OUT}" \
   --argjson live_flow_proven "${LIVE_FLOW_PROVEN}" \
-  --argjson base_score "${BASE_SCORE}" \
+  --arg base_score "${BASE_SCORE}" \
   --arg updated_score "${UPDATED_SCORE}" \
   '{
     created_at: $created_at,
