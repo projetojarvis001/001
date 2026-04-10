@@ -169,6 +169,83 @@ app.get('/stack/history', async (_req, res) => {
   }
 });
 
+app.get('/stack/history/compact', async (_req, res) => {
+  try {
+    const historyCandidates = [
+      '/host_jarvis/logs/history/stack_daily_history.json',
+      path.resolve('logs/history/stack_daily_history.json')
+    ];
+
+    const historyPath = historyCandidates.find(p => fs.existsSync(p));
+    const history = historyPath
+      ? JSON.parse(fs.readFileSync(historyPath, 'utf8'))
+      : [];
+
+    const last7 = history.slice(-7);
+
+    const avg7 = last7.length
+      ? Number((last7.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / last7.length).toFixed(5))
+      : null;
+
+    const downtime7 = last7.reduce((a: number, b: any) => a + Number(b.downtime_seconds || 0), 0);
+    const incidents7 = last7.reduce((a: number, b: any) => a + Number(b.incident_count || 0), 0);
+
+    const worstDay = last7.length
+      ? last7.reduce((worst: any, row: any) =>
+          Number(row.availability_percent || 0) < Number(worst.availability_percent || 0) ? row : worst
+        , last7[0])
+      : null;
+
+    const bestDay = last7.length
+      ? last7.reduce((best: any, row: any) =>
+          Number(row.availability_percent || 0) > Number(best.availability_percent || 0) ? row : best
+        , last7[0])
+      : null;
+
+    let trend = 'STABLE';
+    if (last7.length >= 6) {
+      const prev3 = last7.slice(-6, -3);
+      const curr3 = last7.slice(-3);
+
+      const prevAvg = prev3.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / prev3.length;
+      const currAvg = curr3.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / curr3.length;
+      const diff = currAvg - prevAvg;
+
+      if (diff > 0.05) trend = 'UP';
+      else if (diff < -0.05) trend = 'DOWN';
+    }
+
+    let executiveStatus = 'ESTAVEL';
+    if (avg7 !== null) {
+      if (avg7 >= 99.95 && incidents7 === 0) executiveStatus = 'EXCELENTE';
+      else if (avg7 >= 99.9) executiveStatus = 'ESTAVEL';
+      else if (avg7 >= 99.0) executiveStatus = 'ATENCAO';
+      else executiveStatus = 'CRITICO';
+    }
+
+    return res.json({
+      ok: true,
+      service: 'jarvis-stack-history-compact',
+      timestamp: new Date().toISOString(),
+      summary: {
+        average_availability_percent_7d: avg7,
+        total_downtime_seconds_7d: downtime7,
+        total_incidents_7d: incidents7,
+        trend_7d: trend,
+        executive_status: executiveStatus,
+        best_day: bestDay,
+        worst_day: worstDay
+      },
+      series_7d: last7
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || 'erro ao ler history compact'
+    });
+  }
+});
+
 app.get('/stack/health', async (_req, res) => {
   const visionHost = process.env.VISION_HOST;
   const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (visionHost ? `http://${visionHost}:5006` : undefined);

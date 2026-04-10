@@ -329,6 +329,42 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
+fetch('/stack/history/compact').then(r=>r.json()).then(d=>{
+  const s = d.summary || {};
+
+  const st = document.getElementById('exec-status');
+  const av = document.getElementById('exec-avg7');
+  const dw = document.getElementById('exec-down7');
+  const ic = document.getElementById('exec-inc7');
+  const tr = document.getElementById('exec-trend');
+  const be = document.getElementById('exec-best');
+  const wo = document.getElementById('exec-worst');
+  const dot = document.getElementById('d-exec');
+  const badge = document.getElementById('b-exec');
+
+  if (st) st.textContent = String(s.executive_status ?? '--');
+  if (av) av.textContent = s.average_availability_percent_7d != null ? `${s.average_availability_percent_7d}%` : '--';
+  if (dw) dw.textContent = String(s.total_downtime_seconds_7d ?? '--');
+  if (ic) ic.textContent = String(s.total_incidents_7d ?? '--');
+  if (tr) tr.textContent = String(s.trend_7d ?? '--');
+  if (be) be.textContent = s.best_day ? `${s.best_day.date} · ${s.best_day.availability_percent}%` : '--';
+  if (wo) wo.textContent = s.worst_day ? `${s.worst_day.date} · ${s.worst_day.availability_percent}%` : '--';
+
+  if (dot) dot.className = 'dot';
+  if (badge) badge.className = 'svc-badge';
+
+  if (s.executive_status === 'EXCELENTE') {
+    if (dot) dot.classList.add('ok');
+    if (badge) { badge.classList.add('sb-ok'); badge.textContent = 'EXEC'; }
+  } else if (s.executive_status === 'ESTAVEL') {
+    if (badge) badge.textContent = 'OK';
+  } else if (s.executive_status === 'ATENCAO') {
+    if (badge) badge.textContent = 'WARN';
+  } else {
+    if (badge) badge.textContent = 'RISK';
+  }
+}).catch(()=>{});
+
 fetch('/stack/history').then(r=>r.json()).then(d=>{
   const s = d.summary?.days_7 || {};
 
