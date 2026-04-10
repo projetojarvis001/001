@@ -86,13 +86,7 @@ else
   echo "===== STEP 4: RELEASE GUARD ====="
   if ALLOW_RISKY_RELEASE="${ALLOW_RISKY_RELEASE}" ./scripts/release_guard.sh; then
     echo "[OK] release guard aprovou"
-  else
-    echo "[ERRO] release guard bloqueou"
-    FINAL_STATUS="BLOQUEAR"
-    FINAL_NOTE="Promocao bloqueada pelo gate de risco/release."
-  fi
 
-  if [ "${FINAL_STATUS}" != "BLOQUEAR" ]; then
     echo
     echo "===== STEP 5: DEPLOY CONTROLLED ====="
     ACTOR="${ACTOR}" REASON="${REASON}" ALLOW_RISKY_RELEASE="${ALLOW_RISKY_RELEASE}" ./scripts/deploy_controlled.sh
@@ -112,6 +106,10 @@ else
       echo "[ERRO] deploy log nao encontrado"
       exit 1
     fi
+  else
+    echo "[ERRO] release guard bloqueou"
+    FINAL_STATUS="BLOQUEAR"
+    FINAL_NOTE="Promocao bloqueada pelo gate de risco/release."
   fi
 fi
 
