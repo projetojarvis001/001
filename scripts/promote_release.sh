@@ -79,6 +79,20 @@ DEPLOY_EXECUTED=false
 DEPLOY_FILE=""
 POST_DEPLOY_FILE=""
 POST_DEPLOY_STATUS="NOT_RUN"
+POST_DEPLOY_NOTE="Verificacao pos-deploy nao executada."
+ROLLBACK_FILE=""
+ROLLBACK_STATUS="NOT_RUN"
+ROLLBACK_NOTE="Rollback automatico nao executado."
+EXIT_CODE_AFTER_JSON=0
+POST_DEPLOY_FILE=""
+POST_DEPLOY_STATUS="NOT_RUN"
+POST_DEPLOY_NOTE="Verificacao pos-deploy nao executada."
+ROLLBACK_FILE=""
+ROLLBACK_STATUS="NOT_RUN"
+ROLLBACK_NOTE="Rollback automatico nao executado."
+EXIT_CODE_AFTER_JSON=0
+POST_DEPLOY_FILE=""
+POST_DEPLOY_STATUS="NOT_RUN"
 POST_DEPLOY_NOTE="Verificacao nao executada."
 
 if [ "${WINDOW_AUTHORIZED}" != "true" ]; then
@@ -140,6 +154,12 @@ jq -n \
   --arg risk_file "${RISK_FILE}" \
   --arg window_file "${WINDOW_FILE}" \
   --arg deploy_file "${DEPLOY_FILE}" \
+  --arg post_deploy_file "${POST_DEPLOY_FILE}" \
+  --arg post_deploy_status "${POST_DEPLOY_STATUS}" \
+  --arg post_deploy_note "${POST_DEPLOY_NOTE}" \
+  --arg rollback_file "${ROLLBACK_FILE}" \
+  --arg rollback_status "${ROLLBACK_STATUS}" \
+  --arg rollback_note "${ROLLBACK_NOTE}" \
   --arg post_deploy_file "${POST_DEPLOY_FILE}" \
   --arg strict_readiness "${STRICT_READINESS}" \
   --argjson strict_score "${STRICT_SCORE}" \
@@ -209,9 +229,14 @@ cat "${OUT_FILE}" | jq .
 
 AUTHORIZED_STR="$(jq -r '.result.promotion_authorized | tostring' "${OUT_FILE}")"
 POST_DEPLOY_STR="$(jq -r '.post_deploy.status // "NOT_RUN"' "${OUT_FILE}")"
+FINAL_STR="$(jq -r '.result.final_status // "BLOQUEAR"' "${OUT_FILE}")"
 
 if [ "${AUTHORIZED_STR}" = "true" ] && [ "${POST_DEPLOY_STR}" = "PASS" ]; then
   exit 0
 fi
 
-exit 1
+if [ "${FINAL_STR}" = "ROLLBACK_EXECUTADO" ]; then
+  exit 1
+fi
+
+exit "${EXIT_CODE_AFTER_JSON}"
