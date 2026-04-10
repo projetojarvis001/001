@@ -1,0 +1,10 @@
+{
+  "task_id": "vision-redis-task-20260410-112524",
+  "created_at": "2026-04-10T14:25:24Z",
+  "source": "phase73_redis_publish",
+  "type": "classification",
+  "input": {
+    "title": "Redis queue classification test",
+    "text": "Core healthy. Sem incidentes. Nao houve rollback. Operacao estavel."
+  }
+}

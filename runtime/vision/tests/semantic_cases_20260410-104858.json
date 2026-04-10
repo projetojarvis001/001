@@ -1,0 +1,27 @@
+[
+  {
+    "case_id": "sem_001",
+    "text": "Redis respondeu normalmente. Core healthy. Nao houve rollback. Risco atual controlado.",
+    "expected_classification": "healthy_controlled"
+  },
+  {
+    "case_id": "sem_002",
+    "text": "Rollback executado apos falha de deploy. Ambiente estabilizado depois.",
+    "expected_classification": "attention"
+  },
+  {
+    "case_id": "sem_003",
+    "text": "Risco controlado identificado sem impacto operacional relevante.",
+    "expected_classification": "risk_controlled"
+  },
+  {
+    "case_id": "sem_004",
+    "text": "Core healthy, sem incidentes, sem rollback e com operacao estavel.",
+    "expected_classification": "healthy_controlled"
+  },
+  {
+    "case_id": "sem_005",
+    "text": "Falha critica com rollback falhou e ambiente instavel.",
+    "expected_classification": "attention"
+  }
+]

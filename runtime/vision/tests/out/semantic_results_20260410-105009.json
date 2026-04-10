@@ -1,0 +1,46 @@
+{
+  "processed_at": "2026-04-10T13:50:09Z",
+  "source_suite": "runtime/vision/tests/semantic_cases_20260410-105009.json",
+  "results": [
+    {
+      "case_id": "sem_001",
+      "expected_classification": "healthy_controlled",
+      "predicted_classification": "attention",
+      "confidence": 0.91,
+      "summary": "Evento com rollback real ou instabilidade critica.",
+      "match": false
+    },
+    {
+      "case_id": "sem_002",
+      "expected_classification": "attention",
+      "predicted_classification": "attention",
+      "confidence": 0.91,
+      "summary": "Evento com rollback real ou instabilidade critica.",
+      "match": true
+    },
+    {
+      "case_id": "sem_003",
+      "expected_classification": "risk_controlled",
+      "predicted_classification": "risk_controlled",
+      "confidence": 0.86,
+      "summary": "Risco controlado identificado sem evento critico.",
+      "match": true
+    },
+    {
+      "case_id": "sem_004",
+      "expected_classification": "healthy_controlled",
+      "predicted_classification": "healthy_controlled",
+      "confidence": 0.95,
+      "summary": "Estado saudavel e controlado sem rollback.",
+      "match": true
+    },
+    {
+      "case_id": "sem_005",
+      "expected_classification": "attention",
+      "predicted_classification": "attention",
+      "confidence": 0.91,
+      "summary": "Evento com rollback real ou instabilidade critica.",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "task_id": "vision-listener-task-20260410-110243",
+  "created_at": "2026-04-10T14:02:43Z",
+  "source": "phase72_listener_seed",
+  "type": "classification",
+  "input": {
+    "title": "Listener classification test",
+    "text": "Core healthy. Sem incidentes. Nao houve rollback. Operacao estavel com risco controlado."
+  }
+}
