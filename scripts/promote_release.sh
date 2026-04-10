@@ -181,3 +181,10 @@ echo
 echo "[OK] promotion pipeline concluido"
 echo "[OK] trilha gravada em ${OUT_FILE}"
 cat "${OUT_FILE}" | jq .
+
+AUTHORIZED_STR="$(jq -r '.result.promotion_authorized | tostring' "${OUT_FILE}")"
+if [ "${AUTHORIZED_STR}" = "true" ]; then
+  exit 0
+fi
+
+exit 1
