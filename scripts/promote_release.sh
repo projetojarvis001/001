@@ -71,6 +71,30 @@ echo "WINDOW_STATUS=${WINDOW_STATUS}"
 echo "WINDOW_AUTHORIZED=${WINDOW_AUTHORIZED}"
 echo "WINDOW_MODE=${WINDOW_MODE}"
 
+echo
+echo "===== STEP 3B: EXCEPTION APPROVAL ====="
+APPROVAL_REQUIRED="false"
+APPROVAL_FILE=""
+APPROVAL_VALID="false"
+APPROVAL_NOTE="Nao requerida."
+
+if [ "${GO_LIVE_STATUS}" = "LIBERAR_COM_RISCO" ] || [ "${GO_LIVE_STATUS}" = "OPERAR_COM_CAUTELA" ] || [ "${WINDOW_MODE}" = "OVERRIDE_EXPLICITO" ] || [ "${CHANGE_POLICY}" = "FREEZE" ]; then
+  APPROVAL_REQUIRED="true"
+  if ./scripts/exception_approval_check.sh >/tmp/promote_exception.out 2>/dev/null; then
+    APPROVAL_FILE="$(ls -1t logs/readiness/exception_check_*.json 2>/dev/null | head -n 1 || true)"
+    APPROVAL_VALID="true"
+    APPROVAL_NOTE="Aprovacao excepcional valida."
+  else
+    APPROVAL_FILE="$(ls -1t logs/readiness/exception_check_*.json 2>/dev/null | head -n 1 || true)"
+    APPROVAL_VALID="false"
+    APPROVAL_NOTE="Aprovacao excepcional obrigatoria e ausente/invalida."
+  fi
+fi
+
+echo "APPROVAL_REQUIRED=${APPROVAL_REQUIRED}"
+echo "APPROVAL_VALID=${APPROVAL_VALID}"
+echo "APPROVAL_FILE=${APPROVAL_FILE}"
+
 FINAL_STATUS="BLOQUEAR"
 FINAL_NOTE="Promocao bloqueada."
 PROMOTION_AUTHORIZED=false
@@ -98,6 +122,9 @@ POST_DEPLOY_NOTE="Verificacao nao executada."
 if [ "${WINDOW_AUTHORIZED}" != "true" ]; then
   FINAL_STATUS="BLOQUEAR"
   FINAL_NOTE="Promocao bloqueada pela janela de mudanca: ${WINDOW_NOTE}"
+elif [ "${APPROVAL_REQUIRED}" = "true" ] && [ "${APPROVAL_VALID}" != "true" ]; then
+  FINAL_STATUS="BLOQUEAR"
+  FINAL_NOTE="Promocao bloqueada por falta de aprovacao excepcional valida."
 else
   echo
   echo "===== STEP 4: RELEASE GUARD ====="
@@ -153,6 +180,7 @@ jq -n \
   --arg readiness_file "${READINESS_FILE}" \
   --arg risk_file "${RISK_FILE}" \
   --arg window_file "${WINDOW_FILE}" \
+  --arg approval_file "${APPROVAL_FILE}" \
   --arg deploy_file "${DEPLOY_FILE}" \
   --arg post_deploy_file "${POST_DEPLOY_FILE}" \
   --arg post_deploy_status "${POST_DEPLOY_STATUS}" \
@@ -191,6 +219,7 @@ jq -n \
       readiness_file: $readiness_file,
       risk_file: $risk_file,
       change_window_file: $window_file,
+      approval_file: $approval_file,
       deploy_file: $deploy_file,
       post_deploy_file: $post_deploy_file
     },
@@ -208,6 +237,11 @@ jq -n \
       status: $window_status,
       mode: $window_mode,
       operator_note: $window_note
+    },
+    exception_approval: {
+      required: ($approval_required == "true"),
+      valid: ($approval_valid == "true"),
+      operator_note: $approval_note
     },
     post_deploy: {
       status: $post_deploy_status,
