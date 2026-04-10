@@ -128,6 +128,14 @@ echo "===== AUDIT BUNDLE INDEX ====="
 ./scripts/audit_bundle_index_update.sh
 
 echo
+echo "===== DEVOPS AGENT STATUS ====="
+./scripts/devops_agent_status.sh
+
+echo
+echo "===== DEVOPS AGENT PACKET ====="
+./scripts/phase66_devops_packet.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
