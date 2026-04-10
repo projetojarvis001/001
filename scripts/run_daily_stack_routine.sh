@@ -2,7 +2,6 @@
 set -e
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
-
 echo "===== SNAPSHOT ====="
 ./scripts/snapshot_stack_health.sh
 
@@ -13,6 +12,10 @@ echo "===== ALERT CHECK ====="
 echo
 echo "===== OPS REPORT ====="
 ./scripts/ops_report_vision.sh
+
+echo
+echo "===== RESUMO DIARIO ====="
+./scripts/send_daily_stack_summary.sh
 
 echo
 echo "[OK] rotina diaria concluida"
