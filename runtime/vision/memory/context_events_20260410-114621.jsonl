@@ -1,0 +1,2 @@
+{"event_id":"ctx-20260410-114621-01","created_at":"2026-04-10T14:46:21Z","classification":"attention","summary":"Rollback executado anteriormente no modulo bridge.","source":"history"}
+{"event_id":"ctx-20260410-114621-02","created_at":"2026-04-10T14:46:21Z","classification":"risk_controlled","summary":"Depois do rollback, ambiente estabilizou sob monitoramento.","source":"history"}

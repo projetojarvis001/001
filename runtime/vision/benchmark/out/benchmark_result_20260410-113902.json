@@ -1,0 +1,109 @@
+{
+  "processed_at": "2026-04-10T14:39:03Z",
+  "source_suite": "runtime/vision/benchmark/benchmark_suite_20260410-113902.json",
+  "route_results": [
+    {
+      "route": "route_primary_simulated",
+      "accuracy_percent": 100.0,
+      "avg_latency_ms": 85.06,
+      "hits": 5,
+      "total_cases": 5,
+      "results": [
+        {
+          "case_id": "bench_001",
+          "expected_classification": "healthy_controlled",
+          "predicted_classification": "healthy_controlled",
+          "confidence": 0.88,
+          "elapsed_ms": 85.04,
+          "match": true
+        },
+        {
+          "case_id": "bench_002",
+          "expected_classification": "risk_controlled",
+          "predicted_classification": "risk_controlled",
+          "confidence": 0.84,
+          "elapsed_ms": 85.07,
+          "match": true
+        },
+        {
+          "case_id": "bench_003",
+          "expected_classification": "attention",
+          "predicted_classification": "attention",
+          "confidence": 0.91,
+          "elapsed_ms": 85.07,
+          "match": true
+        },
+        {
+          "case_id": "bench_004",
+          "expected_classification": "healthy_controlled",
+          "predicted_classification": "healthy_controlled",
+          "confidence": 0.88,
+          "elapsed_ms": 85.08,
+          "match": true
+        },
+        {
+          "case_id": "bench_005",
+          "expected_classification": "attention",
+          "predicted_classification": "attention",
+          "confidence": 0.91,
+          "elapsed_ms": 85.03,
+          "match": true
+        }
+      ]
+    },
+    {
+      "route": "route_secondary_simulated",
+      "accuracy_percent": 80.0,
+      "avg_latency_ms": 34.57,
+      "hits": 4,
+      "total_cases": 5,
+      "results": [
+        {
+          "case_id": "bench_001",
+          "expected_classification": "healthy_controlled",
+          "predicted_classification": "attention",
+          "confidence": 0.92,
+          "elapsed_ms": 33.36,
+          "match": false
+        },
+        {
+          "case_id": "bench_002",
+          "expected_classification": "risk_controlled",
+          "predicted_classification": "risk_controlled",
+          "confidence": 0.87,
+          "elapsed_ms": 35.04,
+          "match": true
+        },
+        {
+          "case_id": "bench_003",
+          "expected_classification": "attention",
+          "predicted_classification": "attention",
+          "confidence": 0.92,
+          "elapsed_ms": 34.34,
+          "match": true
+        },
+        {
+          "case_id": "bench_004",
+          "expected_classification": "healthy_controlled",
+          "predicted_classification": "healthy_controlled",
+          "confidence": 0.95,
+          "elapsed_ms": 35.04,
+          "match": true
+        },
+        {
+          "case_id": "bench_005",
+          "expected_classification": "attention",
+          "predicted_classification": "attention",
+          "confidence": 0.92,
+          "elapsed_ms": 35.06,
+          "match": true
+        }
+      ]
+    }
+  ],
+  "winner": {
+    "route": "route_primary_simulated",
+    "accuracy_percent": 100.0,
+    "avg_latency_ms": 85.06
+  }
+}

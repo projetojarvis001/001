@@ -1,0 +1,11 @@
+{
+  "task_id": "vision-memory-task-20260410-114727",
+  "processed_at": "2026-04-10T14:47:27Z",
+  "status": "processed",
+  "classification": "attention",
+  "confidence": 0.91,
+  "summary": "Novo evento critico identificado no contexto atual.",
+  "memory_events_used": 2,
+  "memory_file": "runtime/vision/memory/context_events_20260410-114727.jsonl",
+  "source_task_file": "runtime/vision/memory/context_task_20260410-114727.json"
+}

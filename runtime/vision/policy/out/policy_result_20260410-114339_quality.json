@@ -1,0 +1,11 @@
+{
+  "task_id": "vision-policy-task-20260410-114339-quality",
+  "processed_at": "2026-04-10T14:43:39Z",
+  "status": "processed",
+  "policy_used": "quality_first",
+  "chosen_route": "route_primary_simulated",
+  "classification": "healthy_controlled",
+  "confidence": 0.88,
+  "elapsed_ms": 85.02,
+  "source_task_file": "runtime/vision/policy/policy_task_20260410-114339_quality.json"
+}

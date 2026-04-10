@@ -1,0 +1,8 @@
+{
+  "task_id": "vision-policy-task-20260410-114241-speed",
+  "created_at": "2026-04-10T14:42:41Z",
+  "policy": "speed_first",
+  "input": {
+    "text": "Core healthy. Sem incidentes. Nao houve rollback. Operacao estavel."
+  }
+}

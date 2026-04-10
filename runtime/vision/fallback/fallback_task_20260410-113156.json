@@ -1,0 +1,15 @@
+{
+  "task_id": "vision-fallback-task-20260410-113156",
+  "created_at": "2026-04-10T14:31:56Z",
+  "source": "phase75_fallback_seed",
+  "type": "classification",
+  "routing": {
+    "primary_model": "vision_primary_simulated",
+    "fallback_model": "vision_secondary_simulated",
+    "force_primary_fail": true
+  },
+  "input": {
+    "title": "Fallback routing test",
+    "text": "Risco controlado identificado. Sem rollback executado. Operacao monitorada."
+  }
+}

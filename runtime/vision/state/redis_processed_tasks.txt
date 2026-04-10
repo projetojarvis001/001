@@ -1,1 +1,3 @@
-vision-redis-task-20260410-112524
+vision-batch-task-20260410-112924-01
+vision-batch-task-20260410-112924-02
+vision-batch-task-20260410-112924-03

@@ -1,0 +1,10 @@
+{
+  "task_id": "vision-batch-task-20260410-112924-02",
+  "processed_at": "2026-04-10T14:29:24Z",
+  "status": "processed",
+  "summary": "Risco controlado identificado sem evento critico.",
+  "classification": "risk_controlled",
+  "confidence": 0.86,
+  "source": "phase74_redis_batch_listener",
+  "queue_name": "vision_tasks"
+}

@@ -1,0 +1,15 @@
+{
+  "task_id": "vision-fallback-task-20260410-113410",
+  "processed_at": "2026-04-10T14:34:10Z",
+  "status": "processed",
+  "classification": "attention",
+  "confidence": 0.91,
+  "summary": "Evento com rollback real ou instabilidade critica.",
+  "routing_result": {
+    "primary_ok": false,
+    "primary_error": "primary_route_simulated_failure",
+    "used_model": "vision_secondary_simulated",
+    "fallback_used": true
+  },
+  "source_task_file": "runtime/vision/fallback/fallback_task_20260410-113410.json"
+}

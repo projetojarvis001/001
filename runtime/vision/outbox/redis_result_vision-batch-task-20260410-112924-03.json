@@ -1,0 +1,10 @@
+{
+  "task_id": "vision-batch-task-20260410-112924-03",
+  "processed_at": "2026-04-10T14:29:24Z",
+  "status": "processed",
+  "summary": "Evento com rollback real ou instabilidade critica.",
+  "classification": "attention",
+  "confidence": 0.91,
+  "source": "phase74_redis_batch_listener",
+  "queue_name": "vision_tasks"
+}

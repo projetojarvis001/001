@@ -1,0 +1,35 @@
+{
+  "suite_id": "vision-benchmark-20260410-113711",
+  "created_at": "2026-04-10T14:37:11Z",
+  "routes": [
+    "route_primary_simulated",
+    "route_secondary_simulated"
+  ],
+  "cases": [
+    {
+      "case_id": "bench_001",
+      "text": "Core healthy. Sem incidentes. Nao houve rollback. Operacao estavel.",
+      "expected_classification": "healthy_controlled"
+    },
+    {
+      "case_id": "bench_002",
+      "text": "Risco controlado identificado. Operacao monitorada. Sem evento critico.",
+      "expected_classification": "risk_controlled"
+    },
+    {
+      "case_id": "bench_003",
+      "text": "Houve rollback executado e ambiente instavel.",
+      "expected_classification": "attention"
+    },
+    {
+      "case_id": "bench_004",
+      "text": "Sem rollback. Healthy. Respondeu normalmente.",
+      "expected_classification": "healthy_controlled"
+    },
+    {
+      "case_id": "bench_005",
+      "text": "Falha critica e instabilidade persistente.",
+      "expected_classification": "attention"
+    }
+  ]
+}

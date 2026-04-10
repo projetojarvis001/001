@@ -1,0 +1,41 @@
+{
+  "processed_at": "2026-04-10T14:57:47Z",
+  "source_registry_file": "runtime/vision/registry/route_registry_20260410-115747.json",
+  "ranked_routes": [
+    {
+      "route": "route_primary_simulated",
+      "kind": "quality_first",
+      "accuracy_percent": 100.0,
+      "avg_latency_ms": 85.06,
+      "stability_score": 9.4,
+      "status": "active_candidate",
+      "recruiter_score": 99.09,
+      "registry_decision": "promoted_primary"
+    },
+    {
+      "route": "route_secondary_simulated",
+      "kind": "speed_first",
+      "accuracy_percent": 80.0,
+      "avg_latency_ms": 34.57,
+      "stability_score": 8.2,
+      "status": "active_candidate",
+      "recruiter_score": 87.34,
+      "registry_decision": "kept_candidate"
+    },
+    {
+      "route": "route_fallback_simulated",
+      "kind": "resilience_only",
+      "accuracy_percent": 78.0,
+      "avg_latency_ms": 41.0,
+      "stability_score": 8.0,
+      "status": "backup_candidate",
+      "recruiter_score": 84.7,
+      "registry_decision": "demoted_secondary"
+    }
+  ],
+  "decision": {
+    "promoted_route": "route_primary_simulated",
+    "demoted_route": "route_fallback_simulated",
+    "registry_live": true
+  }
+}
