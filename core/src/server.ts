@@ -32,14 +32,24 @@ function requireInternalKey(req: any, res: any, next: any) {
 
 app.get('/stack/metrics', async (_req, res) => {
   try {
-    const metricsPath = path.resolve('logs/state/stack_metrics.json');
-    const autoHealPath = path.resolve('logs/state/auto_heal_state.json');
+    const metricsCandidates = [
+      '/host_jarvis/logs/state/stack_metrics.json',
+      path.resolve('logs/state/stack_metrics.json')
+    ];
 
-    const metrics = fs.existsSync(metricsPath)
+    const autoHealCandidates = [
+      '/host_jarvis/logs/state/auto_heal_state.json',
+      path.resolve('logs/state/auto_heal_state.json')
+    ];
+
+    const metricsPath = metricsCandidates.find(p => fs.existsSync(p));
+    const autoHealPath = autoHealCandidates.find(p => fs.existsSync(p));
+
+    const metrics = metricsPath
       ? JSON.parse(fs.readFileSync(metricsPath, 'utf8'))
       : null;
 
-    const autoHeal = fs.existsSync(autoHealPath)
+    const autoHeal = autoHealPath
       ? JSON.parse(fs.readFileSync(autoHealPath, 'utf8'))
       : null;
 
