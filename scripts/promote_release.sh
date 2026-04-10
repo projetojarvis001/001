@@ -183,12 +183,6 @@ jq -n \
   --arg approval_file "${APPROVAL_FILE}" \
   --arg deploy_file "${DEPLOY_FILE}" \
   --arg post_deploy_file "${POST_DEPLOY_FILE}" \
-  --arg post_deploy_status "${POST_DEPLOY_STATUS}" \
-  --arg post_deploy_note "${POST_DEPLOY_NOTE}" \
-  --arg rollback_file "${ROLLBACK_FILE}" \
-  --arg rollback_status "${ROLLBACK_STATUS}" \
-  --arg rollback_note "${ROLLBACK_NOTE}" \
-  --arg post_deploy_file "${POST_DEPLOY_FILE}" \
   --arg strict_readiness "${STRICT_READINESS}" \
   --argjson strict_score "${STRICT_SCORE}" \
   --arg risk_level "${RISK_LEVEL}" \
@@ -198,8 +192,14 @@ jq -n \
   --arg window_status "${WINDOW_STATUS}" \
   --arg window_mode "${WINDOW_MODE}" \
   --arg window_note "${WINDOW_NOTE}" \
+  --arg approval_required "${APPROVAL_REQUIRED}" \
+  --arg approval_valid "${APPROVAL_VALID}" \
+  --arg approval_note "${APPROVAL_NOTE}" \
   --arg post_deploy_status "${POST_DEPLOY_STATUS}" \
   --arg post_deploy_note "${POST_DEPLOY_NOTE}" \
+  --arg rollback_file "${ROLLBACK_FILE}" \
+  --arg rollback_status "${ROLLBACK_STATUS}" \
+  --arg rollback_note "${ROLLBACK_NOTE}" \
   --arg final_status "${FINAL_STATUS}" \
   --arg final_note "${FINAL_NOTE}" \
   --arg promotion_mode "${PROMOTION_MODE}" \
@@ -246,6 +246,11 @@ jq -n \
     post_deploy: {
       status: $post_deploy_status,
       operator_note: $post_deploy_note
+    },
+    rollback: {
+      status: $rollback_status,
+      rollback_file: $rollback_file,
+      operator_note: $rollback_note
     },
     result: {
       promotion_authorized: $promotion_authorized,
