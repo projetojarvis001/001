@@ -40,4 +40,8 @@ echo "===== RELATORIO DE RETENCAO ====="
 ./scripts/logs_retention_report.sh
 
 echo
+echo "===== BACKUP OPERACIONAL ====="
+./scripts/backup_operational_state.sh
+
+echo
 echo "[OK] rotina diaria concluida"
