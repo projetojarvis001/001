@@ -61,12 +61,7 @@ url = os.environ['ODOO_URL']
 db = os.environ['ODOO_DB']
 
 payload = {
-    \"event\": \"odoo_watchdog_test\",
-    \"status\": \"GREEN\",
-    \"message\": \"OK: watchdog remoto do ODOO testado com entrega real\",
-    \"url\": url,
-    \"db\": db,
-    \"created_at\": now()
+    \"text\": f\"OK: watchdog remoto do ODOO testado com entrega real | db={db} | url={url} | created_at={now()}\"
 }
 
 body = json.dumps(payload).encode(\"utf-8\")
@@ -93,9 +88,7 @@ out = {
     \"alert_delivery\": {
         \"http_ok\": http_ok,
         \"status_code\": status_code,
-        \"event\": payload[\"event\"],
-        \"status\": payload[\"status\"],
-        \"message\": payload[\"message\"],
+        \"message\": payload[\"text\"],
         \"url\": url,
         \"db\": db,
         \"error\": error
