@@ -49,12 +49,14 @@ ENV_FILE=\"\${BASE_DIR}/.env\"
 mkdir -p \"\${LOG_DIR}\"
 
 source \"\${ENV_FILE}\"
+export ODOO_URL ODOO_DB ODOO_APP_USER ODOO_APP_PASS
 
 TS=\"\$(date +%Y%m%d-%H%M%S)\"
 OUT_JSON=\"\${LOG_DIR}/watchdog_\${TS}.json\"
 OUT_LOG=\"\${LOG_DIR}/watchdog_\${TS}.log\"
 LAST_JSON=\"\${LOG_DIR}/last_run.json\"
 STAMP_FILE=\"\${LOG_DIR}/last_run.ok\"
+export LAST_JSON
 
 python3 - <<'PY' > \"\${OUT_JSON}\"
 import json, os, urllib.request, xmlrpc.client
