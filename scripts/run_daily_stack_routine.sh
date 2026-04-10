@@ -32,4 +32,12 @@ echo "===== BRIEFING EXECUTIVO ====="
 ./scripts/send_morning_exec_briefing.sh
 
 echo
+echo "===== ROTACAO DE LOGS ====="
+./scripts/rotate_logs.sh
+
+echo
+echo "===== RELATORIO DE RETENCAO ====="
+./scripts/logs_retention_report.sh
+
+echo
 echo "[OK] rotina diaria concluida"
