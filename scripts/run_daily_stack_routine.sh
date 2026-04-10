@@ -88,6 +88,10 @@ echo "===== OPERATIONAL SCORE ====="
 ./scripts/operational_score_daily.sh
 
 echo
+echo "===== OPERATIONAL SCORE HISTORY ====="
+./scripts/operational_score_history_update.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
