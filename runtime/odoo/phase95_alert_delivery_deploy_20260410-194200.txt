@@ -1,0 +1,12 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== SEND FILE =====
+-rwx------ 1 wps wps 1519 Apr 10 22:42 /home/wps/odoo_watchdog/send_alert.sh
+
+===== TEST RUN =====
+  File "<stdin>", line 14
+    message: OK: watchdog remoto do ODOO testado com entrega real,
+               ^
+SyntaxError: invalid syntax
+Connection to 177.104.176.69 closed.

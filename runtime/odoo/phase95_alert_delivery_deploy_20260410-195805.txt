@@ -1,0 +1,12 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== SEND FILE =====
+-rwx------ 1 wps wps 1573 Apr 10 22:58 /home/wps/odoo_watchdog/send_alert.sh
+
+===== TEST RUN =====
+  File "<stdin>", line 30
+    error = 
+            ^
+SyntaxError: invalid syntax
+Connection to 177.104.176.69 closed.
