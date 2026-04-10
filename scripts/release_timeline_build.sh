@@ -30,11 +30,14 @@ SEMAPHORE_FILE="$(ls -1t logs/executive/executive_semaphore_*.json 2>/dev/null |
 ROLLBACK_FILE=""
 AUTO_ROLLBACK_FILE=""
 FREEZE_FILE=""
+PROMOTION_FINAL_STATUS="$(jq -r '.result.final_status // "UNKNOWN"' "${PROMOTION_FILE}")"
 
 if [ -n "${MANIFEST_FILE}" ] && [ -f "${MANIFEST_FILE}" ]; then
-  ROLLBACK_FILE="$(jq -r '.sources.rollback_file // ""' "${MANIFEST_FILE}")"
-  AUTO_ROLLBACK_FILE="$(jq -r '.sources.auto_rollback_file // ""' "${MANIFEST_FILE}")"
   FREEZE_FILE="$(jq -r '.sources.freeze_file // ""' "${MANIFEST_FILE}")"
+  if [ "${PROMOTION_FINAL_STATUS}" = "ROLLBACK_EXECUTADO" ] || [ "${PROMOTION_FINAL_STATUS}" = "ROLLBACK_FALHOU" ] || [ "${PROMOTION_FINAL_STATUS}" = "FALHA_POS_DEPLOY" ]; then
+    ROLLBACK_FILE="$(jq -r '.sources.rollback_file // ""' "${MANIFEST_FILE}")"
+    AUTO_ROLLBACK_FILE="$(jq -r '.sources.auto_rollback_file // ""' "${MANIFEST_FILE}")"
+  fi
 fi
 
 readiness_at=""
@@ -94,7 +97,10 @@ fi
 
 rollback_at=""
 rollback_status="NOT_RUN"
-if [ -n "${AUTO_ROLLBACK_FILE}" ] && [ -f "${AUTO_ROLLBACK_FILE}" ]; then
+if [ "${PROMOTION_FINAL_STATUS}" = "LIBERAR" ] || [ "${PROMOTION_FINAL_STATUS}" = "LIBERAR_COM_RISCO" ] || [ "${PROMOTION_FINAL_STATUS}" = "BLOQUEAR" ]; then
+  rollback_status="NOT_RUN"
+  rollback_at=""
+elif [ -n "${AUTO_ROLLBACK_FILE}" ] && [ -f "${AUTO_ROLLBACK_FILE}" ]; then
   rollback_at="$(jq -r '.created_at // ""' "${AUTO_ROLLBACK_FILE}")"
   rollback_status="$(jq -r '.result.final_status // "UNKNOWN"' "${AUTO_ROLLBACK_FILE}")"
 elif [ -n "${ROLLBACK_FILE}" ] && [ -f "${ROLLBACK_FILE}" ]; then
