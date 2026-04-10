@@ -100,6 +100,10 @@ echo "===== EXECUTIVE SEMAPHORE ====="
 ./scripts/executive_semaphore.sh
 
 echo
+echo "===== RELEASE TIMELINE ====="
+./scripts/release_timeline_build.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
