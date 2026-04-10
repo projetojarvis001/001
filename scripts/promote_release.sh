@@ -77,6 +77,9 @@ PROMOTION_AUTHORIZED=false
 PROMOTION_MODE="NORMAL"
 DEPLOY_EXECUTED=false
 DEPLOY_FILE=""
+POST_DEPLOY_FILE=""
+POST_DEPLOY_STATUS="NOT_RUN"
+POST_DEPLOY_NOTE="Verificacao nao executada."
 
 if [ "${WINDOW_AUTHORIZED}" != "true" ]; then
   FINAL_STATUS="BLOQUEAR"
@@ -94,13 +97,29 @@ else
 
     if [ -n "${DEPLOY_FILE}" ] && [ -f "${DEPLOY_FILE}" ]; then
       DEPLOY_EXECUTED=true
-      PROMOTION_AUTHORIZED=true
-      FINAL_STATUS="${GO_LIVE_STATUS}"
-      FINAL_NOTE="${RISK_NOTE}"
-      if [ "${ALLOW_RISKY_RELEASE}" = "1" ]; then
-        PROMOTION_MODE="OVERRIDE_EXPLICITO"
+
+      echo
+      echo "===== STEP 6: POST DEPLOY VERIFY ====="
+      if ./scripts/post_deploy_verify.sh; then
+        POST_DEPLOY_FILE="$(ls -1t logs/release/post_deploy_verify_*.json 2>/dev/null | head -n 1 || true)"
+        POST_DEPLOY_STATUS="PASS"
+        POST_DEPLOY_NOTE="Deploy confirmado apos verificacao."
+        PROMOTION_AUTHORIZED=true
+        FINAL_STATUS="${GO_LIVE_STATUS}"
+        FINAL_NOTE="${RISK_NOTE}"
+
+        if [ "${ALLOW_RISKY_RELEASE}" = "1" ] || [ "${WINDOW_MODE}" = "OVERRIDE_EXPLICITO" ]; then
+          PROMOTION_MODE="OVERRIDE_EXPLICITO"
+        else
+          PROMOTION_MODE="NORMAL"
+        fi
       else
-        PROMOTION_MODE="NORMAL"
+        POST_DEPLOY_FILE="$(ls -1t logs/release/post_deploy_verify_*.json 2>/dev/null | head -n 1 || true)"
+        POST_DEPLOY_STATUS="FAIL"
+        POST_DEPLOY_NOTE="Deploy executado, mas verificacao pos-deploy falhou."
+        PROMOTION_AUTHORIZED=false
+        FINAL_STATUS="FALHA_POS_DEPLOY"
+        FINAL_NOTE="Deploy executado, mas stack nao estabilizou apos promocao."
       fi
     else
       echo "[ERRO] deploy log nao encontrado"
@@ -121,6 +140,7 @@ jq -n \
   --arg risk_file "${RISK_FILE}" \
   --arg window_file "${WINDOW_FILE}" \
   --arg deploy_file "${DEPLOY_FILE}" \
+  --arg post_deploy_file "${POST_DEPLOY_FILE}" \
   --arg strict_readiness "${STRICT_READINESS}" \
   --argjson strict_score "${STRICT_SCORE}" \
   --arg risk_level "${RISK_LEVEL}" \
@@ -130,6 +150,8 @@ jq -n \
   --arg window_status "${WINDOW_STATUS}" \
   --arg window_mode "${WINDOW_MODE}" \
   --arg window_note "${WINDOW_NOTE}" \
+  --arg post_deploy_status "${POST_DEPLOY_STATUS}" \
+  --arg post_deploy_note "${POST_DEPLOY_NOTE}" \
   --arg final_status "${FINAL_STATUS}" \
   --arg final_note "${FINAL_NOTE}" \
   --arg promotion_mode "${PROMOTION_MODE}" \
@@ -149,7 +171,8 @@ jq -n \
       readiness_file: $readiness_file,
       risk_file: $risk_file,
       change_window_file: $window_file,
-      deploy_file: $deploy_file
+      deploy_file: $deploy_file,
+      post_deploy_file: $post_deploy_file
     },
     readiness: {
       strict_readiness: $strict_readiness,
@@ -166,6 +189,10 @@ jq -n \
       mode: $window_mode,
       operator_note: $window_note
     },
+    post_deploy: {
+      status: $post_deploy_status,
+      operator_note: $post_deploy_note
+    },
     result: {
       promotion_authorized: $promotion_authorized,
       deploy_executed: $deploy_executed,
@@ -181,7 +208,9 @@ echo "[OK] trilha gravada em ${OUT_FILE}"
 cat "${OUT_FILE}" | jq .
 
 AUTHORIZED_STR="$(jq -r '.result.promotion_authorized | tostring' "${OUT_FILE}")"
-if [ "${AUTHORIZED_STR}" = "true" ]; then
+POST_DEPLOY_STR="$(jq -r '.post_deploy.status // "NOT_RUN"' "${OUT_FILE}")"
+
+if [ "${AUTHORIZED_STR}" = "true" ] && [ "${POST_DEPLOY_STR}" = "PASS" ]; then
   exit 0
 fi
 
