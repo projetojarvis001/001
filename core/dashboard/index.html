@@ -329,6 +329,34 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
+fetch('/stack/history').then(r=>r.json()).then(d=>{
+  const s = d.summary?.days_7 || {};
+
+  const avg = document.getElementById('hist-avg7');
+  const down = document.getElementById('hist-downtime7');
+  const inc = document.getElementById('hist-incidents7');
+  const tr = document.getElementById('hist-trend');
+  const dot = document.getElementById('d-trend');
+  const badge = document.getElementById('b-trend');
+
+  if (avg) avg.textContent = s.average_availability_percent != null ? `${s.average_availability_percent}%` : '--';
+  if (down) down.textContent = String(s.total_downtime_seconds ?? '--');
+  if (inc) inc.textContent = String(s.total_incidents ?? '--');
+  if (tr) tr.textContent = String(s.trend ?? '--');
+
+  if (dot) dot.className = 'dot';
+  if (badge) badge.className = 'svc-badge';
+
+  if (s.trend === 'UP') {
+    if (dot) dot.classList.add('ok');
+    if (badge) { badge.classList.add('sb-ok'); badge.textContent = 'UP'; }
+  } else if (s.trend === 'DOWN') {
+    if (badge) badge.textContent = 'DOWN';
+  } else {
+    if (badge) badge.textContent = 'STABLE';
+  }
+}).catch(()=>{});
+
 fetch('/stack/slo').then(r=>r.json()).then(d=>{
   const av = document.getElementById('slo-availability');
   const tg = document.getElementById('slo-target');

@@ -109,6 +109,66 @@ app.get('/stack/slo', async (_req, res) => {
   }
 });
 
+app.get('/stack/history', async (_req, res) => {
+  try {
+    const historyCandidates = [
+      '/host_jarvis/logs/history/stack_daily_history.json',
+      path.resolve('logs/history/stack_daily_history.json')
+    ];
+
+    const historyPath = historyCandidates.find(p => fs.existsSync(p));
+    const history = historyPath
+      ? JSON.parse(fs.readFileSync(historyPath, 'utf8'))
+      : [];
+
+    const last7 = history.slice(-7);
+    const last30 = history.slice(-30);
+
+    const avg7 = last7.length
+      ? Number((last7.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / last7.length).toFixed(5))
+      : null;
+
+    const downtime7 = last7.reduce((a: number, b: any) => a + Number(b.downtime_seconds || 0), 0);
+    const incidents7 = last7.reduce((a: number, b: any) => a + Number(b.incident_count || 0), 0);
+
+    let trend = 'STABLE';
+    if (last7.length >= 6) {
+      const prev3 = last7.slice(-6, -3);
+      const curr3 = last7.slice(-3);
+
+      const prevAvg = prev3.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / prev3.length;
+      const currAvg = curr3.reduce((a: number, b: any) => a + Number(b.availability_percent || 0), 0) / curr3.length;
+      const diff = currAvg - prevAvg;
+
+      if (diff > 0.05) trend = 'UP';
+      else if (diff < -0.05) trend = 'DOWN';
+    }
+
+    return res.json({
+      ok: true,
+      service: 'jarvis-stack-history',
+      timestamp: new Date().toISOString(),
+      history,
+      summary: {
+        days_7: {
+          average_availability_percent: avg7,
+          total_downtime_seconds: downtime7,
+          total_incidents: incidents7,
+          trend
+        },
+        days_30: {
+          total_records: last30.length
+        }
+      }
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || 'erro ao ler historico'
+    });
+  }
+});
+
 app.get('/stack/health', async (_req, res) => {
   const visionHost = process.env.VISION_HOST;
   const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (visionHost ? `http://${visionHost}:5006` : undefined);
