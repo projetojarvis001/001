@@ -92,6 +92,10 @@ echo "===== OPERATIONAL SCORE HISTORY ====="
 ./scripts/operational_score_history_update.sh
 
 echo
+echo "===== OPERATIONAL SCORE TREND ====="
+./scripts/operational_score_trend.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
