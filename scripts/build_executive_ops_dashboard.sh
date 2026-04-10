@@ -20,6 +20,8 @@ PG_FILE="$(ls -1t backups/postgres/*.sql.gz 2>/dev/null | head -n 1 || true)"
 REDIS_FILE="$(ls -1t backups/redis/*.rdb 2>/dev/null | head -n 1 || true)"
 OPS_FILE="$(ls -1t backups/operational_state/*.tar.gz 2>/dev/null | head -n 1 || true)"
 ENV_FILE="$(ls -1t backups/env/*.bak 2>/dev/null | head -n 1 || true)"
+SCORE_FILE="$(ls -1t logs/executive/operational_score_*.json 2>/dev/null | grep -v "operational_score_history.json" | head -n 1 || true)"
+TREND_FILE="$(ls -1t logs/executive/operational_score_trend_*.json 2>/dev/null | head -n 1 || true)"
 
 ALERT_STATE_FILE="logs/state/alert_state.json"
 AUTOHEAL_STATE_FILE="logs/state/auto_heal_state.json"
@@ -43,6 +45,8 @@ if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
   jq -n \
     --arg generated_at "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     --arg readiness_file "${READINESS_FILE}" \
+    --arg score_file "${SCORE_FILE}" \
+    --arg trend_file "${TREND_FILE}" \
   --arg risk_level "${RISK_LEVEL}" \
   --arg change_policy "${CHANGE_POLICY}" \
   --arg go_live_status "${GO_LIVE_STATUS}" \
@@ -59,8 +63,12 @@ if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
     --argjson metrics "${METRICS_JSON}" \
     --slurpfile readiness "${READINESS_FILE}" \
     --slurpfile alert "${ALERT_STATE_FILE}" \
-    --slurpfile autoheal "${AUTOHEAL_STATE_FILE}" '
+    --slurpfile autoheal "${AUTOHEAL_STATE_FILE}" \
+    --slurpfile score "${SCORE_FILE}" \
+    --slurpfile trend "${TREND_FILE}" '
     def safe_readiness: if ($readiness|length) > 0 then $readiness[0] else {} end;
+    def safe_score: if ($score|length) > 0 then $score[0] else {} end;
+    def safe_trend: if ($trend|length) > 0 then $trend[0] else {} end;
     {
       generated_at: $generated_at,
       executive: {
@@ -88,9 +96,19 @@ if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
         autoheal_last_diagnosis_detail: ($autoheal[0].last_diagnosis_detail // ""),
         autoheal_postcheck_ok: ($autoheal[0].postcheck_ok // false)
       },
+      operational_discipline: {
+        score: (safe_score.scoring.final_score // 0),
+        grade: (safe_score.scoring.grade // "N/A"),
+        status: (safe_score.scoring.status // "N/A"),
+        trend: (safe_trend.summary.trend // "UNKNOWN"),
+        executive_band: (safe_trend.summary.executive_band // "INDEFINIDA"),
+        operator_note: (safe_trend.decision.operator_note // "Sem leitura de tendencia.")
+      },
       artifacts: {
         readiness_file: $readiness_file,
         risk_file: $risk_file,
+        score_file: $score_file,
+        trend_file: $trend_file,
         latest_chaos_suite: $chaos_file,
         latest_postgres_backup: $pg_file,
         latest_redis_backup: $redis_file,
@@ -149,6 +167,8 @@ else
       artifacts: {
         readiness_file: "",
         risk_file: $risk_file,
+        score_file: $score_file,
+        trend_file: $trend_file,
         latest_chaos_suite: $chaos_file,
         latest_postgres_backup: $pg_file,
         latest_redis_backup: $redis_file,
