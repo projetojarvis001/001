@@ -8,26 +8,24 @@ OUT_FILE="${OUT_DIR}/jarvis_postgres_${STAMP}.sql.gz"
 
 mkdir -p "${OUT_DIR}"
 
-POSTGRES_DB_VALUE=""
-POSTGRES_USER_VALUE=""
-POSTGRES_PASSWORD_VALUE=""
+DB_NAME="jarvis_db"
+DB_USER="jarvis_admin"
+DB_PASS=""
 
 if [ -f .env ]; then
   while IFS='=' read -r key value; do
     case "$key" in
-      POSTGRES_DB) POSTGRES_DB_VALUE="$value" ;;
-      POSTGRES_USER) POSTGRES_USER_VALUE="$value" ;;
-      POSTGRES_PASSWORD) POSTGRES_PASSWORD_VALUE="$value" ;;
+      PG_PASSWORD) DB_PASS="$value" ;;
     esac
-  done < <(grep -E '^(POSTGRES_DB|POSTGRES_USER|POSTGRES_PASSWORD)=' .env)
+  done < <(grep -E '^(PG_PASSWORD)=' .env)
 fi
 
-DB_NAME="${POSTGRES_DB_VALUE:-jarvis}"
-DB_USER="${POSTGRES_USER_VALUE:-jarvis_admin}"
-DB_PASS="${POSTGRES_PASSWORD_VALUE:-}"
+if [ -z "${DB_PASS}" ]; then
+  DB_PASS="$(docker inspect jarvis-postgres-1 --format '{{range .Config.Env}}{{println .}}{{end}}' | grep '^POSTGRES_PASSWORD=' | head -n 1 | cut -d= -f2-)"
+fi
 
 if [ -z "${DB_PASS}" ]; then
-  echo "[ERRO] POSTGRES_PASSWORD nao definida"
+  echo "[ERRO] PG_PASSWORD/POSTGRES_PASSWORD nao definida"
   exit 1
 fi
 
