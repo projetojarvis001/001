@@ -2,6 +2,10 @@
 set -e
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
+echo "===== CONFIG CHECK ====="
+./scripts/check_config_consistency.sh || true
+
+echo
 echo "===== SNAPSHOT ====="
 ./scripts/snapshot_stack_health.sh
 

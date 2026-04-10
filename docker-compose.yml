@@ -47,7 +47,7 @@ services:
       - /Users/jarvis001/jarvis:/host_jarvis
       - /Users/jarvis001/.ssh:/root/.ssh:ro
     environment:
-      - DATABASE_URL=postgres://jarvis_admin:W%21%40%23wps%402026@postgres:5432/jarvis
+      - DATABASE_URL=postgres://jarvis_admin:W%21%40%23wps%402026@postgres:5432/jarvis_db
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - VISION_HOST=${VISION_HOST}
       - VISION_BRIDGE_URL=${VISION_BRIDGE_URL}
