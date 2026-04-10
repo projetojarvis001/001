@@ -20,7 +20,7 @@ PG_FILE="$(ls -1t backups/postgres/*.sql.gz 2>/dev/null | head -n 1 || true)"
 REDIS_FILE="$(ls -1t backups/redis/*.rdb 2>/dev/null | head -n 1 || true)"
 OPS_FILE="$(ls -1t backups/operational_state/*.tar.gz 2>/dev/null | head -n 1 || true)"
 ENV_FILE="$(ls -1t backups/env/*.bak 2>/dev/null | head -n 1 || true)"
-SCORE_FILE="$(ls -1t logs/executive/operational_score_*.json 2>/dev/null | grep -v "operational_score_history.json" | head -n 1 || true)"
+SCORE_FILE="$(ls -1t logs/executive/operational_score_[0-9]*.json 2>/dev/null | head -n 1 || true)"
 TREND_FILE="$(ls -1t logs/executive/operational_score_trend_*.json 2>/dev/null | head -n 1 || true)"
 
 ALERT_STATE_FILE="logs/state/alert_state.json"

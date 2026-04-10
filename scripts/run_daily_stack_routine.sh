@@ -104,6 +104,30 @@ echo "===== RELEASE TIMELINE ====="
 ./scripts/release_timeline_build.sh
 
 echo
+echo "===== RELEASE RELIABILITY ====="
+./scripts/release_reliability_score.sh
+
+echo
+echo "===== DAILY EXECUTIVE PACKET ====="
+./scripts/daily_executive_packet.sh
+
+echo
+echo "===== DAILY EXECUTIVE BUNDLE ====="
+./scripts/daily_executive_bundle.sh
+
+echo
+echo "===== DAILY EXECUTIVE COMPARE ====="
+./scripts/daily_executive_compare.sh
+
+echo
+echo "===== OPERATIONAL DEGRADATION CAUSES ====="
+./scripts/operational_degradation_causes.sh
+
+echo
+echo "===== AUDIT BUNDLE INDEX ====="
+./scripts/audit_bundle_index_update.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
