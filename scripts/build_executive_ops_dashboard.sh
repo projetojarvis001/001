@@ -27,6 +27,18 @@ AUTOHEAL_STATE_FILE="logs/state/auto_heal_state.json"
 [ -f "${AUTOHEAL_STATE_FILE}" ] || echo '{}' > "${AUTOHEAL_STATE_FILE}"
 
 if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
+  if [ -n "${RISK_FILE}" ] && [ -f "${RISK_FILE}" ]; then
+    RISK_LEVEL=$(jq -r '.decision.risk_level // ""' "${RISK_FILE}")
+    GO_LIVE_STATUS=$(jq -r '.decision.go_live_status // ""' "${RISK_FILE}")
+    CHANGE_POLICY=$(jq -r '.decision.change_policy // ""' "${RISK_FILE}")
+    OPERATOR_NOTE=$(jq -r '.decision.operator_note // ""' "${RISK_FILE}")
+  else
+    RISK_LEVEL=""
+    GO_LIVE_STATUS=""
+    CHANGE_POLICY=""
+    OPERATOR_NOTE=""
+  fi
+
   jq -n \
     --arg generated_at "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     --arg readiness_file "${READINESS_FILE}" \

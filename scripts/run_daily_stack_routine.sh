@@ -68,6 +68,10 @@ echo "===== READINESS STRICT ====="
 ./scripts/readiness_gate_strict.sh
 
 echo
+echo "===== OPERATIONAL RISK ====="
+./scripts/operational_risk_gate.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
