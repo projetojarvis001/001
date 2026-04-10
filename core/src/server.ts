@@ -4,6 +4,8 @@ dotenv.config();
 import express from 'express';
 import axios from 'axios';
 import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 import { dispatch } from './dispatcher';
 import { pool } from './logger';
 import './agents/sentinel';
@@ -27,6 +29,34 @@ function requireInternalKey(req: any, res: any, next: any) {
 
   next();
 }
+
+app.get('/stack/metrics', async (_req, res) => {
+  try {
+    const metricsPath = path.resolve('logs/state/stack_metrics.json');
+    const autoHealPath = path.resolve('logs/state/auto_heal_state.json');
+
+    const metrics = fs.existsSync(metricsPath)
+      ? JSON.parse(fs.readFileSync(metricsPath, 'utf8'))
+      : null;
+
+    const autoHeal = fs.existsSync(autoHealPath)
+      ? JSON.parse(fs.readFileSync(autoHealPath, 'utf8'))
+      : null;
+
+    return res.json({
+      ok: true,
+      service: 'jarvis-stack-metrics',
+      timestamp: new Date().toISOString(),
+      metrics,
+      autoHeal
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || 'erro ao ler stack metrics'
+    });
+  }
+});
 
 app.get('/stack/health', async (_req, res) => {
   const visionHost = process.env.VISION_HOST;

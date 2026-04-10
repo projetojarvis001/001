@@ -329,6 +329,20 @@ fetch('network_report.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   $('v-internet').textContent = d.public_ip+' · '+d.isp;
 }).catch(()=>{});
 
+fetch('/stack/metrics').then(r=>r.json()).then(d=>{
+  const metrics = d.metrics || {};
+  const autoHeal = d.autoHeal || {};
+
+  const fmt = (v)=> (v === undefined || v === null || v === '' ? '--' : String(v));
+
+  const a = document.getElementById('m-down-count'); if (a) a.textContent = fmt(metrics.down_count);
+  const b = document.getElementById('m-total-downtime'); if (b) b.textContent = fmt(metrics.total_downtime_seconds);
+  const c = document.getElementById('m-last-down'); if (c) c.textContent = fmt(metrics.last_down_at);
+  const d1 = document.getElementById('m-last-recovered'); if (d1) d1.textContent = fmt(metrics.last_recovered_at);
+  const e = document.getElementById('m-last-action'); if (e) e.textContent = fmt(autoHeal.last_action);
+  const f = document.getElementById('m-last-result'); if (f) f.textContent = fmt(autoHeal.last_result);
+}).catch(()=>{});
+
 fetch('/semantic-proxy/health').then(r=>r.json()).then(d=>{
   $('d-ollama').className = 'dot ok';
   $('b-ollama').className = 'svc-badge sb-ok';
