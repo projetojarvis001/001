@@ -12,8 +12,9 @@ RISK_FILE="$(ls -1t logs/readiness/operational_risk_*.json 2>/dev/null | head -n
 WINDOW_FILE="$(ls -1t logs/readiness/change_window_*.json 2>/dev/null | head -n 1 || true)"
 APPROVAL_FILE="$(ls -1t logs/readiness/exception_check_*.json 2>/dev/null | head -n 1 || true)"
 PROMOTION_FILE="$(ls -1t logs/release/promotion_*.json 2>/dev/null | head -n 1 || true)"
-POST_FILE="$(ls -1t logs/release/post_deploy_verify_*.json 2>/dev/null | head -n 1 || true)"
-AUTO_ROLLBACK_FILE="$(ls -1t logs/release/auto_rollback_*.json 2>/dev/null | head -n 1 || true)"
+MANIFEST_FILE="$(ls -1t logs/release/release_manifest_*.json 2>/dev/null | head -n 1 || true)"
+POST_FILE=""
+AUTO_ROLLBACK_FILE=""
 SCORE_FILE="$(ls -1t logs/executive/operational_score_[0-9]*.json 2>/dev/null | head -n 1 || true)"
 TREND_FILE="$(ls -1t logs/executive/operational_score_trend_*.json 2>/dev/null | head -n 1 || true)"
 
@@ -57,12 +58,28 @@ if [ -n "${PROMOTION_FILE}" ] && [ -f "${PROMOTION_FILE}" ]; then
   APPROVAL_VALID="$(jq -r '.exception_approval.valid // false' "${PROMOTION_FILE}" 2>/dev/null || echo false)"
 fi
 
+if [ -n "${PROMOTION_FILE}" ] && [ -f "${PROMOTION_FILE}" ]; then
+  POST_FILE="$(jq -r '.sources.post_deploy_file // ""' "${PROMOTION_FILE}")"
+  ROLLBACK_STATUS="$(jq -r '.rollback.status // "NOT_RUN"' "${PROMOTION_FILE}")"
+fi
+
+if [ -n "${MANIFEST_FILE}" ] && [ -f "${MANIFEST_FILE}" ]; then
+  if [ -z "${POST_FILE}" ]; then
+    POST_FILE="$(jq -r '.sources.post_deploy_file // ""' "${MANIFEST_FILE}")"
+  fi
+  if [ -z "${AUTO_ROLLBACK_FILE}" ]; then
+    AUTO_ROLLBACK_FILE="$(jq -r '.sources.auto_rollback_file // ""' "${MANIFEST_FILE}")"
+  fi
+fi
+
 if [ -n "${POST_FILE}" ] && [ -f "${POST_FILE}" ]; then
   POST_DEPLOY_STATUS="$(jq -r '.result.status // "NOT_RUN"' "${POST_FILE}")"
 fi
 
 if [ -n "${AUTO_ROLLBACK_FILE}" ] && [ -f "${AUTO_ROLLBACK_FILE}" ]; then
   AUTO_ROLLBACK_STATUS="$(jq -r '.result.final_status // "NOT_RUN"' "${AUTO_ROLLBACK_FILE}")"
+elif [ "${ROLLBACK_STATUS}" = "EXECUTADO" ] || [ "${ROLLBACK_STATUS}" = "FALHOU" ]; then
+  AUTO_ROLLBACK_STATUS="${ROLLBACK_STATUS}"
 fi
 
 if [ -n "${SCORE_FILE}" ] && [ -f "${SCORE_FILE}" ]; then
