@@ -64,6 +64,10 @@ echo "===== READINESS SAFE ====="
 ./scripts/readiness_gate_safe.sh
 
 echo
+echo "===== READINESS STRICT ====="
+./scripts/readiness_gate_strict.sh
+
+echo
 echo "===== DASHBOARD EXECUTIVO ====="
 ./scripts/build_executive_ops_dashboard.sh
 
