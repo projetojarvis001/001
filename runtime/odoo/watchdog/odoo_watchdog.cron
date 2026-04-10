@@ -1,0 +1,1 @@
+*/5 * * * * /Users/jarvis001/jarvis/scripts/phase92_odoo_watchdog_runner.sh >> /Users/jarvis001/jarvis/runtime/odoo/watchdog/cron_stdout.log 2>&1

@@ -1,0 +1,49 @@
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+
+===== LOG FILES =====
+cron_stdout.log
+last_run.json
+last_run.ok
+watchdog_20260410-215404.json
+watchdog_20260410-215501.json
+watchdog_20260410-215502.json
+watchdog_20260410-220001.json
+watchdog_20260410-220501.json
+watchdog_20260410-220547.json
+watchdog_20260410-220847.json
+watchdog_20260410-221001.json
+watchdog_20260410-221037.json
+watchdog_20260410-221410.json
+watchdog_20260410-221501.json
+watchdog_20260410-221553.json
+watchdog_20260410-221704.json
+watchdog_20260410-221820.json
+watchdog_20260410-221820.log
+watchdog_20260410-221924.json
+watchdog_20260410-221924.log
+
+===== LAST JSON =====
+{
+  "created_at": "2026-04-10T22:19:25Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}
+
+===== LAST STAMP =====
+2026-04-10T22:19:25Z
+Connection to 177.104.176.69 closed.

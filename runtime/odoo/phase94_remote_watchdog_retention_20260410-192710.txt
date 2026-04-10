@@ -1,0 +1,15 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== RETENTION FILE =====
+-rwx------ 1 wps wps 762 Apr 10 22:27 /home/wps/odoo_watchdog/retention.sh
+
+===== RETENTION RUN =====
+json_count=17
+log_count=4
+cron_stdout_size=705
+
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+17 2 * * * /home/wps/odoo_watchdog/retention.sh >> /home/wps/odoo_watchdog/logs/retention_stdout.log 2>&1
+Connection to 177.104.176.69 closed.

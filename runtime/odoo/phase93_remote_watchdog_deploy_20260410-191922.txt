@@ -1,0 +1,30 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+
+===== LAST JSON =====
+{
+  "created_at": "2026-04-10T22:19:25Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}
+
+===== LAST STAMP =====
+2026-04-10T22:19:25Z
+Connection to 177.104.176.69 closed.
