@@ -42,6 +42,11 @@ if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
   jq -n \
     --arg generated_at "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     --arg readiness_file "${READINESS_FILE}" \
+  --arg risk_level "${RISK_LEVEL}" \
+  --arg change_policy "${CHANGE_POLICY}" \
+  --arg go_live_status "${GO_LIVE_STATUS}" \
+  --arg operator_note "${OPERATOR_NOTE}" \
+  --arg risk_file "${RISK_FILE}" \
     --arg chaos_file "${CHAOS_FILE}" \
     --arg pg_file "${PG_FILE}" \
     --arg redis_file "${REDIS_FILE}" \
@@ -84,27 +89,20 @@ if [ -n "${READINESS_FILE}" ] && [ -f "${READINESS_FILE}" ]; then
       },
       artifacts: {
         readiness_file: $readiness_file,
+        risk_file: $risk_file,
         latest_chaos_suite: $chaos_file,
         latest_postgres_backup: $pg_file,
         latest_redis_backup: $redis_file,
         latest_operational_backup: $ops_file,
         latest_env_backup: $env_file
       },
+      governance: {
+        risk_level: $risk_level,
+        change_policy: $change_policy
+      },
       decision: {
-        go_live_status:
-          (if (safe_readiness.readiness // "") == "READY" and ($stack.ok // false) == true
-           then "LIBERAR"
-           elif ($stack.ok // false) == true
-           then "LIBERAR_COM_RISCO"
-           else "BLOQUEAR"
-           end),
-        operator_note:
-          (if (safe_readiness.readiness // "") == "READY" and ($stack.ok // false) == true
-           then "Stack pronta para operacao controlada."
-           elif ($stack.ok // false) == true
-           then "Stack de pe, mas ha pendencias de governanca."
-           else "Nao liberar. Corrigir stack antes."
-           end)
+        go_live_status: $go_live_status,
+        operator_note: $operator_note
       }
     }' > "${OUT_FILE}"
 else
@@ -149,15 +147,20 @@ else
       },
       artifacts: {
         readiness_file: "",
+        risk_file: $risk_file,
         latest_chaos_suite: $chaos_file,
         latest_postgres_backup: $pg_file,
         latest_redis_backup: $redis_file,
         latest_operational_backup: $ops_file,
         latest_env_backup: $env_file
       },
+      governance: {
+        risk_level: $risk_level,
+        change_policy: $change_policy
+      },
       decision: {
-        go_live_status: (if ($stack.ok // false) then "LIBERAR_COM_RISCO" else "BLOQUEAR" end),
-        operator_note: "Readiness ausente. Revisar antes de liberar."
+        go_live_status: $go_live_status,
+        operator_note: $operator_note
       }
     }' > "${OUT_FILE}"
 fi
