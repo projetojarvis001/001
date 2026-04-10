@@ -1,4 +1,22 @@
 #!/usr/bin/env bash
+
+VISION_ALERT_STATE_DIR="${VISION_ALERT_STATE_DIR:-runtime/vision_alert}"
+VISION_ALERT_LOG="${VISION_ALERT_LOG:-logs/telegram/vision_alert_internal.log}"
+VISION_FAIL_THRESHOLD="${VISION_FAIL_THRESHOLD:-5}"
+VISION_RECOVER_THRESHOLD="${VISION_RECOVER_THRESHOLD:-3}"
+mkdir -p "${VISION_ALERT_STATE_DIR}" "$(dirname "${VISION_ALERT_LOG}")"
+
+VISION_FAIL_FILE="${VISION_ALERT_STATE_DIR}/vision_fail.count"
+VISION_OK_FILE="${VISION_ALERT_STATE_DIR}/vision_ok.count"
+
+read_count() {
+  local f="$1"
+  if [ -f "$f" ]; then
+    cat "$f" 2>/dev/null || echo 0
+  else
+    echo 0
+  fi
+}
 if ./scripts/telegram_guard.sh; then
   exit 0
 fi
@@ -179,3 +197,10 @@ fi
 
 echo "[ALERTA] stack com falha"
 exit 1
+
+
+VISION_STATUS_FILE="${VISION_ALERT_STATE_DIR}/last_eval.status"
+
+if grep -q 'V.I.S.I.O.N. Offline ou instavel\|V.I.S.I.O.N. Offline ou instável' "$0" 2>/dev/null; then
+  :
+fi
