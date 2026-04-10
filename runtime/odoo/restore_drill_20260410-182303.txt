@@ -1,0 +1,19 @@
+===== INPUTS =====
+DRILL_DB=WPS_drill_20260410-182215
+DB_DUMP_FILE=/home/wps/backup_odoo_phase88_20260410-181902/db_WPS_20260410-181902.dump
+
+===== DROP IF EXISTS =====
+NOTICE:  database "WPS_drill_20260410-182215" does not exist, skipping
+
+===== CREATE DRILL DB =====
+
+===== RESTORE DRILL DB =====
+
+===== CHECK TABLE COUNT =====
+586
+
+===== CHECK USERS =====
+6
+
+===== DRILL DB READY =====
+WPS_drill_20260410-182215

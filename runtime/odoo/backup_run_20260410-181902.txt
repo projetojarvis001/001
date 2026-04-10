@@ -1,0 +1,19 @@
+===== BACKUP DIR =====
+/home/wps/backup_odoo_phase88_20260410-181902
+
+===== DB DUMP =====
+-rw-rw-r-- 1 wps wps 6.5M Apr 10 21:19 /home/wps/backup_odoo_phase88_20260410-181902/db_WPS_20260410-181902.dump
+4a92b3a42a1ad3d27cdcb5549e70681fbba35b2a7fd74310f063526f86fc24e0  /home/wps/backup_odoo_phase88_20260410-181902/db_WPS_20260410-181902.dump
+
+===== ODOO CONF =====
+[sudo] password for wps: -rw-r--r-- 1 root root 366 Apr 10 21:19 /home/wps/backup_odoo_phase88_20260410-181902/odoo.conf
+622ff2e87eb4ec86a7e9b080624e1bc48b109e2960e2a6f435a3cdc8b716484a  /home/wps/backup_odoo_phase88_20260410-181902/odoo.conf
+
+===== NGINX CONF =====
+-rw-r--r-- 1 root root 580 Apr 10 21:19 /home/wps/backup_odoo_phase88_20260410-181902/nginx_odoo.conf
+7bfd8f3b6d67d8c043e8392edda96235a93067013f64af58ad2e2cb5b7e0970e  /home/wps/backup_odoo_phase88_20260410-181902/nginx_odoo.conf
+
+===== FILE LIST =====
+/home/wps/backup_odoo_phase88_20260410-181902/db_WPS_20260410-181902.dump
+/home/wps/backup_odoo_phase88_20260410-181902/nginx_odoo.conf
+/home/wps/backup_odoo_phase88_20260410-181902/odoo.conf
