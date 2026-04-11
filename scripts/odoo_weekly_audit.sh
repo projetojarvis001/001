@@ -16,8 +16,8 @@ echo "===== FASE 95 / ALERTA ====="
 ./scripts/phase95_odoo_alert_delivery_probe.sh
 
 echo
-echo "===== FASE 97 / DRIFT ====="
-./scripts/phase97_odoo_watchdog_drift_probe.sh
+echo "===== FASE 101 / DRIFT REBASELINE ====="
+./scripts/phase101_odoo_watchdog_drift_rebaseline_probe.sh
 
 echo
 echo "===== FASE 98 / RESTORE ====="
