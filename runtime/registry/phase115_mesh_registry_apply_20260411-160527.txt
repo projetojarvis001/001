@@ -1,0 +1,68 @@
+===== APPLY PHASE115 =====
+
+===== REGISTRY FILE =====
+{
+  "created_at": "2026-04-11T19:05:27Z",
+  "registry_version": 1,
+  "nodes": [
+    {
+      "name": "jarvis",
+      "role": "core_orchestrator",
+      "host": "192.168.8.121",
+      "ssh_port": 22,
+      "health_url": "http://192.168.8.121:3000",
+      "status": "online"
+    },
+    {
+      "name": "vision",
+      "role": "observability_hub",
+      "host": "192.168.8.124",
+      "ssh_port": 22,
+      "health_url": "http://192.168.8.124:3010/health",
+      "status": "online"
+    },
+    {
+      "name": "friday",
+      "role": "automation_worker",
+      "host": "192.168.8.36",
+      "ssh_port": 22,
+      "health_url": "http://192.168.8.36:3010/health",
+      "status": "online"
+    },
+    {
+      "name": "tadash",
+      "role": "edge_executor",
+      "host": "177.104.176.69",
+      "ssh_port": 61022,
+      "health_url": "http://177.104.176.69:58069",
+      "status": "online"
+    }
+  ]
+}
+
+===== DEPLOY VISION HEARTBEAT =====
+{
+  "name": "vision",
+  "role": "observability_hub",
+  "host": "192.168.8.124",
+  "heartbeat": "2026-04-11T19:05:27Z",
+  "status": "online"
+}
+
+===== DEPLOY FRIDAY HEARTBEAT =====
+{
+  "name": "friday",
+  "role": "automation_worker",
+  "host": "192.168.8.36",
+  "heartbeat": "2026-04-11T19:05:27Z",
+  "status": "online"
+}
+
+===== DEPLOY TADASH HEARTBEAT =====
+{
+  "name": "tadash",
+  "role": "edge_executor",
+  "host": "177.104.176.69",
+  "heartbeat": "2026-04-11T19:05:27Z",
+  "status": "online"
+}

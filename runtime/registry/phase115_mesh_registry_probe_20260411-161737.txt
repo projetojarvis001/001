@@ -1,0 +1,56 @@
+===== PROBE PHASE115 =====
+
+VISION -> http://192.168.8.124:3010/health
+{"status": "ok", "service": "mesh_health", "hostname": "2-VISION.local"}
+
+FRIDAY -> http://192.168.8.36:3010/health
+{"status": "ok", "service": "mesh_health", "hostname": "friday"}
+
+TADASH -> http://177.104.176.69:58069
+TADASH_HTTP_OK=true
+
+===== REMOTE IDENTITY FILES =====
+--- VISION ---
+{
+  "name": "vision",
+  "role": "observability_hub",
+  "host": "192.168.8.124",
+  "heartbeat": "2026-04-11T19:17:36Z",
+  "status": "online"
+}
+--- FRIDAY ---
+{
+  "name": "friday",
+  "role": "automation_worker",
+  "host": "192.168.8.36",
+  "heartbeat": "2026-04-11T19:17:36Z",
+  "status": "online"
+}
+--- TADASH ---
+{
+  "name": "tadash",
+  "role": "edge_executor",
+  "host": "177.104.176.69",
+  "heartbeat": "2026-04-11T19:17:36Z",
+  "status": "online"
+}
+
+[OK] phase115 probe gerado em logs/executive/phase115_mesh_registry_probe_20260411-161737.json
+{
+  "created_at": "2026-04-11T19:17:37Z",
+  "mesh_registry_probe": {
+    "raw_file": "runtime/registry/phase115_mesh_registry_probe_20260411-161737.txt",
+    "vision_http_ok": true,
+    "friday_http_ok": true,
+    "tadash_http_ok": true,
+    "vision_id_ok": true,
+    "friday_id_ok": true,
+    "tadash_id_ok": true,
+    "ready_count": 3,
+    "overall_ok": true
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}
