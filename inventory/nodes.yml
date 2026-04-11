@@ -4,21 +4,25 @@ nodes:
     host: 127.0.0.1
     ssh_port: 22
     enabled: true
+    probe_http: "http://127.0.0.1:3000"
 
   - name: vision
     role: observability_hub
-    host: COLE_AQUI_IP_OU_HOST_DO_VISION
-    ssh_port: 22
-    enabled: false
+    host: ${VISION_HOST}
+    ssh_port: ${VISION_SSH_PORT}
+    enabled: true
+    probe_http: "http://${VISION_HOST}:${VISION_HTTP_PORT}"
 
   - name: friday
     role: automation_worker
-    host: COLE_AQUI_IP_OU_HOST_DO_FRIDAY
-    ssh_port: 22
-    enabled: false
+    host: ${FRIDAY_HOST}
+    ssh_port: ${FRIDAY_SSH_PORT}
+    enabled: true
+    probe_http: "http://${FRIDAY_HOST}:${FRIDAY_HTTP_PORT}"
 
   - name: tadash
     role: edge_executor
-    host: COLE_AQUI_IP_OU_HOST_DO_TADASH
-    ssh_port: 22
-    enabled: false
+    host: ${TADASH_HOST}
+    ssh_port: ${TADASH_SSH_PORT}
+    enabled: true
+    probe_http: "http://${TADASH_HOST}:${TADASH_HTTP_PORT}"
