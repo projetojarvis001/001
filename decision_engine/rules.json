@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "obs_down",
+      "description": "Observabilidade indisponivel",
+      "condition": "observability_flow_ok == false",
+      "severity": "critical",
+      "action": "run_phase103_probe",
+      "mode": "safe_auto"
+    },
+    {
+      "id": "odoo_closure_broken",
+      "description": "Fechamento executivo do Odoo invalido",
+      "condition": "odoo_closure_ok == false",
+      "severity": "high",
+      "action": "run_validate_fase100",
+      "mode": "safe_auto"
+    },
+    {
+      "id": "fallback_broken",
+      "description": "Fallback de alerta invalido",
+      "condition": "odoo_fallback_ok == false",
+      "severity": "high",
+      "action": "run_phase99_probe",
+      "mode": "safe_auto"
+    },
+    {
+      "id": "restore_broken",
+      "description": "Restore do watchdog invalido",
+      "condition": "odoo_restore_ok == false",
+      "severity": "high",
+      "action": "run_phase98_probe",
+      "mode": "safe_auto"
+    },
+    {
+      "id": "mesh_partial",
+      "description": "Malha definida mas parcialmente habilitada",
+      "condition": "mesh_nodes_enabled < mesh_nodes_defined",
+      "severity": "medium",
+      "action": "flag_for_expansion",
+      "mode": "advisory"
+    },
+    {
+      "id": "capability_score_low",
+      "description": "Score de capacidade ainda baixo",
+      "condition": "capability_score < 30",
+      "severity": "medium",
+      "action": "prioritize_phase109_plus",
+      "mode": "advisory"
+    }
+  ]
+}

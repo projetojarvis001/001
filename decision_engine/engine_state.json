@@ -1,0 +1,76 @@
+{
+  "created_at": "2026-04-11T12:27:17Z",
+  "decision_engine": {
+    "rules_file": "decision_engine/rules.json",
+    "snapshot_file": "logs/executive/phase108_decision_engine_snapshot_20260411-092717.json",
+    "rules_total": 6,
+    "triggered_total": 2,
+    "triggered_ids": [
+      "mesh_partial",
+      "capability_score_low"
+    ],
+    "highest_severity": "medium",
+    "auto_actions_possible": [],
+    "advisories": [
+      "flag_for_expansion",
+      "prioritize_phase109_plus"
+    ],
+    "decisions": [
+      {
+        "id": "obs_down",
+        "description": "Observabilidade indisponivel",
+        "condition": "observability_flow_ok == false",
+        "severity": "critical",
+        "action": "run_phase103_probe",
+        "mode": "safe_auto",
+        "matched": false
+      },
+      {
+        "id": "odoo_closure_broken",
+        "description": "Fechamento executivo do Odoo invalido",
+        "condition": "odoo_closure_ok == false",
+        "severity": "high",
+        "action": "run_validate_fase100",
+        "mode": "safe_auto",
+        "matched": false
+      },
+      {
+        "id": "fallback_broken",
+        "description": "Fallback de alerta invalido",
+        "condition": "odoo_fallback_ok == false",
+        "severity": "high",
+        "action": "run_phase99_probe",
+        "mode": "safe_auto",
+        "matched": false
+      },
+      {
+        "id": "restore_broken",
+        "description": "Restore do watchdog invalido",
+        "condition": "odoo_restore_ok == false",
+        "severity": "high",
+        "action": "run_phase98_probe",
+        "mode": "safe_auto",
+        "matched": false
+      },
+      {
+        "id": "mesh_partial",
+        "description": "Malha definida mas parcialmente habilitada",
+        "condition": "mesh_nodes_enabled < mesh_nodes_defined",
+        "severity": "medium",
+        "action": "flag_for_expansion",
+        "mode": "advisory",
+        "matched": true
+      },
+      {
+        "id": "capability_score_low",
+        "description": "Score de capacidade ainda baixo",
+        "condition": "capability_score < 30",
+        "severity": "medium",
+        "action": "prioritize_phase109_plus",
+        "mode": "advisory",
+        "matched": true
+      }
+    ],
+    "overall_ok": true
+  }
+}
