@@ -1,0 +1,183 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== TREE =====
+/home/wps/odoo_watchdog/alert.env
+/home/wps/odoo_watchdog/alert.env.bak.phase96.20260410-205310
+/home/wps/odoo_watchdog/backup_phase98_20260410-210742/alert.env
+/home/wps/odoo_watchdog/backup_phase98_20260410-210742/crontab.txt
+/home/wps/odoo_watchdog/backup_phase98_20260410-210742/retention.sh
+/home/wps/odoo_watchdog/backup_phase98_20260410-210742/send_alert.sh
+/home/wps/odoo_watchdog/backup_phase98_20260410-210828/alert.env
+/home/wps/odoo_watchdog/backup_phase98_20260410-210828/crontab.txt
+/home/wps/odoo_watchdog/backup_phase98_20260410-210828/retention.sh
+/home/wps/odoo_watchdog/backup_phase98_20260410-210828/send_alert.sh
+/home/wps/odoo_watchdog/.env
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-224131.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-224200.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-224410.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-224705.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-224937.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-225344.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-225806.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-230126.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234420.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234422.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234714.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234716.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234946.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-234947.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-235312.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-001023.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-001154.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-001215.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-001414.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-001423.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-003916.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-004047.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-004401.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-004915.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-005422.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-005428.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-010635.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-010637.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-011135.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-011136.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-011310.json
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-011311.json
+/home/wps/odoo_watchdog/logs/cron_stdout.log
+/home/wps/odoo_watchdog/logs/last_run.json
+/home/wps/odoo_watchdog/logs/last_run.ok
+/home/wps/odoo_watchdog/logs/watchdog_20260410-215404.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-215501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-215502.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-220001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-220501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-220547.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-220847.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221037.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221410.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221553.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221704.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221820.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221820.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221924.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-221924.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-222001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-222001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-222501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-222501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-223001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-223001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-223501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-223501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-224002.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-224002.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-224501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-224501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-225001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-225001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-225501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-225501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-230001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-230001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-230501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-230501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-231001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-231001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-231501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-231501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-232001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-232001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-232501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-232501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-233001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-233001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-233501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-233501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-234001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-234001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-234501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-234501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-235001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-235001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260410-235501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260410-235501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-000001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-000001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-000501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-000501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-001001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-001001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-001501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-001501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-002001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-002001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-002501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-002501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-003001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-003001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-003501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-003501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-004001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-004001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-004501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-004501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-005001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-005001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-005501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-005501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-010001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-010001.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-010501.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-010501.log
+/home/wps/odoo_watchdog/logs/watchdog_20260411-011001.json
+/home/wps/odoo_watchdog/logs/watchdog_20260411-011001.log
+/home/wps/odoo_watchdog/retention.sh
+/home/wps/odoo_watchdog/send_alert.sh
+/home/wps/odoo_watchdog/send_alert.sh.phase99.bak
+/home/wps/odoo_watchdog/watchdog_run.sh
+
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+17 2 * * * /home/wps/odoo_watchdog/retention.sh >> /home/wps/odoo_watchdog/logs/retention_stdout.log 2>&1
+
+===== LAST RUN JSON =====
+{
+  "created_at": "2026-04-11T01:10:02Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}
+
+===== LAST ALERT JSON =====
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-011311.json
+{
+  "created_at": "2026-04-11T01:13:12Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T01:13:12Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+
+===== FAILED QUEUE COUNT =====
+2

@@ -1,0 +1,145 @@
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+17 2 * * * /home/wps/odoo_watchdog/retention.sh >> /home/wps/odoo_watchdog/logs/retention_stdout.log 2>&1
+
+===== LOG FILES =====
+alert_delivery_20260410-224131.json
+alert_delivery_20260410-224200.json
+alert_delivery_20260410-224410.json
+alert_delivery_20260410-224705.json
+alert_delivery_20260410-224937.json
+alert_delivery_20260410-225344.json
+alert_delivery_20260410-225806.json
+alert_delivery_20260410-230126.json
+alert_delivery_20260410-234420.json
+alert_delivery_20260410-234422.json
+alert_delivery_20260410-234714.json
+alert_delivery_20260410-234716.json
+alert_delivery_20260410-234946.json
+alert_delivery_20260410-234947.json
+alert_delivery_20260410-235312.json
+alert_delivery_20260411-001023.json
+alert_delivery_20260411-001154.json
+alert_delivery_20260411-001215.json
+alert_delivery_20260411-001414.json
+alert_delivery_20260411-001423.json
+alert_delivery_20260411-003916.json
+alert_delivery_20260411-004047.json
+alert_delivery_20260411-004401.json
+alert_delivery_20260411-004915.json
+alert_delivery_20260411-005422.json
+alert_delivery_20260411-005428.json
+cron_stdout.log
+failed_queue
+last_run.json
+last_run.ok
+watchdog_20260410-215404.json
+watchdog_20260410-215501.json
+watchdog_20260410-215502.json
+watchdog_20260410-220001.json
+watchdog_20260410-220501.json
+watchdog_20260410-220547.json
+watchdog_20260410-220847.json
+watchdog_20260410-221001.json
+watchdog_20260410-221037.json
+watchdog_20260410-221410.json
+watchdog_20260410-221501.json
+watchdog_20260410-221553.json
+watchdog_20260410-221704.json
+watchdog_20260410-221820.json
+watchdog_20260410-221820.log
+watchdog_20260410-221924.json
+watchdog_20260410-221924.log
+watchdog_20260410-222001.json
+watchdog_20260410-222001.log
+watchdog_20260410-222501.json
+watchdog_20260410-222501.log
+watchdog_20260410-223001.json
+watchdog_20260410-223001.log
+watchdog_20260410-223501.json
+watchdog_20260410-223501.log
+watchdog_20260410-224002.json
+watchdog_20260410-224002.log
+watchdog_20260410-224501.json
+watchdog_20260410-224501.log
+watchdog_20260410-225001.json
+watchdog_20260410-225001.log
+watchdog_20260410-225501.json
+watchdog_20260410-225501.log
+watchdog_20260410-230001.json
+watchdog_20260410-230001.log
+watchdog_20260410-230501.json
+watchdog_20260410-230501.log
+watchdog_20260410-231001.json
+watchdog_20260410-231001.log
+watchdog_20260410-231501.json
+watchdog_20260410-231501.log
+watchdog_20260410-232001.json
+watchdog_20260410-232001.log
+watchdog_20260410-232501.json
+watchdog_20260410-232501.log
+watchdog_20260410-233001.json
+watchdog_20260410-233001.log
+watchdog_20260410-233501.json
+watchdog_20260410-233501.log
+watchdog_20260410-234001.json
+watchdog_20260410-234001.log
+watchdog_20260410-234501.json
+watchdog_20260410-234501.log
+watchdog_20260410-235001.json
+watchdog_20260410-235001.log
+watchdog_20260410-235501.json
+watchdog_20260410-235501.log
+watchdog_20260411-000001.json
+watchdog_20260411-000001.log
+watchdog_20260411-000501.json
+watchdog_20260411-000501.log
+watchdog_20260411-001001.json
+watchdog_20260411-001001.log
+watchdog_20260411-001501.json
+watchdog_20260411-001501.log
+watchdog_20260411-002001.json
+watchdog_20260411-002001.log
+watchdog_20260411-002501.json
+watchdog_20260411-002501.log
+watchdog_20260411-003001.json
+watchdog_20260411-003001.log
+watchdog_20260411-003501.json
+watchdog_20260411-003501.log
+watchdog_20260411-004001.json
+watchdog_20260411-004001.log
+watchdog_20260411-004501.json
+watchdog_20260411-004501.log
+watchdog_20260411-005001.json
+watchdog_20260411-005001.log
+watchdog_20260411-005501.json
+watchdog_20260411-005501.log
+watchdog_20260411-010001.json
+watchdog_20260411-010001.log
+watchdog_20260411-010501.json
+watchdog_20260411-010501.log
+
+===== LAST JSON =====
+{
+  "created_at": "2026-04-11T01:05:02Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}
+
+===== LAST STAMP =====
+2026-04-11T01:05:03Z
+Connection to 177.104.176.69 closed.

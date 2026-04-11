@@ -1,0 +1,27 @@
+{
+  "created_at": "2026-04-11T01:06:37Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T01:06:37Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+===== LAST SUCCESS ALERT =====
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-010637.json
+{
+  "created_at": "2026-04-11T01:06:37Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T01:06:37Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+
+===== FAILED QUEUE COUNT =====
+2

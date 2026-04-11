@@ -1,0 +1,131 @@
+set -euo pipefail
+
+BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+ENV_FILE="${BASE_DIR}/alert.env"
+LOG_DIR="${BASE_DIR}/logs"
+FAILED_DIR="${LOG_DIR}/failed_queue"
+ENV_BAK="${BASE_DIR}/alert.env.phase99.drill.bak"
+
+cp "${ENV_FILE}" "${ENV_BAK}"
+
+python3 - <<'PY'
+from pathlib import Path
+import os
+
+user = os.environ["ODOO_SSH_USER"]
+p = Path(f"/home/{user}/odoo_watchdog/alert.env")
+txt = p.read_text()
+if "hooks.slack.com" not in txt:
+    raise SystemExit("webhook slack nao encontrado no alert.env")
+txt = txt.replace("hooks.slack.com", "invalid.local", 1)
+p.write_text(txt)
+print("[OK] webhook temporariamente invalidado")
+PY
+
+set +e
+"${BASE_DIR}/send_alert.sh"
+EC=$?
+set -e
+
+mv "${ENV_BAK}" "${ENV_FILE}"
+chmod 600 "${ENV_FILE}"
+
+echo '===== EXIT CODE ====='
+echo "${EC}"
+echo
+echo '===== LAST ALERT ====='
+LAST_ALERT=$(ls -1t "${LOG_DIR}"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
+echo "${LAST_ALERT}"
+[ -n "${LAST_ALERT}" ] && cat "${LAST_ALERT}"
+echo
+echo '===== LAST FALLBACK ====='
+LAST_FAIL=$(ls -1t "${FAILED_DIR}"/alert_failed_*.json 2>/dev/null | head -n 1 || true)
+echo "${LAST_FAIL}"
+[ -n "${LAST_FAIL}" ] && cat "${LAST_FAIL}"
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ set -euo pipefail
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ ENV_FILE="${BASE_DIR}/alert.env"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ LOG_DIR="${BASE_DIR}/logs"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ FAILED_DIR="${LOG_DIR}/failed_queue"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ ENV_BAK="${BASE_DIR}/alert.env.phase99.drill.bak"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ cp "${ENV_FILE}" "${ENV_BAK}"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ python3 - <<'PY'
+[?2004l[?2004h> from pathlib import Path
+[?2004l[?2004h> import os
+[?2004l[?2004h> 
+[?2004l[?2004h> user = os.environ["ODOO_SSH_USER"]
+[?2004l[?2004h> p = Path(f"/home/{user}/odoo_watchdog/alert.env")
+[?2004l[?2004h> txt = p.read_text()
+[?2004l[?2004h> if "hooks.slack.com" not in txt:
+[?2004l[?2004h>     raise SystemExit("webhook slack nao encontrado no alert.env")
+[?2004l[?2004h> txt = txt.replace("hooks.slack.com", "invalid.local", 1)
+[?2004l[?2004h> p.write_text(txt)
+[?2004l[?2004h> print("[OK] webhook temporariamente invalidado")
+[?2004l[?2004h> PY
+[?2004l[OK] webhook temporariamente invalidado
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ set +e
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ "${BASE_DIR}/send_alert.sh"
+[?2004l{
+  "created_at": "2026-04-11T00:39:21Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:39:16Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ EC=$?
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ set -e
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ mv "${ENV_BAK}" "${ENV_FILE}"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ chmod 600 "${ENV_FILE}"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== EXIT CODE ====='
+[?2004l===== EXIT CODE =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo "${EC}"
+[?2004l0
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo
+[?2004l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== LAST ALERT ====='
+[?2004l===== LAST ALERT =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ LAST_ALERT=$(ls -1t "${LOG_DIR}"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo "${LAST_ALERT}"
+[?2004l/home/wps/odoo_watchdog/logs/alert_delivery_20260411-003916.json
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ [ -n "${LAST_ALERT}" ] && cat "${LAST_ALERT}"
+[?2004l{
+  "created_at": "2026-04-11T00:39:21Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:39:16Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo
+[?2004l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== LAST FALLBACK ====='
+[?2004l===== LAST FALLBACK =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ LAST_FAIL=$(ls -1t "${FAILED_DIR}"/alert_failed_*.json 2>/dev/null | head -n 1 || true)
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo "${LAST_FAIL}"
+[?2004l/home/wps/odoo_watchdog/logs/failed_queue/alert_failed_20260411-003916.json
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ [ -n "${LAST_FAIL}" ] && cat "${LAST_FAIL}"
+[?2004l{
+  "created_at": "2026-04-11T00:39:21Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:39:16Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ Connection to 177.104.176.69 closed.

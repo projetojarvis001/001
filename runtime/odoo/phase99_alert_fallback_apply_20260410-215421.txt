@@ -1,0 +1,9 @@
+[OK] phase99 fallback ja estava aplicado
+===== SEND FILE =====
+-rwx------ 1 wps wps 1652 Apr 11 00:35 /home/wps/odoo_watchdog/send_alert.sh
+
+===== BACKUP FILE =====
+-rwx------ 1 wps wps 1428 Apr 11 00:35 /home/wps/odoo_watchdog/send_alert.sh.phase99.bak
+
+===== FALLBACK CHECK =====
+7:FAILED_DIR="${LOG_DIR}/failed_queue"

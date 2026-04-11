@@ -1,0 +1,1 @@
+./scripts/phase99_odoo_alert_fallback_apply.sh: line 16: BASE_DIR: unbound variable

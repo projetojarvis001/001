@@ -1,0 +1,58 @@
+set -euo pipefail
+
+BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+LOG_DIR="${BASE_DIR}/logs"
+FAILED_DIR="${LOG_DIR}/failed_queue"
+
+"${BASE_DIR}/send_alert.sh"
+
+echo '===== LAST SUCCESS ALERT ====='
+LAST_ALERT=$(ls -1t "${LOG_DIR}"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
+echo "${LAST_ALERT}"
+[ -n "${LAST_ALERT}" ] && cat "${LAST_ALERT}"
+echo
+echo '===== FAILED QUEUE COUNT ====='
+find "${FAILED_DIR}" -maxdepth 1 -type f -name 'alert_failed_*.json' | wc -l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ set -euo pipefail
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ LOG_DIR="${BASE_DIR}/logs"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ FAILED_DIR="${LOG_DIR}/failed_queue"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ "${BASE_DIR}/send_alert.sh"
+[?2004l{
+  "created_at": "2026-04-11T00:44:02Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:44:02Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== LAST SUCCESS ALERT ====='
+[?2004l===== LAST SUCCESS ALERT =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ LAST_ALERT=$(ls -1t "${LOG_DIR}"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo "${LAST_ALERT}"
+[?2004l/home/wps/odoo_watchdog/logs/alert_delivery_20260411-004401.json
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ [ -n "${LAST_ALERT}" ] && cat "${LAST_ALERT}"
+[?2004l{
+  "created_at": "2026-04-11T00:44:02Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:44:02Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo
+[?2004l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== FAILED QUEUE COUNT ====='
+[?2004l===== FAILED QUEUE COUNT =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ find "${FAILED_DIR}" -maxdepth 1 -type f -name 'alert_failed_*.json' | wc -l
+[?2004l1
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ Connection to 177.104.176.69 closed.

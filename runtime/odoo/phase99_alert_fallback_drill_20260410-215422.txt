@@ -1,0 +1,42 @@
+[OK] webhook temporariamente invalidado
+{
+  "created_at": "2026-04-11T00:54:28Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:54:23Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}
+===== EXIT CODE =====
+0
+
+===== LAST ALERT =====
+/home/wps/odoo_watchdog/logs/alert_delivery_20260411-005422.json
+{
+  "created_at": "2026-04-11T00:54:28Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:54:23Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}
+
+===== LAST FALLBACK =====
+/home/wps/odoo_watchdog/logs/failed_queue/alert_failed_20260411-005422.json
+{
+  "created_at": "2026-04-11T00:54:28Z",
+  "alert_delivery": {
+    "http_ok": false,
+    "status_code": 0,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-11T00:54:23Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+}

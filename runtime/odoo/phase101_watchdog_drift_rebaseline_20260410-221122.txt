@@ -1,0 +1,39 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== SEND SHA =====
+2da55b72382832d341bf91e4213701c993536483404b967c4b69adf8007448b1
+
+===== ENV SHA =====
+a7d68646e105e055f6d4153f54b8716f24381c80a70d5f6dfd9efe28d0973e46
+
+===== RETENTION FILE =====
+/home/wps/odoo_watchdog/retention.sh
+
+===== RETENTION SHA =====
+c930efeb399d0fd00bcf403b87217ba9748368275f66796d3b1071255919c090
+
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+17 2 * * * /home/wps/odoo_watchdog/retention.sh >> /home/wps/odoo_watchdog/logs/retention_stdout.log 2>&1
+
+===== LAST RUN JSON =====
+{
+  "created_at": "2026-04-11T01:10:02Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}

@@ -1,0 +1,124 @@
+set -euo pipefail
+
+BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+SEND_FILE="${BASE_DIR}/send_alert.sh"
+BACKUP_FILE="${BASE_DIR}/send_alert.sh.phase99.bak"
+
+if ! grep -q 'failed_queue' "${SEND_FILE}"; then
+  cp "${SEND_FILE}" "${BACKUP_FILE}"
+
+  python3 - <<'PY'
+from pathlib import Path
+import os
+
+user = os.environ["ODOO_SSH_USER"]
+p = Path(f"/home/{user}/odoo_watchdog/send_alert.sh")
+txt = p.read_text()
+
+old = 'LOG_DIR="${BASE_DIR}/logs"\nmkdir -p "${LOG_DIR}"'
+new = 'LOG_DIR="${BASE_DIR}/logs"\nFAILED_DIR="${LOG_DIR}/failed_queue"\nmkdir -p "${LOG_DIR}" "${FAILED_DIR}"'
+if old not in txt:
+    raise SystemExit("bloco LOG_DIR nao encontrado")
+txt = txt.replace(old, new, 1)
+
+old2 = 'OUT_JSON="${LOG_DIR}/alert_delivery_${TS}.json"'
+new2 = 'OUT_JSON="${LOG_DIR}/alert_delivery_${TS}.json"\nFALLBACK_JSON="${FAILED_DIR}/alert_failed_${TS}.json"'
+if old2 not in txt:
+    raise SystemExit("bloco OUT_JSON nao encontrado")
+txt = txt.replace(old2, new2, 1)
+
+marker = 'cat "${OUT_JSON}"'
+insert = '''if jq -e '.alert_delivery.http_ok == false' "${OUT_JSON}" >/dev/null; then
+  cp "${OUT_JSON}" "${FALLBACK_JSON}"
+fi
+
+cat "${OUT_JSON}"'''
+if marker not in txt:
+    raise SystemExit("marker cat OUT_JSON nao encontrado")
+txt = txt.replace(marker, insert, 1)
+
+p.write_text(txt)
+print("[OK] phase99 fallback aplicado")
+PY
+else
+  [ -f "${BACKUP_FILE}" ] || cp "${SEND_FILE}" "${BACKUP_FILE}"
+  echo "[OK] phase99 fallback ja estava aplicado"
+fi
+
+chmod 700 "${SEND_FILE}"
+
+echo '===== SEND FILE ====='
+ls -l "${SEND_FILE}"
+echo
+echo '===== BACKUP FILE ====='
+ls -l "${BACKUP_FILE}"
+echo
+echo '===== FALLBACK CHECK ====='
+grep -n 'failed_queue' "${SEND_FILE}" || true
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ set -euo pipefail
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ BASE_DIR="/home/${ODOO_SSH_USER}/odoo_watchdog"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ SEND_FILE="${BASE_DIR}/send_alert.sh"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ BACKUP_FILE="${BASE_DIR}/send_alert.sh.phase99.bak"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ if ! grep -q 'failed_queue' "${SEND_FILE}"; then
+[?2004l[?2004h>   cp "${SEND_FILE}" "${BACKUP_FILE}"
+[?2004l[?2004h> 
+[?2004l[?2004h>   python3 - <<'PY'
+[?2004l[?2004h> from pathlib import Path
+[?2004l[?2004h> import os
+[?2004l[?2004h> 
+[?2004l[?2004h> user = os.environ["ODOO_SSH_USER"]
+[?2004l[?2004h> p = Path(f"/home/{user}/odoo_watchdog/send_alert.sh")
+[?2004l[?2004h> txt = p.read_text()
+[?2004l[?2004h> 
+[?2004l[?2004h> old = 'LOG_DIR="${BASE_DIR}/logs"\nmkdir -p "${LOG_DIR}"'
+[?2004l[?2004h> new = 'LOG_DIR="${BASE_DIR}/logs"\nFAILED_DIR="${LOG_DIR}/failed_queue"\nmkdir -p "${LOG_DIR}" "${FAILED_DIR}"'
+[?2004l[?2004h> if old not in txt:
+[?2004l[?2004h>     raise SystemExit("bloco LOG_DIR nao encontrado")
+[?2004l[?2004h> txt = txt.replace(old, new, 1)
+[?2004l[?2004h> 
+[?2004l[?2004h> old2 = 'OUT_JSON="${LOG_DIR}/alert_delivery_${TS}.json"'
+[?2004l[?2004h> new2 = 'OUT_JSON="${LOG_DIR}/alert_delivery_${TS}.json"\nFALLBACK_JSON="${FAILED_DIR}/alert_failed_${TS}.json"'
+[?2004l[?2004h> if old2 not in txt:
+[?2004l[?2004h>     raise SystemExit("bloco OUT_JSON nao encontrado")
+[?2004l[?2004h> txt = txt.replace(old2, new2, 1)
+[?2004l[?2004h> 
+[?2004l[?2004h> marker = 'cat "${OUT_JSON}"'
+[?2004l[?2004h> insert = '''if jq -e '.alert_delivery.http_ok == false' "${OUT_JSON}" >/dev/null; then
+[?2004l[?2004h>   cp "${OUT_JSON}" "${FALLBACK_JSON}"
+[?2004l[?2004h> fi
+[?2004l[?2004h> 
+[?2004l[?2004h> cat "${OUT_JSON}"'''
+[?2004l[?2004h> if marker not in txt:
+[?2004l[?2004h>     raise SystemExit("marker cat OUT_JSON nao encontrado")
+[?2004l[?2004h> txt = txt.replace(marker, insert, 1)
+[?2004l[?2004h> 
+[?2004l[?2004h> p.write_text(txt)
+[?2004l[?2004h> print("[OK] phase99 fallback aplicado")
+[?2004l[?2004h> PY
+[?2004l[?2004h> else
+[?2004l[?2004h>   [ -f "${BACKUP_FILE}" ] || cp "${SEND_FILE}" "${BACKUP_FILE}"
+[?2004l[?2004h>   echo "[OK] phase99 fallback ja estava aplicado"
+[?2004l[?2004h> fi
+[?2004l[OK] phase99 fallback ja estava aplicado
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ chmod 700 "${SEND_FILE}"
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ 
+[?2004l[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== SEND FILE ====='
+[?2004l===== SEND FILE =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ ls -l "${SEND_FILE}"
+[?2004l-rwx------ 1 wps wps 1652 Apr 11 00:35 [0m[01;32m/home/wps/odoo_watchdog/send_alert.sh[0m
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo
+[?2004l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== BACKUP FILE ====='
+[?2004l===== BACKUP FILE =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ ls -l "${BACKUP_FILE}"
+[?2004l-rwx------ 1 wps wps 1428 Apr 11 00:35 [0m[01;32m/home/wps/odoo_watchdog/send_alert.sh.phase99.bak[0m
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo
+[?2004l
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ echo '===== FALLBACK CHECK ====='
+[?2004l===== FALLBACK CHECK =====
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ grep -n 'failed_queue' "${SEND_FILE}" || true
+[?2004l[32m[K7[m[K[36m[K:[m[KFAILED_DIR="${LOG_DIR}/[01;31m[Kfailed_queue[m[K"
+[?2004h]0;wps@wps-odoo-001: ~[01;32mwps@wps-odoo-001[00m:[01;34m~[00m$ Connection to 177.104.176.69 closed.
