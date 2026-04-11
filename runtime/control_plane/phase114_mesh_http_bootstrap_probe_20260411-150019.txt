@@ -1,0 +1,25 @@
+===== HTTP PROBE PHASE114 =====
+VISION -> http://192.168.8.124:3010/health
+VISION_HTTP_OK=true
+
+FRIDAY -> http://192.168.8.36:3010/health
+FRIDAY_HTTP_OK=true
+
+TADASH -> http://177.104.176.69:58069
+TADASH_HTTP_OK=true
+[OK] phase114 probe gerado em logs/executive/phase114_mesh_http_bootstrap_probe_20260411-150019.json
+{
+  "created_at": "2026-04-11T18:00:19Z",
+  "mesh_http_bootstrap_probe": {
+    "raw_file": "runtime/control_plane/phase114_mesh_http_bootstrap_probe_20260411-150019.txt",
+    "vision_http_ok": true,
+    "friday_http_ok": true,
+    "tadash_http_ok": true,
+    "ready_count": 3,
+    "overall_ok": true
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

@@ -1,0 +1,19 @@
+===== APPLY PHASE114 =====
+
+===== NODE vision =====
+{"status": "ok", "service": "mesh_health", "hostname": "2-VISION.local"}
+===== NODE friday =====
+{"status": "ok", "service": "mesh_health", "hostname": "friday"}[OK] phase114 apply gerado em logs/executive/phase114_mesh_http_bootstrap_apply_20260411-150015.json
+{
+  "created_at": "2026-04-11T18:00:15Z",
+  "mesh_http_bootstrap_apply": {
+    "raw_file": "runtime/control_plane/phase114_mesh_http_bootstrap_apply_20260411-150015.txt",
+    "vision_ok": true,
+    "friday_ok": true,
+    "overall_ok": true
+  },
+  "governance": {
+    "deploy_executed": true,
+    "production_changed": true
+  }
+}
