@@ -18,11 +18,15 @@ set -e
 
 BASE_DIR='/home/${ODOO_SSH_USER}/odoo_watchdog'
 LOG_DIR=\"\${BASE_DIR}/logs\"
+SEND_FILE=\"\${BASE_DIR}/send_alert.sh\"
 
+echo '===== FORCE ALERT RUN ====='
+\"\${SEND_FILE}\"
+echo
 echo '===== LAST WATCHDOG JSON ====='
-LAST_JSON=\$(ls -1t \"\${LOG_DIR}\"/last_run.json 2>/dev/null | head -n 1 || true)
-echo \"\$LAST_JSON\"
-[ -n \"\$LAST_JSON\" ] && cat \"\$LAST_JSON\"
+LAST_JSON=\"\${LOG_DIR}/last_run.json\"
+echo \"\${LAST_JSON}\"
+[ -f \"\${LAST_JSON}\" ] && cat \"\${LAST_JSON}\"
 echo
 echo '===== LAST ALERT DELIVERY ====='
 LAST_ALERT=\$(ls -1t \"\${LOG_DIR}\"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
@@ -56,7 +60,7 @@ jq -nc \
   }' > "${OUT_JSON}"
 
 cat > "${OUT_MD}" <<MD
-# FASE 98 — ODOO Watchdog Restore Probe
+# FASE 98A — ODOO Watchdog Restore Probe Fix
 
 ## Probe
 - raw_file: ${RAW_FILE}
@@ -68,5 +72,5 @@ cat > "${OUT_MD}" <<MD
 - production_changed: false
 MD
 
-echo "[OK] restore probe gerado em ${OUT_JSON}"
+echo "[OK] restore probe 98A gerado em ${OUT_JSON}"
 cat "${OUT_JSON}" | jq .
