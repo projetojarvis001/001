@@ -1,0 +1,25 @@
+{
+  "created_at": "2026-04-11T12:10:33Z",
+  "executive_status": {
+    "system_status": "operational",
+    "score": 14.0,
+    "machines": {
+      "defined": 4,
+      "enabled": 1,
+      "jarvis_role": "core_orchestrator",
+      "vision_enabled": false,
+      "friday_enabled": false,
+      "tadash_enabled": false
+    },
+    "services": {
+      "observability_foundation": true,
+      "odoo_closure": true,
+      "drift_rebaseline": true,
+      "dashboard_snapshot": true
+    },
+    "focus": {
+      "next_priority": "habilitar vision friday tadash com IP real e enriquecer mapa de comunicacoes",
+      "main_gap": "malha ainda definida mais no modelo do que em alcance real multi-no"
+    }
+  }
+}
