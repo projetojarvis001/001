@@ -1,0 +1,27 @@
+graph TD
+    JARVIS_CORE[jarvis_core :3000]
+    POSTGRES[postgres :5432]
+    REDIS[redis :6379]
+    N8N[jarvis_n8n :5678]
+    JGRAFANA[jarvis_grafana :3001]
+
+    PROM[obs_prometheus :9090]
+    OGRAFANA[obs_grafana :3300]
+    LOKI[obs_loki :3100]
+    NODE[obs_node_exporter :9100]
+    CADVISOR[obs_cadvisor :8080]
+    BLACKBOX[obs_blackbox :9115]
+
+    ODOOHTTP[odoo_http :58069]
+    ODOOSSH[odoo_ssh :61022]
+
+    JARVIS_CORE --> POSTGRES
+    JARVIS_CORE --> REDIS
+    N8N --> JARVIS_CORE
+    PROM --> NODE
+    PROM --> CADVISOR
+    PROM --> BLACKBOX
+    OGRAFANA --> PROM
+    OGRAFANA --> LOKI
+    BLACKBOX --> ODOOHTTP
+    JARVIS_CORE --> ODOOHTTP

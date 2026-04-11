@@ -1,0 +1,177 @@
+{
+  "created_at": "2026-04-11T12:16:14Z",
+  "nodes": [
+    {
+      "id": "jarvis",
+      "role": "core_orchestrator",
+      "enabled": true
+    },
+    {
+      "id": "vision",
+      "role": "observability_hub",
+      "enabled": false
+    },
+    {
+      "id": "friday",
+      "role": "automation_worker",
+      "enabled": false
+    },
+    {
+      "id": "tadash",
+      "role": "edge_executor",
+      "enabled": false
+    }
+  ],
+  "services": [
+    {
+      "id": "jarvis_core",
+      "node": "jarvis",
+      "port": 3000,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "jarvis_grafana",
+      "node": "jarvis",
+      "port": 3001,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "jarvis_n8n",
+      "node": "jarvis",
+      "port": 5678,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "postgres",
+      "node": "jarvis",
+      "port": 5432,
+      "protocol": "tcp",
+      "status": "online"
+    },
+    {
+      "id": "redis",
+      "node": "jarvis",
+      "port": 6379,
+      "protocol": "tcp",
+      "status": "online"
+    },
+    {
+      "id": "obs_prometheus",
+      "node": "jarvis",
+      "port": 9090,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "obs_grafana",
+      "node": "jarvis",
+      "port": 3300,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "obs_loki",
+      "node": "jarvis",
+      "port": 3100,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "obs_node_exporter",
+      "node": "jarvis",
+      "port": 9100,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "obs_cadvisor",
+      "node": "jarvis",
+      "port": 8080,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "obs_blackbox",
+      "node": "jarvis",
+      "port": 9115,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "odoo_http",
+      "node": "external_odoo",
+      "port": 58069,
+      "protocol": "http",
+      "status": "online"
+    },
+    {
+      "id": "odoo_ssh",
+      "node": "external_odoo",
+      "port": 61022,
+      "protocol": "tcp",
+      "status": "online"
+    }
+  ],
+  "links": [
+    {
+      "from": "jarvis_core",
+      "to": "postgres",
+      "type": "dependency"
+    },
+    {
+      "from": "jarvis_core",
+      "to": "redis",
+      "type": "dependency"
+    },
+    {
+      "from": "jarvis_n8n",
+      "to": "jarvis_core",
+      "type": "automation"
+    },
+    {
+      "from": "obs_prometheus",
+      "to": "obs_node_exporter",
+      "type": "scrape"
+    },
+    {
+      "from": "obs_prometheus",
+      "to": "obs_cadvisor",
+      "type": "scrape"
+    },
+    {
+      "from": "obs_prometheus",
+      "to": "obs_blackbox",
+      "type": "scrape"
+    },
+    {
+      "from": "obs_grafana",
+      "to": "obs_prometheus",
+      "type": "datasource"
+    },
+    {
+      "from": "obs_grafana",
+      "to": "obs_loki",
+      "type": "datasource"
+    },
+    {
+      "from": "obs_blackbox",
+      "to": "odoo_http",
+      "type": "probe"
+    },
+    {
+      "from": "jarvis_core",
+      "to": "odoo_http",
+      "type": "business_integration"
+    }
+  ],
+  "summary": {
+    "nodes_defined": 4,
+    "nodes_enabled": 1,
+    "services_total": 13,
+    "links_total": 10,
+    "overall_status": "operational"
+  }
+}
