@@ -22,11 +22,13 @@ SEND_FILE=\"\${BASE_DIR}/send_alert.sh\"
 
 echo '===== FORCE ALERT RUN ====='
 \"\${SEND_FILE}\"
+
 echo
 echo '===== LAST WATCHDOG JSON ====='
 LAST_JSON=\"\${LOG_DIR}/last_run.json\"
 echo \"\${LAST_JSON}\"
 [ -f \"\${LAST_JSON}\" ] && cat \"\${LAST_JSON}\"
+
 echo
 echo '===== LAST ALERT DELIVERY ====='
 LAST_ALERT=\$(ls -1t \"\${LOG_DIR}\"/alert_delivery_*.json 2>/dev/null | head -n 1 || true)
