@@ -1,0 +1,63 @@
+{
+  "phase": "118D",
+  "created_at": "2026-04-11T21:55:36Z",
+  "mode": "lease_simulation_only",
+  "lease_policy": {
+    "analysis_only": true,
+    "lease_enforced": false,
+    "ttl_seconds_default": 300,
+    "max_owner_heartbeat_age_seconds": 120,
+    "stuck_recovery_enabled": false
+  },
+  "leases": [
+    {
+      "job_id": "sched_vision_health_001",
+      "node": "vision",
+      "owner": "scheduler-vision",
+      "current_status": "done",
+      "lease_status": "active",
+      "ownership_valid": true,
+      "ttl_seconds": 300,
+      "max_owner_heartbeat_age_seconds": 120,
+      "acquired_at": "2026-04-11T21:55:36Z",
+      "heartbeat_at": "2026-04-11T21:55:36Z",
+      "expires_at": "2026-04-11T22:00:36Z",
+      "flagged_for_recovery": false,
+      "simulation_only": true
+    },
+    {
+      "job_id": "sched_friday_health_001",
+      "node": "friday",
+      "owner": "scheduler-friday",
+      "current_status": "done",
+      "lease_status": "active",
+      "ownership_valid": true,
+      "ttl_seconds": 300,
+      "max_owner_heartbeat_age_seconds": 120,
+      "acquired_at": "2026-04-11T21:55:36Z",
+      "heartbeat_at": "2026-04-11T21:55:36Z",
+      "expires_at": "2026-04-11T22:00:36Z",
+      "flagged_for_recovery": false,
+      "simulation_only": true
+    },
+    {
+      "job_id": "sched_tadash_health_001",
+      "node": "tadash",
+      "owner": "scheduler-tadash",
+      "current_status": "done",
+      "lease_status": "active",
+      "ownership_valid": true,
+      "ttl_seconds": 300,
+      "max_owner_heartbeat_age_seconds": 120,
+      "acquired_at": "2026-04-11T21:55:36Z",
+      "heartbeat_at": "2026-04-11T21:55:36Z",
+      "expires_at": "2026-04-11T22:00:36Z",
+      "flagged_for_recovery": false,
+      "simulation_only": true
+    }
+  ],
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

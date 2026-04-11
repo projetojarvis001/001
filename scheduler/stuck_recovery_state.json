@@ -1,0 +1,37 @@
+{
+  "phase": "118D",
+  "created_at": "2026-04-11T21:56:38Z",
+  "objective": "initialize_lease_lock_and_stuck_recovery",
+  "status": "stuck_recovery_simulation_completed",
+  "mode": "analysis_only",
+  "inputs": {
+    "job_queue": "scheduler/job_queue.json",
+    "stuck_jobs": "scheduler/stuck_jobs.json",
+    "job_leases": "scheduler/job_leases.json",
+    "requeue_results": "scheduler/requeue_results.json"
+  },
+  "recovery_policy": {
+    "analysis_only": true,
+    "auto_recover_enabled": false,
+    "lease_break_enabled": false,
+    "duplicate_execution_blocking": false
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  },
+  "last_lease_summary": {
+    "leases_total": 3,
+    "active_leases": 3,
+    "expired_leases": 0,
+    "ownership_valid_count": 3,
+    "jobs_flagged_for_recovery": 0
+  },
+  "last_recovery_summary": {
+    "recovery_candidates_total": 0,
+    "recover_now_total": 0,
+    "blocked_by_active_lease_total": 0,
+    "observe_only_total": 3,
+    "jobs_total": 3
+  }
+}

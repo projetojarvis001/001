@@ -1,0 +1,21 @@
+{
+  "phase": "118D",
+  "created_at": "2026-04-11T21:54:39Z",
+  "expected_inputs": [
+    "scheduler/job_queue.json",
+    "scheduler/stuck_jobs.json",
+    "scheduler/job_leases.json",
+    "scheduler/requeue_results.json"
+  ],
+  "analysis_scope": [
+    "lease_structure",
+    "ownership_model",
+    "ttl_policy",
+    "duplicate_execution_prevention",
+    "stuck_job_recovery_strategy"
+  ],
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}
