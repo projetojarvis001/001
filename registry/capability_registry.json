@@ -1,0 +1,64 @@
+{
+  "phase": "118E",
+  "created_at": "2026-04-11T21:58:35Z",
+  "mode": "initialization_only",
+  "registry_policy": {
+    "analysis_only": true,
+    "routing_enforced": false,
+    "service_selection_enforced": false,
+    "capability_gating_enforced": false
+  },
+  "nodes": {
+    "jarvis": {
+      "machine_role": "principal_local_mac_mini_m4",
+      "operational_role": "core_orchestration",
+      "capabilities": [
+        "repo_control",
+        "phase_execution",
+        "runtime_validation",
+        "coordination"
+      ],
+      "status": "declared"
+    },
+    "vision": {
+      "machine_role": "apoio_local_mac_mini_m4",
+      "operational_role": "observability_support",
+      "capabilities": [
+        "http_health",
+        "registry_presence",
+        "dispatch_execution",
+        "scheduler_target"
+      ],
+      "status": "declared"
+    },
+    "friday": {
+      "machine_role": "central_operacional_local_dell_7020_plus",
+      "operational_role": "central_execution",
+      "capabilities": [
+        "http_health",
+        "registry_presence",
+        "dispatch_execution",
+        "scheduler_target",
+        "higher_local_capacity"
+      ],
+      "status": "declared"
+    },
+    "tadash": {
+      "machine_role": "remoto_exclusivo_hospedagem_odoo",
+      "operational_role": "remote_odoo_host",
+      "capabilities": [
+        "http_health",
+        "registry_presence",
+        "dispatch_execution",
+        "scheduler_target",
+        "remote_execution",
+        "odoo_hosting"
+      ],
+      "status": "declared"
+    }
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

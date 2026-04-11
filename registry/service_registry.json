@@ -1,0 +1,82 @@
+{
+  "phase": "118E",
+  "created_at": "2026-04-11T21:58:35Z",
+  "mode": "initialization_only",
+  "services": {
+    "mesh_health_http": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "http_health"
+      ],
+      "eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "status": "declared"
+    },
+    "mesh_registry_identity": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "registry_presence"
+      ],
+      "eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "status": "declared"
+    },
+    "mesh_dispatch_execution": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "dispatch_execution"
+      ],
+      "eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "status": "declared"
+    },
+    "mesh_scheduler_target": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "scheduler_target"
+      ],
+      "eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "status": "declared"
+    },
+    "repo_phase_control": {
+      "type": "control_service",
+      "required_capabilities": [
+        "repo_control",
+        "phase_execution",
+        "runtime_validation"
+      ],
+      "eligible_nodes": [
+        "jarvis"
+      ],
+      "status": "declared"
+    },
+    "odoo_remote_hosting": {
+      "type": "business_service",
+      "required_capabilities": [
+        "odoo_hosting",
+        "remote_execution"
+      ],
+      "eligible_nodes": [
+        "tadash"
+      ],
+      "status": "declared"
+    }
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

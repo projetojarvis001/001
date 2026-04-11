@@ -1,0 +1,184 @@
+{
+  "phase": "118E",
+  "created_at": "2026-04-11T21:59:48Z",
+  "mode": "eligibility_resolution_only",
+  "services": {
+    "mesh_health_http": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "http_health"
+      ],
+      "declared_eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "resolved_eligible_nodes": [
+        {
+          "node": "vision",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "friday",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "tadash",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        }
+      ],
+      "blocked_nodes": [],
+      "status": "resolved"
+    },
+    "mesh_registry_identity": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "registry_presence"
+      ],
+      "declared_eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "resolved_eligible_nodes": [
+        {
+          "node": "vision",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "friday",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "tadash",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        }
+      ],
+      "blocked_nodes": [],
+      "status": "resolved"
+    },
+    "mesh_dispatch_execution": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "dispatch_execution"
+      ],
+      "declared_eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "resolved_eligible_nodes": [
+        {
+          "node": "vision",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "friday",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "tadash",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        }
+      ],
+      "blocked_nodes": [],
+      "status": "resolved"
+    },
+    "mesh_scheduler_target": {
+      "type": "distributed_service",
+      "required_capabilities": [
+        "scheduler_target"
+      ],
+      "declared_eligible_nodes": [
+        "vision",
+        "friday",
+        "tadash"
+      ],
+      "resolved_eligible_nodes": [
+        {
+          "node": "vision",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "friday",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        },
+        {
+          "node": "tadash",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        }
+      ],
+      "blocked_nodes": [],
+      "status": "resolved"
+    },
+    "repo_phase_control": {
+      "type": "control_service",
+      "required_capabilities": [
+        "repo_control",
+        "phase_execution",
+        "runtime_validation"
+      ],
+      "declared_eligible_nodes": [
+        "jarvis"
+      ],
+      "resolved_eligible_nodes": [],
+      "blocked_nodes": [
+        {
+          "node": "jarvis",
+          "required_capabilities_ok": true,
+          "effective_weight": 0.0,
+          "health_status": "unknown"
+        }
+      ],
+      "status": "resolved"
+    },
+    "odoo_remote_hosting": {
+      "type": "business_service",
+      "required_capabilities": [
+        "odoo_hosting",
+        "remote_execution"
+      ],
+      "declared_eligible_nodes": [
+        "tadash"
+      ],
+      "resolved_eligible_nodes": [
+        {
+          "node": "tadash",
+          "required_capabilities_ok": true,
+          "effective_weight": 1.0,
+          "health_status": "healthy"
+        }
+      ],
+      "blocked_nodes": [],
+      "status": "resolved"
+    }
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

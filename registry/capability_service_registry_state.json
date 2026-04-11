@@ -1,0 +1,29 @@
+{
+  "phase": "118E",
+  "created_at": "2026-04-11T21:59:48Z",
+  "objective": "initialize_capability_registry_and_service_registry",
+  "status": "service_eligibility_resolved",
+  "mode": "analysis_only",
+  "inputs": {
+    "capability_registry": "registry/capability_registry.json",
+    "service_registry": "registry/service_registry.json",
+    "health_weights": "scheduler/health_weights.json",
+    "mesh_registry_state": "registry/mesh_registry_state.json",
+    "mesh_scheduler_state": "scheduler/mesh_scheduler_state.json"
+  },
+  "registry_policy": {
+    "analysis_only": true,
+    "eligibility_resolution_enabled": true,
+    "service_binding_enabled": false,
+    "capability_routing_enabled": false
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  },
+  "last_eligibility_summary": {
+    "services_total": 6,
+    "eligible_bindings_total": 13,
+    "blocked_bindings_total": 1
+  }
+}
