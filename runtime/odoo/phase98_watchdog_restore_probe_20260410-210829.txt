@@ -1,0 +1,25 @@
+===== LAST WATCHDOG JSON =====
+/home/wps/odoo_watchdog/logs/last_run.json
+{
+  "created_at": "2026-04-11T00:05:03Z",
+  "watchdog": {
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "web_ok": true,
+    "login_ok": true,
+    "status_code": 200,
+    "server_header": "nginx/1.24.0 (Ubuntu)",
+    "rpc_ok": true,
+    "auth_ok": true,
+    "uid": 7,
+    "server_version": "16.0",
+    "protocol_version": 1,
+    "web_error": "",
+    "rpc_error": "",
+    "overall_ok": true
+  }
+}
+
+===== LAST ALERT DELIVERY =====
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-235312.json
+Connection to 177.104.176.69 closed.

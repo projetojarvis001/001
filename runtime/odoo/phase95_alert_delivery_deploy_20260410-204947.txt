@@ -1,0 +1,19 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== SEND FILE =====
+-rwx------ 1 wps wps 1428 Apr 10 23:49 /home/wps/odoo_watchdog/send_alert.sh
+
+===== TEST RUN =====
+{
+  "created_at": "2026-04-10T23:49:48Z",
+  "alert_delivery": {
+    "http_ok": true,
+    "status_code": 200,
+    "message": "OK: watchdog remoto do ODOO testado com entrega real | db=WPS | url=http://177.104.176.69:58069 | created_at=2026-04-10T23:49:48Z",
+    "url": "http://177.104.176.69:58069",
+    "db": "WPS",
+    "error": ""
+  }
+}
+Connection to 177.104.176.69 closed.

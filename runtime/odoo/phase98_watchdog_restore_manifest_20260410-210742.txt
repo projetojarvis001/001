@@ -1,0 +1,13 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== BACKUP DIR =====
+/home/wps/odoo_watchdog/backup_phase98_20260410-210742
+
+===== FILES =====
+total 16
+-rw------- 1 wps wps  108 Apr 11 00:07 alert.env
+-rw-rw-r-- 1 wps wps  211 Apr 11 00:07 crontab.txt
+-rwx------ 1 wps wps  762 Apr 11 00:07 retention.sh
+-rwx------ 1 wps wps 1428 Apr 11 00:07 send_alert.sh
+Connection to 177.104.176.69 closed.

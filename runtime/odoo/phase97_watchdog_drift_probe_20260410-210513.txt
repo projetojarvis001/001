@@ -1,0 +1,16 @@
+===== SHA SEND =====
+dded57e0757ecd730ecd7bf353b25af4e367b8369657f82f9f9679dbb40458a6  /home/wps/odoo_watchdog/send_alert.sh
+
+===== SHA ENV =====
+3abe74ed75fcca11f3cd71a5a06afdb1287981ed06fe9649fb6c57b1216c41d6  /home/wps/odoo_watchdog/alert.env
+
+===== SHA RETENTION =====
+c930efeb399d0fd00bcf403b87217ba9748368275f66796d3b1071255919c090  /home/wps/odoo_watchdog/retention.sh
+
+===== CRONTAB =====
+*/5 * * * * /home/wps/odoo_watchdog/watchdog_run.sh >> /home/wps/odoo_watchdog/logs/cron_stdout.log 2>&1
+17 2 * * * /home/wps/odoo_watchdog/retention.sh >> /home/wps/odoo_watchdog/logs/retention_stdout.log 2>&1
+
+===== STAMP =====
+2026-04-11T00:05:03Z
+Connection to 177.104.176.69 closed.

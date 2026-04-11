@@ -1,0 +1,6 @@
+===== ALERT ENV =====
+-rw------- 1 wps wps 108 Apr 10 23:53 /home/wps/odoo_watchdog/alert.env
+
+===== LAST DELIVERY =====
+/home/wps/odoo_watchdog/logs/alert_delivery_20260410-235312.json
+Connection to 177.104.176.69 closed.

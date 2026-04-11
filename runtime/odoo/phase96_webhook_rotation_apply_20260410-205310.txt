@@ -1,0 +1,24 @@
+===== BASE DIR =====
+/home/wps/odoo_watchdog
+
+===== ENV FILE =====
+-rw------- 1 wps wps 108 Apr 10 23:53 /home/wps/odoo_watchdog/alert.env
+
+===== BACKUP FILE =====
+-rw------- 1 wps wps 156 Apr 10 23:53 /home/wps/odoo_watchdog/alert.env.bak.phase96.20260410-205310
+
+===== SEND FILE =====
+-rwx------ 1 wps wps 1428 Apr 10 23:49 /home/wps/odoo_watchdog/send_alert.sh
+
+===== TEST RUN =====
+Traceback (most recent call last):
+  File "<stdin>", line 16, in <module>
+  File "/usr/lib/python3.12/urllib/request.py", line 318, in __init__
+    self.full_url = url
+    ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 344, in full_url
+    self._parse()
+  File "/usr/lib/python3.12/urllib/request.py", line 373, in _parse
+    raise ValueError("unknown url type: %r" % self.full_url)
+ValueError: unknown url type: 'COLE_AQUI_O_NOVO_WEBHOOK_DO_SLACK'
+Connection to 177.104.176.69 closed.
