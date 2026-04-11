@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-04-11T20:06:27Z",
+  "jobs": [
+    {
+      "id": "sched_vision_health_001",
+      "node": "vision",
+      "host": "192.168.8.124",
+      "ssh_port": 22,
+      "user": "vision",
+      "password_env": "VISION_SSH_PASS",
+      "command": "echo sched_vision_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    },
+    {
+      "id": "sched_friday_health_001",
+      "node": "friday",
+      "host": "192.168.8.36",
+      "ssh_port": 22,
+      "user": "wagner",
+      "password_env": "FRIDAY_SSH_PASS",
+      "command": "echo sched_friday_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    },
+    {
+      "id": "sched_tadash_health_001",
+      "node": "tadash",
+      "host": "177.104.176.69",
+      "ssh_port": 61022,
+      "user": "wps",
+      "password_env": "TADASH_SSH_PASS",
+      "command": "echo sched_tadash_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-04-11T20:06:27Z",
+  "results": [
+    {
+      "job_id": "sched_vision_health_001",
+      "node": "vision",
+      "ok": true,
+      "output": "sched_vision_ok\n2-VISION.local\nvision"
+    },
+    {
+      "job_id": "sched_friday_health_001",
+      "node": "friday",
+      "ok": true,
+      "output": "sched_friday_ok\nfriday\nwagner"
+    },
+    {
+      "job_id": "sched_tadash_health_001",
+      "node": "tadash",
+      "ok": true,
+      "output": "sched_tadash_ok\nwps-odoo-001\nwps"
+    }
+  ]
+}
