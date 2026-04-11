@@ -1,0 +1,6 @@
+ Container obs_blackbox  Running
+ Container obs_loki  Running
+ Container obs_node_exporter  Running
+ Container obs_grafana  Running
+ Container obs_cadvisor  Running
+ Container obs_prometheus  Running

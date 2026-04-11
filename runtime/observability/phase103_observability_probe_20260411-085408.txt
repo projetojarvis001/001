@@ -1,0 +1,38 @@
+===== DOCKER PS =====
+NAMES                  STATUS                             PORTS
+obs_grafana            Up 12 seconds                      0.0.0.0:3300->3000/tcp, [::]:3300->3000/tcp
+obs_loki               Up 12 seconds                      0.0.0.0:3100->3100/tcp, [::]:3100->3100/tcp
+obs_prometheus         Up 12 seconds                      0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+obs_node_exporter      Up 12 seconds                      0.0.0.0:9100->9100/tcp, [::]:9100->9100/tcp
+obs_blackbox           Up 12 seconds                      0.0.0.0:9115->9115/tcp, [::]:9115->9115/tcp
+obs_cadvisor           Up 12 seconds (health: starting)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+jarvis-jarvis-core-1   Up 33 hours (healthy)              0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+redis                  Up 33 hours                        0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+jarvis-postgres-1      Up 37 hours (healthy)              0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+jarvis-grafana-1       Up 37 hours                        0.0.0.0:3001->3000/tcp, [::]:3001->3000/tcp
+jarvis-n8n-1           Up 37 hours                        0.0.0.0:5678->5678/tcp, [::]:5678->5678/tcp
+
+===== PROMETHEUS READY =====
+Prometheus Server is Ready.
+
+===== GRAFANA LOGIN PAGE =====
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#000" />
+
+    <title>Grafana</title>
+
+    <base href="/" />
+
+    <link rel="icon" type="image/png" href="public/build/img/fav32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="public/build/img/apple-touch-icon.png" />
+    <link rel="mask-icon" href="public/img/grafana_mask_icon.svg" color="#F05A28" />
+
+    
+      <link rel="stylesheet" href="public/build/grafana.app.88685c26236df711f7b7.css" />
+    

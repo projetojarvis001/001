@@ -1,0 +1,29 @@
+===== REACHABILITY =====
+[NODE] jarvis
+enabled=true
+host=127.0.0.1
+ssh_port=22
+ping_ok=true
+tcp_ok=false
+
+[NODE] vision
+enabled=false
+host=COLE_AQUI_IP_OU_HOST_DO_VISION
+ssh_port=22
+ping_ok=skipped
+tcp_ok=skipped
+
+[NODE] friday
+enabled=false
+host=COLE_AQUI_IP_OU_HOST_DO_FRIDAY
+ssh_port=22
+ping_ok=skipped
+tcp_ok=skipped
+
+[NODE] tadash
+enabled=false
+host=COLE_AQUI_IP_OU_HOST_DO_TADASH
+ssh_port=22
+ping_ok=skipped
+tcp_ok=skipped
+

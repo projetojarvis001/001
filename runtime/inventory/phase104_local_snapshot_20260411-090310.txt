@@ -1,0 +1,246 @@
+===== HOSTNAME =====
+1-JARVIS.local
+
+===== LOCAL IPS =====
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128 
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+	nd6 options=201<PERFORMNUD,DAD>
+gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
+stf0: flags=0<> mtu 1280
+anpi0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:75
+	media: none
+	status: inactive
+anpi1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:76
+	media: none
+	status: inactive
+anpi3: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:78
+	media: none
+	status: inactive
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=50b<RXCSUM,TXCSUM,VLAN_HWTAGGING,AV,CHANNEL_IO>
+	ether 1c:f6:4c:33:cb:21
+	inet6 fe80::c6:4d36:f1e6:1c1a%en0 prefixlen 64 secured scopeid 0x7 
+	inet 192.168.8.121 netmask 0xffffff00 broadcast 192.168.8.255
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect (1000baseT <full-duplex,energy-efficient-ethernet>)
+	status: active
+en5: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:55
+	nd6 options=201<PERFORMNUD,DAD>
+	media: none
+	status: inactive
+en6: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:56
+	nd6 options=201<PERFORMNUD,DAD>
+	media: none
+	status: inactive
+en7: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 32:d9:1d:5c:b2:58
+	nd6 options=201<PERFORMNUD,DAD>
+	media: none
+	status: inactive
+en2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=460<TSO4,TSO6,CHANNEL_IO>
+	ether 36:3d:ee:17:db:40
+	media: autoselect <full-duplex>
+	status: inactive
+en3: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=460<TSO4,TSO6,CHANNEL_IO>
+	ether 36:3d:ee:17:db:44
+	media: autoselect <full-duplex>
+	status: inactive
+en4: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=460<TSO4,TSO6,CHANNEL_IO>
+	ether 36:3d:ee:17:db:4c
+	media: autoselect <full-duplex>
+	status: inactive
+utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
+	inet6 fe80::f801:45b:59db:b023%utun0 prefixlen 64 scopeid 0xe 
+	nd6 options=201<PERFORMNUD,DAD>
+utun1: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1380
+	inet6 fe80::ec2b:9996:51a0:8da6%utun1 prefixlen 64 scopeid 0xf 
+	nd6 options=201<PERFORMNUD,DAD>
+ap1: flags=8822<BROADCAST,SMART,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether be:41:d2:6d:d6:5f
+	media: autoselect (none)
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=6460<TSO4,TSO6,CHANNEL_IO,PARTIAL_CSUM,ZEROINVERT_CSUM>
+	ether a2:a2:8d:a3:2f:de
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: inactive
+bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=63<RXCSUM,TXCSUM,TSO4,TSO6>
+	ether 36:3d:ee:17:db:40
+	Configuration:
+		id 0:0:0:0:0:0 priority 0 hellotime 0 fwddelay 0
+		maxage 0 holdcnt 0 proto stp maxaddr 100 timeout 1200
+		root id 0:0:0:0:0:0 priority 0 ifcost 0 port 0
+		ipfilter disabled flags 0x0
+	member: en2 flags=3<LEARNING,DISCOVER>
+	        ifmaxaddr 0 port 11 priority 0 path cost 0
+	member: en3 flags=3<LEARNING,DISCOVER>
+	        ifmaxaddr 0 port 12 priority 0 path cost 0
+	member: en4 flags=3<LEARNING,DISCOVER>
+	        ifmaxaddr 0 port 13 priority 0 path cost 0
+	nd6 options=201<PERFORMNUD,DAD>
+	media: <unknown type>
+	status: inactive
+awdl0: flags=8822<BROADCAST,SMART,SIMPLEX,MULTICAST> mtu 1500
+	options=6460<TSO4,TSO6,CHANNEL_IO,PARTIAL_CSUM,ZEROINVERT_CSUM>
+	ether da:c5:40:31:e2:4c
+	inet6 fe80::d8c5:40ff:fe31:e24c%awdl0 prefixlen 64 scopeid 0x13 
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect (none)
+	status: inactive
+utun2: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 2000
+	inet6 fe80::c33f:c2d0:1fdf:d64a%utun2 prefixlen 64 scopeid 0x14 
+	nd6 options=201<PERFORMNUD,DAD>
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1000
+	inet6 fe80::ce81:b1c:bd2c:69e%utun3 prefixlen 64 scopeid 0x15 
+	nd6 options=201<PERFORMNUD,DAD>
+llw0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether da:c5:40:31:e2:4c
+	inet6 fe80::d8c5:40ff:fe31:e24c%llw0 prefixlen 64 scopeid 0x16 
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect (none)
+vmenet0: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=60<TSO4,TSO6>
+	ether 32:21:a2:6a:82:94
+	media: autoselect
+	status: active
+bridge100: flags=8a63<UP,BROADCAST,SMART,RUNNING,ALLMULTI,SIMPLEX,MULTICAST> mtu 1500
+	options=63<RXCSUM,TXCSUM,TSO4,TSO6>
+	ether 1e:f6:4c:33:9d:64
+	inet 192.168.139.3 netmask 0xfffffe00 broadcast 192.168.139.255
+	inet6 fe80::1cf6:4cff:fe33:9d64%bridge100 prefixlen 64 scopeid 0x18 
+	inet6 fd07:b51a:cc66:0:a617:db5e:ab7:e9f1 prefixlen 64 
+	Configuration:
+		id 0:0:0:0:0:0 priority 0 hellotime 0 fwddelay 0
+		maxage 0 holdcnt 0 proto stp maxaddr 100 timeout 1200
+		root id 0:0:0:0:0:0 priority 0 ifcost 0 port 0
+		ipfilter disabled flags 0x0
+	member: vmenet0 flags=10003<LEARNING,DISCOVER,CSUM>
+	        ifmaxaddr 0 port 23 priority 0 path cost 0
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: active
+vmenet1: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=60<TSO4,TSO6>
+	ether b2:77:8f:b4:9b:e5
+	media: autoselect
+	status: active
+bridge101: flags=8a63<UP,BROADCAST,SMART,RUNNING,ALLMULTI,SIMPLEX,MULTICAST> mtu 1500
+	options=63<RXCSUM,TXCSUM,TSO4,TSO6>
+	ether 1e:f6:4c:33:9d:65
+	inet 192.168.97.0 netmask 0xffffff00 broadcast 192.168.97.255
+	inet6 fe80::1cf6:4cff:fe33:9d65%bridge101 prefixlen 64 scopeid 0x1a 
+	Configuration:
+		id 0:0:0:0:0:0 priority 0 hellotime 0 fwddelay 0
+		maxage 0 holdcnt 0 proto stp maxaddr 100 timeout 1200
+		root id 0:0:0:0:0:0 priority 0 ifcost 0 port 0
+		ipfilter disabled flags 0x0
+	member: vmenet1 flags=10003<LEARNING,DISCOVER,CSUM>
+	        ifmaxaddr 0 port 25 priority 0 path cost 0
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: active
+vmenet2: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500
+	options=60<TSO4,TSO6>
+	ether ba:1d:97:32:01:fe
+	media: autoselect
+	status: active
+bridge102: flags=8a63<UP,BROADCAST,SMART,RUNNING,ALLMULTI,SIMPLEX,MULTICAST> mtu 1500
+	options=63<RXCSUM,TXCSUM,TSO4,TSO6>
+	ether 1e:f6:4c:33:9d:66
+	inet 192.168.107.0 netmask 0xffffff00 broadcast 192.168.107.255
+	inet6 fe80::1cf6:4cff:fe33:9d66%bridge102 prefixlen 64 scopeid 0x1d 
+	Configuration:
+		id 0:0:0:0:0:0 priority 0 hellotime 0 fwddelay 0
+		maxage 0 holdcnt 0 proto stp maxaddr 100 timeout 1200
+		root id 0:0:0:0:0:0 priority 0 ifcost 0 port 0
+		ipfilter disabled flags 0x0
+	member: vmenet2 flags=10003<LEARNING,DISCOVER,CSUM>
+	        ifmaxaddr 0 port 28 priority 0 path cost 0
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: active
+
+===== LISTEN PORTS =====
+COMMAND     PID      USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+rapportd    366 jarvis001   10u  IPv4 0xb54d14775d983685      0t0  TCP *:49152 (LISTEN)
+rapportd    366 jarvis001   11u  IPv6 0xa27814551a7e8145      0t0  TCP *:49152 (LISTEN)
+ControlCe   527 jarvis001    9u  IPv4 0x5e3cdd01846d1ef8      0t0  TCP *:7000 (LISTEN)
+ControlCe   527 jarvis001   10u  IPv6 0x6b688f3653f7dc3f      0t0  TCP *:7000 (LISTEN)
+ControlCe   527 jarvis001   11u  IPv4 0xad5ee66ae22961dd      0t0  TCP *:5000 (LISTEN)
+ControlCe   527 jarvis001   12u  IPv6 0xa2d95eab66da63fa      0t0  TCP *:5000 (LISTEN)
+zeroclaw    781 jarvis001    9u  IPv4 0x2288e4089d585142      0t0  TCP 127.0.0.1:42617 (LISTEN)
+cloudflar   789 jarvis001   11u  IPv4 0xf039fe790916455a      0t0  TCP 127.0.0.1:20241 (LISTEN)
+OrbStack   2412 jarvis001   79u  IPv4 0xec330e74d60de6fa      0t0  TCP 127.0.0.1:32222 (LISTEN)
+OrbStack   2412 jarvis001   80u  IPv6 0x1777b412103c559c      0t0  TCP [::1]:32222 (LISTEN)
+OrbStack   2412 jarvis001   81u  IPv4 0x35b50d8602ae488f      0t0  TCP 127.0.0.1:49408 (LISTEN)
+OrbStack   2412 jarvis001   82u  IPv4 0x799e1aa3e13e5702      0t0  TCP *:3000 (LISTEN)
+OrbStack   2412 jarvis001   84u  IPv4 0x44173ef727dcbf27      0t0  TCP *:3001 (LISTEN)
+OrbStack   2412 jarvis001   85u  IPv6 0x95b93ec3411bd34b      0t0  TCP *:3000 (LISTEN)
+OrbStack   2412 jarvis001   86u  IPv4 0x28cf896e19236b53      0t0  TCP *:6379 (LISTEN)
+OrbStack   2412 jarvis001   88u  IPv6 0x53e67f5e77db0974      0t0  TCP *:6379 (LISTEN)
+OrbStack   2412 jarvis001  109u  IPv4 0x302ac9bd2da67229      0t0  TCP *:5678 (LISTEN)
+OrbStack   2412 jarvis001  111u  IPv4 0x54705e75e610f917      0t0  TCP *:5432 (LISTEN)
+OrbStack   2412 jarvis001  112u  IPv6 0x68769f06af8202f4      0t0  TCP *:3001 (LISTEN)
+OrbStack   2412 jarvis001  113u  IPv4 0x12dd525917ea3a11      0t0  TCP *:8080 (LISTEN)
+OrbStack   2412 jarvis001  114u  IPv6 0x5c73150695c06b4a      0t0  TCP *:5678 (LISTEN)
+OrbStack   2412 jarvis001  115u  IPv6 0xb8c0a3de87355d7d      0t0  TCP *:5432 (LISTEN)
+OrbStack   2412 jarvis001  117u  IPv4 0x8f1967d715d4ba7e      0t0  TCP *:3300 (LISTEN)
+OrbStack   2412 jarvis001  121u  IPv4 0x33377a3326a35327      0t0  TCP *:3100 (LISTEN)
+OrbStack   2412 jarvis001  122u  IPv4 0xe694e587d3918170      0t0  TCP *:9100 (LISTEN)
+OrbStack   2412 jarvis001  123u  IPv4 0x34022c49fc378d69      0t0  TCP *:9090 (LISTEN)
+OrbStack   2412 jarvis001  125u  IPv4 0xf6d54ef2980ab5e8      0t0  TCP *:9115 (LISTEN)
+OrbStack   2412 jarvis001  127u  IPv6 0xf0355c692c788d00      0t0  TCP *:8080 (LISTEN)
+OrbStack   2412 jarvis001  128u  IPv6 0xb8cf7fde36f85be1      0t0  TCP *:3300 (LISTEN)
+OrbStack   2412 jarvis001  129u  IPv6 0x5c6ddfb1922769e9      0t0  TCP *:3100 (LISTEN)
+OrbStack   2412 jarvis001  130u  IPv6 0x9be3e67ee117ac85      0t0  TCP *:9100 (LISTEN)
+OrbStack   2412 jarvis001  131u  IPv6 0xc591ef521c731957      0t0  TCP *:9090 (LISTEN)
+OrbStack   2412 jarvis001  132u  IPv6 0xa5482dddc3753a22      0t0  TCP *:9115 (LISTEN)
+AnyDesk   25210 jarvis001   54u  IPv4 0x35f088668467ce29      0t0  TCP *:7070 (LISTEN)
+AnyDesk   25210 jarvis001   55u  IPv6  0x4d499f2b2d330ef      0t0  TCP *:7070 (LISTEN)
+AnyDesk   25210 jarvis001  139u  IPv4 0x2f5f8a1fe9dd99ee      0t0  TCP *:54647 (LISTEN)
+AnyDesk   25210 jarvis001  144u  IPv6 0x9bd5d0ed643b804c      0t0  TCP *:54647 (LISTEN)
+
+===== DOCKER PS =====
+NAMES                  IMAGE                             STATUS                   PORTS
+obs_grafana            grafana/grafana:latest            Up 9 minutes             0.0.0.0:3300->3000/tcp, [::]:3300->3000/tcp
+obs_loki               grafana/loki:latest               Up 9 minutes             0.0.0.0:3100->3100/tcp, [::]:3100->3100/tcp
+obs_prometheus         prom/prometheus:latest            Up 9 minutes             0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+obs_node_exporter      prom/node-exporter:latest         Up 9 minutes             0.0.0.0:9100->9100/tcp, [::]:9100->9100/tcp
+obs_blackbox           prom/blackbox-exporter:latest     Up 9 minutes             0.0.0.0:9115->9115/tcp, [::]:9115->9115/tcp
+obs_cadvisor           gcr.io/cadvisor/cadvisor:latest   Up 9 minutes (healthy)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+jarvis-jarvis-core-1   jarvis-jarvis-core                Up 33 hours (healthy)    0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+redis                  redis:7-alpine                    Up 33 hours              0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+jarvis-postgres-1      postgres:16-alpine                Up 37 hours (healthy)    0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+jarvis-grafana-1       grafana/grafana:latest            Up 37 hours              0.0.0.0:3001->3000/tcp, [::]:3001->3000/tcp
+jarvis-n8n-1           n8nio/n8n                         Up 37 hours              0.0.0.0:5678->5678/tcp, [::]:5678->5678/tcp
+
+===== CRITICAL LOCAL URLS =====
+jarvis_core_http=true
+jarvis_grafana_http=true
+jarvis_n8n_http=true
+obs_prometheus_http=true
+obs_grafana_http=true
+obs_loki_http=true
+obs_node_exporter_http=true
+obs_cadvisor_http=true
+obs_blackbox_http=true

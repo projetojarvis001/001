@@ -1,0 +1,8 @@
+time="2026-04-11T08:48:23-03:00" level=warning msg="/Users/jarvis001/jarvis/observability/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container obs_blackbox  Running
+ Container obs_cadvisor  Running
+ Container obs_node_exporter  Running
+ Container obs_loki  Running
+ Container obs_prometheus  Running
+ Container obs_grafana  Starting
+Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint obs_grafana (eaf1d966dd28527257a08dbf87fcd509fe4cc6816c73da286aa433b050e7b818): Bind for 0.0.0.0:3000 failed: port is already allocated

@@ -1,0 +1,23 @@
+===== DOCKER PS =====
+NAMES                  STATUS                             PORTS
+obs_cadvisor           Up 14 seconds (health: starting)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+obs_blackbox           Up 14 seconds                      0.0.0.0:9115->9115/tcp, [::]:9115->9115/tcp
+obs_node_exporter      Up 14 seconds                      0.0.0.0:9100->9100/tcp, [::]:9100->9100/tcp
+obs_prometheus         Up 14 seconds                      0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+obs_loki               Up 14 seconds                      0.0.0.0:3100->3100/tcp, [::]:3100->3100/tcp
+jarvis-jarvis-core-1   Up 33 hours (healthy)              0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+redis                  Up 33 hours                        0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+jarvis-postgres-1      Up 37 hours (healthy)              0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+jarvis-grafana-1       Up 37 hours                        0.0.0.0:3001->3000/tcp, [::]:3001->3000/tcp
+jarvis-n8n-1           Up 37 hours                        0.0.0.0:5678->5678/tcp, [::]:5678->5678/tcp
+
+===== PROMETHEUS READY =====
+Prometheus Server is Ready.
+
+===== GRAFANA LOGIN PAGE =====
+curl: (22) The requested URL returned error: 404
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Security-Policy: default-src 'none'
+X-Content-Type-Options: nosniff
+Content-Type: text/html; charset=utf-8
