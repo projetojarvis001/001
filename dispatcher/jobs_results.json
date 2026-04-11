@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-04-11T19:32:36Z",
+  "results": [
+    {
+      "node": "vision",
+      "ok": true,
+      "output": "vision_dispatch_ok\n2-VISION.local\nvision"
+    },
+    {
+      "node": "friday",
+      "ok": true,
+      "output": "friday_dispatch_ok\nfriday\nwagner"
+    },
+    {
+      "node": "tadash",
+      "ok": true,
+      "output": "tadash_dispatch_ok\nwps-odoo-001\nwps"
+    }
+  ]
+}

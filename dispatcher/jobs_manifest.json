@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-04-11T19:32:36Z",
+  "jobs": [
+    {
+      "id": "vision_job_001",
+      "node": "vision",
+      "host": "192.168.8.124",
+      "command": "echo vision_dispatch_ok; hostname; whoami"
+    },
+    {
+      "id": "friday_job_001",
+      "node": "friday",
+      "host": "192.168.8.36",
+      "command": "echo friday_dispatch_ok; hostname; whoami"
+    },
+    {
+      "id": "tadash_job_001",
+      "node": "tadash",
+      "host": "177.104.176.69",
+      "command": "echo tadash_dispatch_ok; hostname; whoami"
+    }
+  ]
+}
