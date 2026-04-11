@@ -1,0 +1,35 @@
+{
+  "phase": "118B",
+  "created_at": "2026-04-11T21:47:11Z",
+  "analysis_mode": true,
+  "summary": {
+    "suspected_total": 0,
+    "confirmed_total": 0
+  },
+  "suspected_jobs": [],
+  "confirmed_jobs": [],
+  "classification_rules": [
+    "pending_without_progress",
+    "retry_loop_suspected",
+    "done_without_evidence",
+    "dead_without_dlq_record",
+    "node_mismatch_suspected"
+  ],
+  "analysis_findings": [
+    {
+      "scheduler_state_status": "scheduler_operational",
+      "done_count": 3,
+      "retry_count": 0,
+      "dead_count": 0,
+      "run_ok": true,
+      "overall_ok": true,
+      "queue_jobs_total": 3,
+      "result_jobs_total": 3,
+      "dlq_jobs_total": 0
+    }
+  ],
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}
