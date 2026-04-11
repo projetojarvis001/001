@@ -1,0 +1,18 @@
+===== NODE vision =====
+PING=false
+TCP_SSH=false
+HTTP=false
+REMOTE_HEALTH=false
+
+===== NODE friday =====
+PING=false
+TCP_SSH=false
+HTTP=false
+REMOTE_HEALTH=false
+
+===== NODE tadash =====
+PING=false
+TCP_SSH=false
+HTTP=false
+REMOTE_HEALTH=false
+

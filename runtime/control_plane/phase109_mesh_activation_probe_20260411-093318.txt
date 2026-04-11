@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    {
+      "name": "jarvis",
+      "enabled": true,
+      "host": "127.0.0.1",
+      "ping_ok": true,
+      "tcp_ok": false,
+      "http_ok": false
+    },
+    {
+      "name": "vision",
+      "enabled": true,
+      "host": "COLE_AQUI_IP_OU_HOST_DO_VISION",
+      "ping_ok": false,
+      "tcp_ok": false,
+      "http_ok": false
+    },
+    {
+      "name": "friday",
+      "enabled": true,
+      "host": "COLE_AQUI_IP_OU_HOST_DO_FRIDAY",
+      "ping_ok": false,
+      "tcp_ok": false,
+      "http_ok": false
+    },
+    {
+      "name": "tadash",
+      "enabled": true,
+      "host": "COLE_AQUI_IP_OU_HOST_DO_TADASH",
+      "ping_ok": false,
+      "tcp_ok": false,
+      "http_ok": false
+    }
+  ]
+}

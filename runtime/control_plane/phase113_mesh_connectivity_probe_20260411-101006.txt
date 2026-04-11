@@ -1,0 +1,21 @@
+===== NODE vision =====
+DNS_OK=true
+PING_OK=false
+TCP_OK=false
+SSH_OK=false
+HTTP_OK=false
+
+===== NODE friday =====
+DNS_OK=true
+PING_OK=false
+TCP_OK=false
+SSH_OK=false
+HTTP_OK=false
+
+===== NODE tadash =====
+DNS_OK=true
+PING_OK=false
+TCP_OK=false
+SSH_OK=false
+HTTP_OK=false
+

@@ -1,3 +1,5 @@
+===== INVENTORY CHECK =====
+INV_FILE=inventory/nodes.resolved.yml
 nodes:
   - name: jarvis
     role: core_orchestrator

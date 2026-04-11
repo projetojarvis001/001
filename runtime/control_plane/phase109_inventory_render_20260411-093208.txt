@@ -8,21 +8,21 @@ nodes:
 
   - name: vision
     role: observability_hub
-    host: COLE_AQUI_IP_OU_HOST_DO_VISION
+    host: "COLE_AQUI_IP_OU_HOST_DO_VISION"
     ssh_port: 22
     enabled: true
     probe_http: "http://COLE_AQUI_IP_OU_HOST_DO_VISION:3000"
 
   - name: friday
     role: automation_worker
-    host: COLE_AQUI_IP_OU_HOST_DO_FRIDAY
+    host: "COLE_AQUI_IP_OU_HOST_DO_FRIDAY"
     ssh_port: 22
     enabled: true
     probe_http: "http://COLE_AQUI_IP_OU_HOST_DO_FRIDAY:3000"
 
   - name: tadash
     role: edge_executor
-    host: COLE_AQUI_IP_OU_HOST_DO_TADASH
+    host: "COLE_AQUI_IP_OU_HOST_DO_TADASH"
     ssh_port: 22
     enabled: true
     probe_http: "http://COLE_AQUI_IP_OU_HOST_DO_TADASH:3000"

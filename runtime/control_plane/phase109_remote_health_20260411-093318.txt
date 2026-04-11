@@ -1,0 +1,9 @@
+===== NODE vision =====
+ssh: Could not resolve hostname cole_aqui_ip_ou_host_do_vision: nodename nor servname provided, or not known
+
+===== NODE friday =====
+ssh: Could not resolve hostname cole_aqui_ip_ou_host_do_friday: nodename nor servname provided, or not known
+
+===== NODE tadash =====
+ssh: Could not resolve hostname cole_aqui_ip_ou_host_do_tadash: nodename nor servname provided, or not known
+

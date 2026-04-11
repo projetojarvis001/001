@@ -1,0 +1,4 @@
+===== APPLY PHASE110 =====
+
+===== NODE vision =====
+ssh: Could not resolve hostname cole_aqui_ip_ou_host_do_vision: nodename nor servname provided, or not known

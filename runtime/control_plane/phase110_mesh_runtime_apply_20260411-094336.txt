@@ -1,0 +1,14 @@
+===== APPLY PHASE110 =====
+
+===== NODE vision =====
+SKIPPED_PLACEHOLDER=true
+
+===== NODE friday =====
+SKIPPED_PLACEHOLDER=true
+
+===== NODE tadash =====
+SKIPPED_PLACEHOLDER=true
+
+VISION_OK=false
+FRIDAY_OK=false
+TADASH_OK=false
