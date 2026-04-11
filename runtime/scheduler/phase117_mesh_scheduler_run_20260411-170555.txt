@@ -1,0 +1,109 @@
+===== RUN PHASE117 =====
+
+===== JOB sched_vision_health_001 / NODE vision =====
+sched_vision_ok
+2-VISION.local
+vision
+
+===== JOB sched_friday_health_001 / NODE friday =====
+sched_friday_ok
+friday
+wagner
+
+===== JOB sched_tadash_health_001 / NODE tadash =====
+sched_tadash_ok
+wps-odoo-001
+wps
+
+[OK] phase117 run gerado em logs/executive/phase117_mesh_scheduler_run_20260411-170555.json
+{
+  "created_at": "2026-04-11T20:05:55Z",
+  "mesh_scheduler_run": {
+    "raw_file": "runtime/scheduler/phase117_mesh_scheduler_run_20260411-170555.txt",
+    "queue_file": "scheduler/job_queue.json",
+    "dlq_file": "scheduler/dead_letter_queue.json",
+    "result_file": "scheduler/job_run_results.json",
+    "done_count": 3,
+    "retry_count": 0,
+    "dead_count": 0,
+    "overall_ok": true
+  },
+  "governance": {
+    "deploy_executed": true,
+    "production_changed": true
+  }
+}
+
+[OK] queue final
+{
+  "created_at": "2026-04-11T20:05:44Z",
+  "jobs": [
+    {
+      "id": "sched_vision_health_001",
+      "node": "vision",
+      "host": "192.168.8.124",
+      "ssh_port": 22,
+      "user": "vision",
+      "password_env": "VISION_SSH_PASS",
+      "command": "echo sched_vision_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    },
+    {
+      "id": "sched_friday_health_001",
+      "node": "friday",
+      "host": "192.168.8.36",
+      "ssh_port": 22,
+      "user": "wagner",
+      "password_env": "FRIDAY_SSH_PASS",
+      "command": "echo sched_friday_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    },
+    {
+      "id": "sched_tadash_health_001",
+      "node": "tadash",
+      "host": "177.104.176.69",
+      "ssh_port": 61022,
+      "user": "wps",
+      "password_env": "TADASH_SSH_PASS",
+      "command": "echo sched_tadash_ok; hostname; whoami",
+      "max_retries": 2,
+      "retry_count": 0,
+      "status": "done"
+    }
+  ]
+}
+
+[OK] dlq final
+{
+  "created_at": "2026-04-11T20:05:44Z",
+  "jobs": []
+}
+
+[OK] results
+{
+  "created_at": "2026-04-11T20:05:55Z",
+  "results": [
+    {
+      "job_id": "sched_vision_health_001",
+      "node": "vision",
+      "ok": true,
+      "output": "sched_vision_ok\n2-VISION.local\nvision"
+    },
+    {
+      "job_id": "sched_friday_health_001",
+      "node": "friday",
+      "ok": true,
+      "output": "sched_friday_ok\nfriday\nwagner"
+    },
+    {
+      "job_id": "sched_tadash_health_001",
+      "node": "tadash",
+      "ok": true,
+      "output": "sched_tadash_ok\nwps-odoo-001\nwps"
+    }
+  ]
+}
