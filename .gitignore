@@ -30,3 +30,6 @@ logs/
 backups/
 .env.bak*
 .env.restore*
+.secrets/
+.env.local
+.env.secret
