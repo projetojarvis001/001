@@ -1,0 +1,43 @@
+{
+  "phase": "118A",
+  "created_at": "2026-04-11T21:35:15Z",
+  "repo_structure": {
+    "core_dirs": [
+      "capability",
+      "control_plane",
+      "decision_engine",
+      "dispatcher",
+      "docs/generated",
+      "inventory",
+      "logs/executive",
+      "readiness",
+      "registry",
+      "reports",
+      "runtime",
+      "scheduler",
+      "scripts",
+      ".secrets"
+    ],
+    "critical_files": [
+      "scripts/load_mesh_env.sh",
+      ".secrets/mesh_nodes.env",
+      "inventory/nodes.yml",
+      "inventory/nodes.resolved.yml",
+      "inventory/nodes.runtime.yml"
+    ],
+    "phase_pattern": [
+      "seed",
+      "snapshot_or_inventory_or_apply_or_probe",
+      "build",
+      "report",
+      "evidence",
+      "packet",
+      "validate",
+      "git_commit"
+    ]
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

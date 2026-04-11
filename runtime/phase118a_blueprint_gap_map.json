@@ -1,0 +1,112 @@
+{
+  "phase": "118A",
+  "created_at": "2026-04-11T21:41:59Z",
+  "objective": "map_blueprint_gap_between_future_vision_and_current_proven_capacity",
+  "machine_context": {
+    "jarvis": "principal_local_mac_mini_m4",
+    "vision": "apoio_local_mac_mini_m4",
+    "friday": "central_operacional_local_dell_7020_plus",
+    "tadashi": "remoto_exclusivo_hospedagem_odoo"
+  },
+  "nuclei_gap_map": {
+    "tadash": {
+      "target_role": "nucleo_soberano_constituicao_identidade_memoria_mestra",
+      "current_state": "mostly_blueprint_not_yet_proven",
+      "maturity_score": 1.4,
+      "proven_strengths": [
+        "governance_discipline_by_phase",
+        "executive_packets_and_reports",
+        "partial_operational_traceability"
+      ],
+      "major_gaps": [
+        "policy_engine_enforced",
+        "sovereign_identity",
+        "command_authorization",
+        "consent_layer",
+        "dual_control",
+        "key_custody",
+        "legal_compliance_engine",
+        "long_term_memory_stack",
+        "immutable_audit",
+        "kill_switch_and_quarantine"
+      ],
+      "status": "vision_far_ahead_of_runtime"
+    },
+    "jarvis": {
+      "target_role": "cognicao_linguagem_multimodalidade_planejamento_personalidade",
+      "current_state": "partial_operational_foundation",
+      "maturity_score": 1.8,
+      "proven_strengths": [
+        "decision_engine_seed",
+        "capability_assessment",
+        "distributed_operational_coordination_foundation"
+      ],
+      "major_gaps": [
+        "planner_multi_horizon",
+        "agent_orchestration_runtime",
+        "native_multimodality",
+        "context_router",
+        "continual_learning",
+        "reasoning_harness",
+        "sandbox_proof_layer",
+        "model_security",
+        "adversarial_testing",
+        "skill_registry_runtime"
+      ],
+      "status": "cognitive_vision_not_yet_materialized"
+    },
+    "vision": {
+      "target_role": "execucao_infra_apis_blockchain_swarm_operacao_empresarial",
+      "current_state": "strongest_real_operational_core",
+      "maturity_score": 2.3,
+      "proven_strengths": [
+        "ssh_connectivity_real",
+        "http_health_distributed",
+        "registry_operational",
+        "dispatcher_operational",
+        "scheduler_operational",
+        "readiness_gate"
+      ],
+      "major_gaps": [
+        "reconciliation_engine",
+        "health_weighted_scheduling",
+        "job_leases_and_locks",
+        "service_registry_capability_registry",
+        "zero_trust_runtime",
+        "observability_stack_full",
+        "supply_chain_security",
+        "geo_redundancy",
+        "disaster_recovery",
+        "swarm_runtime"
+      ],
+      "status": "best_real_core_but_far_from_full_pdf_scope"
+    },
+    "friday": {
+      "target_role": "poder_de_fogo_operacional_e_nucleo_transacional",
+      "current_state": "node_operational_but_business_core_not_fully_proven",
+      "maturity_score": 2.4,
+      "proven_strengths": [
+        "friday_node_in_mesh",
+        "friday_http_reachability",
+        "friday_registry_identity",
+        "friday_dispatch_execution",
+        "historical_odoo_watchdog_restore_fallback_closure_basis"
+      ],
+      "major_gaps": [
+        "odoo_business_core_integrated",
+        "crm_runtime_proven",
+        "financial_stack_proven",
+        "sales_subscription_pos_proven",
+        "inventory_and_procurement_proven",
+        "document_management_proven",
+        "approval_and_governance_flows",
+        "business_kpis_and_margin_visibility"
+      ],
+      "status": "technical_node_more_real_than_business_core"
+    }
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

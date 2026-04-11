@@ -1,0 +1,45 @@
+{
+  "phase": "118A",
+  "created_at": "2026-04-11T21:35:15Z",
+  "evidence_index": {
+    "control_plane": [
+      "control_plane/mesh_http_bootstrap_state.json"
+    ],
+    "registry": [
+      "registry/mesh_nodes_registry.json",
+      "registry/mesh_registry_state.json"
+    ],
+    "dispatcher": [
+      "dispatcher/jobs_manifest.json",
+      "dispatcher/jobs_results.json",
+      "dispatcher/mesh_dispatcher_state.json"
+    ],
+    "scheduler": [
+      "scheduler/job_queue.json",
+      "scheduler/dead_letter_queue.json",
+      "scheduler/job_run_results.json",
+      "scheduler/mesh_scheduler_state.json"
+    ],
+    "readiness": [
+      "readiness/mesh_readiness_state.json"
+    ],
+    "decision_engine": [
+      "decision_engine/rules.json",
+      "decision_engine/engine_state.json",
+      "decision_engine/engine_report.md"
+    ],
+    "capability": [
+      "capability/system_capability_matrix.json",
+      "capability/system_capability_matrix_report.md"
+    ],
+    "inventory": [
+      "inventory/nodes.yml",
+      "inventory/nodes.resolved.yml",
+      "inventory/nodes.runtime.yml"
+    ]
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}
