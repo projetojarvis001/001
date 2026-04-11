@@ -1,0 +1,30 @@
+{
+  "phase": "118C",
+  "created_at": "2026-04-11T21:52:42Z",
+  "objective": "initialize_health_weighted_scheduling",
+  "status": "weighted_routing_simulated",
+  "mode": "analysis_only",
+  "inputs": {
+    "health_weights": "scheduler/health_weights.json",
+    "job_queue": "scheduler/job_queue.json",
+    "mesh_scheduler_state": "scheduler/mesh_scheduler_state.json",
+    "registry_state": "registry/mesh_registry_state.json",
+    "http_bootstrap_state": "control_plane/mesh_http_bootstrap_state.json"
+  },
+  "routing_policy": {
+    "allow_equal_weights": true,
+    "allow_unknown_health": true,
+    "degraded_node_action": "observe_only",
+    "down_node_action": "block_in_future_not_now"
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  },
+  "last_weighted_routing_summary": {
+    "allow_count": 3,
+    "observe_count": 0,
+    "block_count": 0,
+    "jobs_total": 3
+  }
+}

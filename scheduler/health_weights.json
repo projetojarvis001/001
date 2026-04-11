@@ -1,0 +1,53 @@
+{
+  "phase": "118C",
+  "created_at": "2026-04-11T21:51:46Z",
+  "mode": "analysis_computed",
+  "policy": {
+    "analysis_only": true,
+    "routing_enforced": false,
+    "block_degraded_nodes": false,
+    "prefer_high_weight_nodes": false
+  },
+  "nodes": {
+    "vision": {
+      "base_weight": 1.0,
+      "health_status": "healthy",
+      "effective_weight": 1.0,
+      "reason": "strong_evidence",
+      "signals": [
+        "registry_operational_global",
+        "http_bootstrap_global",
+        "scheduler_operational_global"
+      ],
+      "signal_score": 3
+    },
+    "friday": {
+      "base_weight": 1.0,
+      "health_status": "healthy",
+      "effective_weight": 1.0,
+      "reason": "strong_evidence",
+      "signals": [
+        "registry_operational_global",
+        "http_bootstrap_global",
+        "scheduler_operational_global"
+      ],
+      "signal_score": 3
+    },
+    "tadash": {
+      "base_weight": 1.0,
+      "health_status": "healthy",
+      "effective_weight": 1.0,
+      "reason": "strong_evidence",
+      "signals": [
+        "registry_operational_global",
+        "http_bootstrap_global",
+        "scheduler_operational_global"
+      ],
+      "signal_score": 3
+    }
+  },
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

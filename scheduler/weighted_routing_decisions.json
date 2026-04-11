@@ -1,0 +1,47 @@
+{
+  "phase": "118C",
+  "created_at": "2026-04-11T21:52:42Z",
+  "mode": "weighted_routing_simulation_only",
+  "summary": {
+    "allow_count": 3,
+    "observe_count": 0,
+    "block_count": 0,
+    "jobs_total": 3
+  },
+  "decisions": [
+    {
+      "id": "sched_vision_health_001",
+      "node": "vision",
+      "current_status": "done",
+      "decision": "allow",
+      "reason": "healthy_node",
+      "effective_weight": 1.0,
+      "health_status": "healthy",
+      "simulation_only": true
+    },
+    {
+      "id": "sched_friday_health_001",
+      "node": "friday",
+      "current_status": "done",
+      "decision": "allow",
+      "reason": "healthy_node",
+      "effective_weight": 1.0,
+      "health_status": "healthy",
+      "simulation_only": true
+    },
+    {
+      "id": "sched_tadash_health_001",
+      "node": "tadash",
+      "current_status": "done",
+      "decision": "allow",
+      "reason": "healthy_node",
+      "effective_weight": 1.0,
+      "health_status": "healthy",
+      "simulation_only": true
+    }
+  ],
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}

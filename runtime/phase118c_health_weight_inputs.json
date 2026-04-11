@@ -1,0 +1,21 @@
+{
+  "phase": "118C",
+  "created_at": "2026-04-11T21:49:41Z",
+  "expected_inputs": [
+    "scheduler/health_weights.json",
+    "scheduler/job_queue.json",
+    "scheduler/mesh_scheduler_state.json",
+    "registry/mesh_registry_state.json",
+    "control_plane/mesh_http_bootstrap_state.json"
+  ],
+  "analysis_scope": [
+    "node_health_visibility",
+    "initial_weight_assignment",
+    "future_routing_policy",
+    "degraded_node_blocking_strategy"
+  ],
+  "governance": {
+    "deploy_executed": false,
+    "production_changed": false
+  }
+}
