@@ -1,5 +1,6 @@
 #!/bin/bash
 if ./scripts/telegram_guard.sh; then
+export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$PATH"
   exit 0
 fi
 
