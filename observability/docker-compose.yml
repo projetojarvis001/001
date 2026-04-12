@@ -7,6 +7,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
     networks:
       - observability
 
@@ -71,6 +72,17 @@ services:
     restart: unless-stopped
     ports:
       - "9115:9115"
+    networks:
+      - observability
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: obs_alertmanager
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
     networks:
       - observability
 

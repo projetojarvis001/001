@@ -1,0 +1,56 @@
+groups:
+  - name: jarvis_alerts
+    rules:
+      - alert: NodeDown
+        expr: up{job=~"node_exporter.*"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Nó {{ $labels.node }} offline"
+          description: "node_exporter não responde há 2 minutos"
+
+      - alert: HighCPU
+        expr: 100 - (avg by(node) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU alta em {{ $labels.node }}"
+          description: "CPU acima de 85% por 5 minutos"
+
+      - alert: HighMemory
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memória alta em {{ $labels.node }}"
+          description: "Memória acima de 85%"
+
+      - alert: DiskAlmostFull
+        expr: (1 - (node_filesystem_avail_bytes{fstype!="tmpfs",mountpoint="/"} / node_filesystem_size_bytes{fstype!="tmpfs",mountpoint="/"})) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disco quase cheio em {{ $labels.node }}"
+          description: "Disco acima de 85%"
+
+      - alert: OdooDown
+        expr: probe_success{instance="http://177.104.176.69:58069"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Odoo offline"
+          description: "Odoo não responde há 2 minutos"
+
+      - alert: VisionSemanticDown
+        expr: probe_success{instance="http://192.168.8.124:5006/health"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "VISION Semantic API offline"
+          description: "Semantic API não responde há 2 minutos"
