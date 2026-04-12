@@ -76,3 +76,10 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox:9115
+
+  - job_name: friday_worker
+    static_configs:
+      - targets: ['192.168.8.36:8877']
+        labels:
+          node: friday
+          service: worker
