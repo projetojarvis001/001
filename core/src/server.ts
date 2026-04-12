@@ -579,9 +579,9 @@ app.get('/health', async (_req, res) => {
 });
 
 app.post('/ask', async (req, res) => {
-  const { prompt, category } = req.body;
+  const { prompt, message, category } = req.body; const finalPrompt = prompt || message;
   try {
-    const result = await dispatch(prompt, category);
+    const result = await dispatch(finalPrompt, category);
     res.json(result);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
