@@ -474,18 +474,150 @@ async function telegramPolling(): Promise<void> {
           continue;
         }
         if (cmd === '/ajuda' || cmd === '/help') {
-          await sendTelegram('🤖 Comandos JARVIS\n\n/status — health do sistema\n/homebridge\\_start — liga HomeKit\n/homebridge\\_stop — desliga HomeKit\n/homebridge\\_status — status HomeKit\n/purge\\_mac2 — libera RAM Mac2\n\nOu envie texto, voz ou imagem.');
+          await sendTelegram(
+            '🤖 *J.A.R.V.I.S. — Comandos*\n\n' +
+            '*Sistema*\n' +
+            '/status — saúde completa do sistema\n' +
+            '/prometheus — métricas dos 4 nós\n' +
+            '/logs — últimos logs do core\n\n' +
+            '*Controle*\n' +
+            '/pausar — para notificações automáticas\n' +
+            '/retomar — retoma notificações\n' +
+            '/silenciar — silencia por 1 hora\n\n' +
+            '*Ações*\n' +
+            '/purge\\_mac2 — libera RAM do VISION\n' +
+            '/guardian — força verificação agora\n' +
+            '/watcher — força watcher preditivo\n' +
+            '/relatorio — relatório executivo diário\n\n' +
+            '*IA*\n' +
+            'Texto livre → JARVIS responde via Groq\n' +
+            'Voz → transcreve + responde\n' +
+            'Imagem → analisa via VISION (llava)\n\n' +
+            'Ex: "qual o status do Odoo?" ou "analise vendas desta semana"'
+          );
           continue;
         }
 
         if (cmd === '/status') {
           try {
-            const h = await axios.get('http://localhost:3000/health', {timeout:5000});
-            const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || (VISION_HOST ? `http://${VISION_HOST}:5006` : undefined);
-            const v = await axios.get(`${semanticBaseUrl}/health`, {timeout:5000});
-            await sendTelegram(`📊 Status JARVIS\nCore: ✅ online\nVISION: ✅ online`);
+            const os = require('os');
+            const { execSync } = require('child_process');
+            // Core
+            let coreStatus = '❌';
+            try { await axios.get('http://localhost:3000/health', {timeout:3000}); coreStatus = '✅'; } catch(e) {}
+            // VISION
+            const semanticBaseUrl = process.env.VISION_SEMANTIC_URL || `http://${VISION_HOST}:5006`;
+            let visionStatus = '❌';
+            try { await axios.get(`${semanticBaseUrl}/health`, {timeout:3000}); visionStatus = '✅'; } catch(e) {}
+            // Whisper
+            const whisperUrl = process.env.VISION_WHISPER_URL || `http://${VISION_HOST}:5007`;
+            let whisperStatus = '❌';
+            try { await axios.get(`${whisperUrl}/health`, {timeout:3000}); whisperStatus = '✅'; } catch(e) {}
+            // Odoo
+            let odooStatus = '❌';
+            try { await axios.get('http://177.104.176.69:58069/web/health', {timeout:4000}); odooStatus = '✅'; } catch(e) {}
+            // Prometheus
+            let promStatus = '❌';
+            try { await axios.get('http://localhost:9090/-/healthy', {timeout:3000}); promStatus = '✅'; } catch(e) {}
+            // RAM
+            const ramPct = (1 - os.freemem()/os.totalmem()) * 100;
+            // Disk
+            let diskUsage = '?';
+            try { diskUsage = execSync("df -h / | tail -1 | awk '{print $5}'").toString().trim(); } catch(e) {}
+            // Tunnel
+            let tunnelUrl = '❌';
+            try { const fs = require('fs'); tunnelUrl = fs.readFileSync('/tmp/current_tunnel_mac1.txt','utf8').trim().replace('https://','').slice(0,35); } catch(e) {}
+            // DB
+            let dbStatus = '❌';
+            try { await pool.query('SELECT 1'); dbStatus = '✅'; } catch(e) {}
+            // Containers
+            let containers = '?';
+            try { containers = execSync("docker ps --format '{{.Names}}' | wc -l | tr -d ' '").toString().trim(); } catch(e) {}
+
+            const msg = [
+              '📊 *J.A.R.V.I.S. Status* — ' + new Date().toLocaleTimeString('pt-BR'),
+              '',
+              '*Serviços*',
+              `Core: ${coreStatus}  VISION: ${visionStatus}  Whisper: ${whisperStatus}`,
+              `Odoo: ${odooStatus}  Prometheus: ${promStatus}  DB: ${dbStatus}`,
+              `Containers: ${containers} ativos`,
+              '',
+              '*Recursos JARVIS*',
+              `RAM: ${ramPct.toFixed(0)}% usada  |  Disco: ${diskUsage}`,
+              '',
+              '*Rede*',
+              `Tunnel: ${tunnelUrl}`,
+            ].join('\n');
+            await sendTelegram(msg);
           } catch(e:any) {
-            await sendTelegram('📊 Sistema operacional');
+            await sendTelegram('📊 JARVIS operacional');
+          }
+          continue;
+        }
+
+        if (cmd === '/prometheus') {
+          try {
+            const r = await axios.get('http://localhost:9090/api/v1/targets', {timeout:5000});
+            const targets = r.data?.data?.activeTargets || [];
+            const ok = targets.filter((t:any) => t.health === 'up');
+            const fail = targets.filter((t:any) => t.health !== 'up');
+            let msg = `📡 *Prometheus — ${ok.length}/${targets.length} targets up*\n\n`;
+            ok.forEach((t:any) => { msg += `✅ ${t.labels?.job} — ${t.labels?.instance}\n`; });
+            if (fail.length > 0) {
+              msg += '\n';
+              fail.forEach((t:any) => { msg += `❌ ${t.labels?.job} — ${t.labels?.instance}\n`; });
+            }
+            await sendTelegram(msg);
+          } catch(e:any) {
+            await sendTelegram('❌ Prometheus indisponível: ' + e.message);
+          }
+          continue;
+        }
+
+        if (cmd === '/logs') {
+          try {
+            const { execSync } = require('child_process');
+            const logs = execSync('docker logs jarvis-jarvis-core-1 --tail 15 2>&1').toString();
+            const clean = logs.replace(/[\x00-\x1F\x7F]/g, '').slice(0, 3000);
+            await sendTelegram('📋 *Logs recentes*\n\`\`\`\n' + clean + '\n\`\`\`');
+          } catch(e:any) {
+            await sendTelegram('❌ Erro ao buscar logs: ' + e.message);
+          }
+          continue;
+        }
+
+        if (cmd === '/guardian') {
+          await sendTelegram('🛡️ Executando Guardian...');
+          try {
+            const { execSync } = require('child_process');
+            execSync('cd /Users/jarvis001/jarvis && bash scripts/guardian.sh >> /tmp/guardian.log 2>&1 &');
+            await sendTelegram('✅ Guardian executado — verifique /logs para resultado');
+          } catch(e:any) {
+            await sendTelegram('❌ Erro: ' + e.message);
+          }
+          continue;
+        }
+
+        if (cmd === '/watcher') {
+          await sendTelegram('🔍 Executando Watcher Preditivo...');
+          try {
+            const { execSync } = require('child_process');
+            const result = execSync('cd /Users/jarvis001/jarvis && bash scripts/watcher_preditivo.sh 2>&1').toString();
+            await sendTelegram('✅ Watcher executado:\n' + result.slice(0, 300));
+          } catch(e:any) {
+            await sendTelegram('❌ Erro: ' + e.message);
+          }
+          continue;
+        }
+
+        if (cmd === '/relatorio') {
+          await sendTelegram('📊 Gerando relatório...');
+          try {
+            const { execSync } = require('child_process');
+            execSync('cd /Users/jarvis001/jarvis && bash scripts/relatorio_diario.sh 2>&1 &');
+            await sendTelegram('✅ Relatório enviado');
+          } catch(e:any) {
+            await sendTelegram('❌ Erro: ' + e.message);
           }
           continue;
         }
