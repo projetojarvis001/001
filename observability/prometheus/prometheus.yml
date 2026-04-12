@@ -77,7 +77,6 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox:9115
 
-
   - job_name: friday_worker
     metrics_path: /probe
     params:
