@@ -730,3 +730,22 @@ app.listen(PORT, async () => {
   if (BOT_TOKEN) { telegramPolling(); console.log('✅ TELEGRAM: Polling iniciado'); }
   else { console.log('⚠️ TELEGRAM: BOT_TOKEN ausente'); }
 });
+
+// ── ALERTMANAGER WEBHOOK ──────────────────────────────────────────
+app.post('/alerts/webhook', async (req, res) => {
+  try {
+    const alerts = req.body?.alerts || [];
+    for (const alert of alerts) {
+      const status = alert.status === 'firing' ? '🔴' : '✅';
+      const name = alert.labels?.alertname || 'Alerta';
+      const node = alert.labels?.node || alert.labels?.instance || '';
+      const summary = alert.annotations?.summary || '';
+      const desc = alert.annotations?.description || '';
+      const msg = `${status} *${name}*${node ? ` — ${node}` : ''}\n${summary}${desc ? '\n' + desc : ''}`;
+      await sendTelegram(msg);
+    }
+    res.json({ ok: true, processed: alerts.length });
+  } catch(e: any) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
