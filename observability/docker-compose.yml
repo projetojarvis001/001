@@ -37,6 +37,18 @@ services:
     networks:
       - observability
 
+  promtail:
+    image: grafana/promtail:latest
+    container_name: obs_promtail
+    restart: unless-stopped
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Users/jarvis001/jarvis/logs:/host_logs:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - observability
+
   node_exporter:
     image: prom/node-exporter:latest
     container_name: obs_node_exporter
