@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── NETWORK AGENT !rede ──────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith('!rede') && fromChatId === CHAT_ID) {
+        const query = msg.slice(5).trim() || 'qual o status geral da rede?';
+        await sendTelegram('\u{1F310} Agente de Rede diagnosticando...');
+        try {
+          const r = await axios.post('http://host.docker.internal:7778', { task: query }, { timeout: 65000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || 'sem resposta');
+        } catch(e: any) {
+          await sendTelegram('\u274C Erro no agente de rede: ' + e.message);
+        }
+        continue;
+      }
+
       // ── LANGGRAPH !jarvis ─────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith('!jarvis') && fromChatId === CHAT_ID) {
         const task = msg.slice(7).trim() || 'qual o status do sistema?';
