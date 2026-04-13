@@ -16,19 +16,19 @@ if [ "$HTTP" != "200" ]; then
   ALERTAS="$ALERTAS\n❌ *VISION Semantic API offline* (HTTP $HTTP)"
 fi
 
-# CHECK 2: Ollama modelos
-MODELS=$(curl -fsS http://192.168.8.124:11434/api/tags 2>/dev/null | python3 -c "
+# CHECK 2: Ollama modelos via Semantic API
+MODELS=$(curl -fsS http://192.168.8.124:5006/health 2>/dev/null | python3 -c "
 import json,sys
 try:
     d=json.load(sys.stdin)
-    models=[m[\"name\"] for m in d.get(\"models\",[]) ]
+    models=d.get(\"models\",[])
     print(len(models))
 except:
     print(0)
 " 2>/dev/null)
 
 if [ "${MODELS:-0}" -lt 4 ]; then
-  ALERTAS="$ALERTAS\n⚠️ *VISION Ollama degradado* — apenas $MODELS modelos carregados (esperado: 6)"
+  ALERTAS="$ALERTAS\n⚠️ *VISION Ollama degradado* — apenas $MODELS modelos (esperado: 5+)"
 fi
 
 # CHECK 3: Vetores RAG
