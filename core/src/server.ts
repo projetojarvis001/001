@@ -691,6 +691,18 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── APROVACAO SIM/NAO ────────────────────────────────────────────
+      if (msg && (msg.toUpperCase().startsWith("SIM_") || msg.toUpperCase().startsWith("NAO_")) && fromChatId === CHAT_ID) {
+        try {
+          const r = await axios.post("http://host.docker.internal:7782/approve", 
+            { response: msg.toUpperCase() }, { timeout: 5000 });
+          await sendTelegram(r.data.ok ? "Resposta registrada." : "ID nao encontrado.");
+        } catch(e: any) {
+          await sendTelegram("Erro ao processar resposta.");
+        }
+        continue;
+      }
+
       // ── INTEL AGENT ──────────────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith("!intel") && fromChatId === CHAT_ID) {
         const query = msg.slice(6).trim() || "selic";

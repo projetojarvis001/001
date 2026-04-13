@@ -75,6 +75,20 @@ Formato EXATO:
     except:
         return None
 
+# Mapa de palavras-chave por nivel de risco
+RISK_KEYWORDS = {
+    5: ["drop table", "delete", "rm -rf", "format", "wipe", "permanent"],
+    4: ["n8n", "workflow", "database", "banco de dados", "credencial", "senha"],
+    3: ["config", "configuracao", "agente", "agent", "email", "enviar", "alterar"],
+}
+
+def classify_risk(objective: str, cmd: str = "") -> int:
+    text = (objective + " " + cmd).lower()
+    for nivel in [5, 4, 3]:
+        if any(kw in text for kw in RISK_KEYWORDS[nivel]):
+            return nivel
+    return 1
+
 def run_auto(objective):
     print(f"[Auto] Objetivo: {objective[:80]}")
     notify(f"JARVIS Autonomo iniciado\nObjetivo: {objective[:200]}")

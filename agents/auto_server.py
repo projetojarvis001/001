@@ -23,6 +23,36 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
         self.wfile.write(resp)
+    def do_POST_approve(self, body):
+        try:
+            from approval_system import process_approval_response
+            ok = process_approval_response(body.get("response",""))
+            return json.dumps({"ok": ok}).encode()
+        except Exception as e:
+            return json.dumps({"ok": False, "error": str(e)}).encode()
+
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length", 0))
+        body = json.loads(self.rfile.read(length))
+        if self.path == "/approve":
+            resp = self.do_POST_approve(body)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(resp)
+            return
+        task = body.get("task", "status dos servicos")
+        try:
+            result = run_auto(task)
+            resp = json.dumps({"ok": True, "response": result}).encode()
+            self.send_response(200)
+        except Exception as e:
+            resp = json.dumps({"ok": False, "error": str(e)}).encode()
+            self.send_response(500)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(resp)
+
     def do_GET(self):
         resp = json.dumps({'ok': True, 'service': 'auto-agent'}).encode()
         self.send_response(200)
