@@ -186,7 +186,9 @@ def build_graph():
     graph.add_node("execute_on_friday", execute_on_friday)
     
     graph.set_entry_point("understand")
-    graph.add_edge("understand", "search_context")
+    def after_understand(state):
+        return END if state.get("result") and state.get("context") == "" else "search_context"
+    graph.add_conditional_edges("understand", after_understand, {"search_context": "search_context", END: END})
     graph.add_edge("search_context", "plan_and_respond")
     graph.add_conditional_edges("plan_and_respond", should_execute, {
         "execute": "execute_on_friday",
