@@ -17,7 +17,7 @@ except:
     COST_ROUTER_AVAILABLE = False
 from langchain_core.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
-from jarvis_context import WAGNER_CONTEXT
+from jarvis_context import WAGNER_CONTEXT, SYSTEM_PROMPT_JARVIS
 
 load_dotenv('/Users/jarvis001/jarvis/.env')
 

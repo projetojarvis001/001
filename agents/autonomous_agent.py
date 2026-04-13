@@ -4,6 +4,10 @@ warnings.filterwarnings("ignore")
 sys.path.insert(0, "/Users/jarvis001/Library/Python/3.9/lib/python/site-packages")
 sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
 from dotenv import load_dotenv
+try:
+    from jarvis_context import SYSTEM_PROMPT_AUTO
+except:
+    SYSTEM_PROMPT_AUTO = "Voce e o planejador do JARVIS. Gere planos em JSON."
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 
