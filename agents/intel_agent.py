@@ -87,11 +87,38 @@ def intel_report(query):
         dados = consulta_cnpj(cnpj)
         if dados:
             rs = dados.get("razao_social") or dados.get("nome","?")
-            sit = dados.get("descricao_situacao_cadastral") or dados.get("situacao_cadastral","?")
-            cnae = dados.get("cnae_fiscal_descricao","?")
+            fantasia = dados.get("nome_fantasia") or dados.get("fantasia","")
+            sit = dados.get("descricao_situacao_cadastral") or dados.get("situacao_cadastral") or dados.get("situacao","?")
+            
+            # CNAE multiplos formatos
+            cnae = dados.get("cnae_fiscal_descricao","")
+            if not cnae and isinstance(dados.get("cnae_principal"), dict):
+                cnae = dados["cnae_principal"].get("descricao","")
+            if not cnae and dados.get("atividade_principal"):
+                cnae = dados["atividade_principal"][0].get("text","")
+            if not cnae:
+                cnae = str(dados.get("cnae_principal","?"))
+            
+            abertura = dados.get("data_inicio_atividade") or dados.get("abertura","")
+            porte = dados.get("porte","")
+            if isinstance(porte, dict): porte = porte.get("descricao","")
+            capital = dados.get("capital_social","")
+            municipio = dados.get("municipio") or dados.get("cidade","")
+            uf = dados.get("uf","")
+            socios = dados.get("qsa",[])
+            
             report_parts.append(f"CNPJ: {cnpj}")
             report_parts.append(f"Razao Social: {rs}")
+            if fantasia and fantasia != rs: report_parts.append(f"Fantasia: {fantasia}")
             report_parts.append(f"Situacao: {sit}")
+            if cnae and cnae != "?": report_parts.append(f"Atividade: {str(cnae)[:100]}")
+            if abertura: report_parts.append(f"Abertura: {abertura}")
+            if porte: report_parts.append(f"Porte: {porte}")
+            if capital: report_parts.append(f"Capital Social: R$ {capital}")
+            if municipio: report_parts.append(f"Cidade: {municipio}/{uf}")
+            if socios:
+                nomes = [s.get("nome_socio") or s.get("nome","?") for s in socios[:3]]
+                report_parts.append(f"Socios: {', '.join(nomes)}")
             report_parts.append(f"CNAE: {cnae}")
             socios = dados.get("qsa",[])
             if socios:
