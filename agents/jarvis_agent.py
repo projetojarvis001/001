@@ -10,6 +10,11 @@ sys.path.insert(0, '/Users/jarvis001/Library/Python/3.9/lib/python/site-packages
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, END
 from langchain_groq import ChatGroq
+try:
+    from cost_router import ask as router_ask
+    COST_ROUTER_AVAILABLE = True
+except:
+    COST_ROUTER_AVAILABLE = False
 from langchain_core.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
 from jarvis_context import WAGNER_CONTEXT
