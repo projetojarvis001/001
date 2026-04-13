@@ -64,7 +64,8 @@ Responda APENAS em JSON: {"needs_execution": bool, "execution_cmd": "cmd ou vazi
 # ── Nó 2: Buscar contexto RAG no VISION ──────────────────────
 def search_context(state: AgentState) -> AgentState:
     task = state['task']
-    print(f"[JARVIS] Buscando contexto RAG no VISION...")
+    print(f"[JARVIS] Buscando contexto RAG + memorias no VISION...")
+    memories = get_memories(task)
     
     try:
         r = requests.post(f'{VISION_URL}/search-and-generate',
@@ -107,6 +108,7 @@ Responda em português do Brasil, seja específico e direto. Use os dados do con
     
     state['result'] = response.content
     print(f"[JARVIS] Resposta gerada: {len(state['result'])} chars")
+    save_memory(task, response.content)
     return state
 
 # ── Nó 4: Executar no FRIDAY (se necessário) ─────────────────
