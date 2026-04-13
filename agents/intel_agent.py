@@ -19,6 +19,34 @@ except:
 BOT = os.getenv("TELEGRAM_BOT_TOKEN")
 CHAT = os.getenv("TELEGRAM_CHAT_ID")
 
+CNAE_MAP = {
+    "8219999": "Preparacao de documentos e servicos de apoio administrativo",
+    "6201500": "Desenvolvimento de programas de computador sob encomenda",
+    "6202300": "Desenvolvimento e licenciamento de programas de computador customizaveis",
+    "6203100": "Desenvolvimento e licenciamento de programas de computador nao customizaveis",
+    "6209100": "Suporte tecnico, manutencao e outros servicos em tecnologia da informacao",
+    "6419300": "Bancos comerciais",
+    "6422100": "Bancos multiplos com carteira comercial",
+    "8011101": "Atividades de vigilancia e seguranca privada",
+    "4321500": "Instalacao e manutencao eletrica",
+    "4329101": "Instalacao de paineis publicitarios",
+    "7490199": "Outras atividades profissionais, cientificas e tecnicas",
+}
+
+def cnae_descricao(codigo):
+    codigo_str = str(codigo).replace(".","").replace("-","").replace("/","")[:7]
+    if codigo_str in CNAE_MAP:
+        return CNAE_MAP[codigo_str]
+    # Tenta BrasilAPI NCM/CNAE
+    try:
+        import requests
+        r = requests.get(f"https://brasilapi.com.br/api/cnae/v1/{codigo_str}", timeout=8)
+        if r.status_code == 200:
+            d = r.json()
+            return d.get("descricao", codigo)
+    except: pass
+    return str(codigo)
+
 def notify(msg):
     try:
         requests.post(f"https://api.telegram.org/bot{BOT}/sendMessage",
@@ -111,7 +139,7 @@ def intel_report(query):
             report_parts.append(f"Razao Social: {rs}")
             if fantasia and fantasia != rs: report_parts.append(f"Fantasia: {fantasia}")
             report_parts.append(f"Situacao: {sit}")
-            if cnae and cnae != "?": report_parts.append(f"Atividade: {str(cnae)[:100]}")
+            if cnae and cnae != "?": report_parts.append(f"Atividade: {cnae_descricao(cnae)[:100]}")
             if abertura: report_parts.append(f"Abertura: {abertura}")
             if porte: report_parts.append(f"Porte: {porte}")
             if capital: report_parts.append(f"Capital Social: R$ {capital}")
