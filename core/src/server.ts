@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── LANGGRAPH !jarvis ─────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith('!jarvis') && fromChatId === CHAT_ID) {
+        const task = msg.slice(7).trim() || 'qual o status do sistema?';
+        await sendTelegram('🧠 Agente LangGraph processando...');
+        try {
+          const r = await axios.post('http://localhost:3000/agent', { task }, { timeout: 65000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || 'sem resposta');
+        } catch(e: any) {
+          await sendTelegram('❌ Erro no agente: ' + e.message);
+        }
+        continue;
+      }
+
       // ── TEXTO ─────────────────────────────────────────────────────
       if (!msg || fromChatId !== CHAT_ID) continue;
       try {
@@ -747,5 +760,23 @@ app.post('/alerts/webhook', async (req, res) => {
     res.json({ ok: true, processed: alerts.length });
   } catch(e: any) {
     res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+// ── LANGGRAPH AGENT — comando !jarvis ────────────────────────
+app.post('/agent', async (req, res) => {
+  const { task } = req.body;
+  if (!task) return res.status(400).json({ ok: false, error: 'task required' });
+  try {
+    const r = await axios.post('http://host.docker.internal:7777', { task }, { timeout: 65000 });
+    res.json({ ok: true, response: r.data.response });
+  } catch(e: any) {
+    // fallback: tenta localhost
+    try {
+      const r2 = await axios.post('http://localhost:7777', { task }, { timeout: 65000 });
+      res.json({ ok: true, response: r2.data.response });
+    } catch(e2: any) {
+      res.status(500).json({ ok: false, error: 'Agent server offline — inicie com: nohup python3 agents/agent_server.py &' });
+    }
   }
 });
