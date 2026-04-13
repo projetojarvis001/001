@@ -39,7 +39,7 @@ json.dump(d,open(f,'w'))
 # ── CHECK 1: Serviços críticos ────────────────────────────
 for svc_name in "jarvis-core:http://localhost:3000/health" \
                 "VISION:http://192.168.8.124:5006/health" \
-                "Odoo:https://177.104.176.69/web/health" \
+                "Odoo:http://localhost:18070/web/health" \
                 "Agent:http://localhost:7777"; do
   NAME="${svc_name%%:*}"
   URL="${svc_name#*:}"
