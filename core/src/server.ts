@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── HUNTER AGENT ──────────────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith("!hunter") && fromChatId === CHAT_ID) {
+        const query = msg.slice(7).trim() || "analise geral do mercado";
+        await sendTelegram("🔍 Hunter analisando mercado com dados reais...");
+        try {
+          const r = await axios.post("http://host.docker.internal:7781", { task: query }, { timeout: 65000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || "sem resposta");
+        } catch(e: any) {
+          await sendTelegram("Erro Hunter: " + e.message);
+        }
+        continue;
+      }
+
       // ── OUTLOOK AGENT ─────────────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith("!outlook") && fromChatId === CHAT_ID) {
         const query = msg.slice(8).trim() || "mostre os emails recentes";
