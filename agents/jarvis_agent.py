@@ -121,19 +121,12 @@ def plan_and_respond(state: AgentState) -> AgentState:
     context = state['context']
     print(f"[JARVIS] Gerando resposta com Groq...")
     
+    memories = get_memories(task)
+    mem_block = f"\n\nINTERAÇÕES ANTERIORES RELEVANTES:\n{memories}" if memories else ""
+    ctx_block = f"\n\nCONTEXTO RAG (dados reais WPS Digital — use obrigatoriamente):\n{context[:800]}" if context else ""
+
     response = llm.invoke([
-        SystemMessage(content=f"""Você é J.A.R.V.I.S., assistente executivo do Grupo Wagner BRASILEIRO.
-Wagner Silva é empresário brasileiro, fundador do Grupo Wagner holding com 9 empresas (WPS Digital, Grape Networks, hubOS, Integracondo e outras).
-WPS Digital: 25 anos, TI e segurança eletrônica para condomínios, CFTV, controle de acesso, redes, automação.
-NÃO tem relação com grupo mercenário russo.
-
-REGRA CRÍTICA: O CONTEXTO RAG ABAIXO contém informações reais do Grupo Wagner. 
-USE OBRIGATORIAMENTE essas informações na resposta. Cite dados específicos. Não invente.
-
-CONTEXTO RAG (use estas informações diretamente):
-{context[:1000]}
-
-Responda em português do Brasil, seja específico e direto. Use os dados do contexto acima."""),
+        SystemMessage(content=SYSTEM_PROMPT_JARVIS + ctx_block + mem_block),
         HumanMessage(content=task)
     ])
     
