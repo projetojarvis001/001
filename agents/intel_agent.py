@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+import sys, os, warnings, json, requests, re
+warnings.filterwarnings("ignore")
+sys.path.insert(0, "/Users/jarvis001/Library/Python/3.9/lib/python/site-packages")
+sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
+from dotenv import load_dotenv
+load_dotenv("/Users/jarvis001/jarvis/.env")
+
+try:
+    from cost_router import ask
+except:
+    from langchain_groq import ChatGroq
+    from langchain_core.messages import HumanMessage
+    _llm = ChatGroq(api_key=os.getenv("GROQ_API_KEY"), model="llama-3.3-70b-versatile", temperature=0)
+    def ask(q, system="", **kwargs):
+        r = _llm.invoke([HumanMessage(content=q)])
+        return {"ok": True, "content": r.content}
+
+BOT = os.getenv("TELEGRAM_BOT_TOKEN")
+CHAT = os.getenv("TELEGRAM_CHAT_ID")
+
+def notify(msg):
+    try:
+        requests.post(f"https://api.telegram.org/bot{BOT}/sendMessage",
+            json={"chat_id": CHAT, "text": msg, "parse_mode": "Markdown"}, timeout=10)
+    except: pass
+
+def consulta_cnpj(cnpj):
+    cnpj_num = "".join(filter(str.isdigit, cnpj))
+    try:
+        r = requests.get(f"https://brasilapi.com.br/api/cnpj/v1/{cnpj_num}", timeout=15)
+        if r.status_code == 200: return r.json()
+    except: pass
+    return None
+
+def consulta_cep(cep):
+    cep_num = "".join(filter(str.isdigit, cep))
+    try:
+        r = requests.get(f"https://brasilapi.com.br/api/cep/v2/{cep_num}", timeout=10)
+        if r.status_code == 200: return r.json()
+    except: pass
+    return None
+
+def consulta_selic():
+    try:
+        r = requests.get("https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados/ultimos/1?formato=json", timeout=10)
+        if r.status_code == 200: return r.json()
+    except: pass
+    return None
+
+def intel_report(query):
+    cnpj_match = re.search(r"\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}", query)
+    cep_match = re.search(r"\d{5}-?\d{3}", query)
+    report_parts = []
+
+    if cnpj_match:
+        cnpj = cnpj_match.group()
+        dados = consulta_cnpj(cnpj)
+        if dados:
+            rs = dados.get("razao_social") or dados.get("nome","?")
+            sit = dados.get("descricao_situacao_cadastral") or dados.get("situacao_cadastral","?")
+            cnae = dados.get("cnae_fiscal_descricao","?")
+            report_parts.append(f"CNPJ: {cnpj}")
+            report_parts.append(f"Razao Social: {rs}")
+            report_parts.append(f"Situacao: {sit}")
+            report_parts.append(f"CNAE: {cnae}")
+            socios = dados.get("qsa",[])
+            if socios:
+                nomes = [s.get("nome_socio") or s.get("nome","?") for s in socios[:3]]
+                report_parts.append(f"Socios: {', '.join(nomes)}")
+        else:
+            report_parts.append(f"CNPJ {cnpj}: dados nao encontrados")
+
+    elif cep_match:
+        cep = cep_match.group()
+        dados = consulta_cep(cep)
+        if dados:
+            report_parts.append(f"CEP: {cep}")
+            report_parts.append(f"Logradouro: {dados.get('street') or dados.get('logradouro','?')}")
+            report_parts.append(f"Bairro: {dados.get('neighborhood') or dados.get('bairro','?')}")
+            report_parts.append(f"Cidade: {dados.get('city') or dados.get('localidade','?')}")
+
+    elif any(w in query.lower() for w in ["selic","juros","taxa"]):
+        selic = consulta_selic()
+        if selic:
+            report_parts.append(f"Selic: {selic[0].get('valor','?')}% a.a.")
+            report_parts.append(f"Data: {selic[0].get('data','?')}")
+
+    if not report_parts:
+        r = ask(query, system="Especialista em inteligencia de negocios brasileiro. Seja direto.")
+        return r.get("content","Sem dados")
+
+    raw = "\n".join(report_parts)
+    analysis = ask(
+        f"Dados:\n{raw}\n\nQuery: {query}\n\nAnalise executiva em 3 linhas.",
+        system="Voce e o JARVIS. Seja direto e objetivo."
+    )
+    return raw + "\n\nAnalise: " + analysis.get("content","")
+
+def run(query):
+    result = intel_report(query)
+    notify(f"Intel:\n{result[:3000]}")
+    return result
+
+if __name__ == "__main__":
+    q = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "selic"
+    print(run(q))

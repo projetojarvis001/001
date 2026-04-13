@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── INTEL AGENT ──────────────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith("!intel") && fromChatId === CHAT_ID) {
+        const query = msg.slice(6).trim() || "selic";
+        await sendTelegram("Consultando dados...");
+        try {
+          const r = await axios.post("http://host.docker.internal:7783", { task: query }, { timeout: 30000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || "sem resposta");
+        } catch(e: any) {
+          await sendTelegram("Erro Intel: " + e.message);
+        }
+        continue;
+      }
+
       // ── AUTONOMOUS AGENT ─────────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith("!auto") && fromChatId === CHAT_ID) {
         const objective = msg.slice(5).trim() || "status dos servicos";
