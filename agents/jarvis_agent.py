@@ -23,6 +23,32 @@ load_dotenv('/Users/jarvis001/jarvis/.env')
 
 GROQ_KEY = os.getenv('GROQ_API_KEY')
 VISION_URL = 'http://192.168.8.124:5006'
+
+SESSION_ID = "wagner_principal"
+
+def save_memory(task: str, response: str):
+    try:
+        requests.post(f"{VISION_URL}/memories/save",
+            json={"session_id": SESSION_ID, "role": "user", "content": task[:400], "source": "telegram"},
+            timeout=8)
+        requests.post(f"{VISION_URL}/memories/save",
+            json={"session_id": SESSION_ID, "role": "assistant", "content": response[:400], "source": "jarvis"},
+            timeout=8)
+    except: pass
+
+def get_memories(query: str) -> str:
+    try:
+        r = requests.post(f"{VISION_URL}/memories/search",
+            json={"session_id": SESSION_ID, "query": query, "limit": 3},
+            timeout=8)
+        if r.status_code == 200:
+            results = r.json().get("results", [])
+            if results:
+                lines = [f"[{m['role']}]: {m['content'][:150]}" for m in results]
+                return "Interacoes anteriores relevantes:\n" + "\n".join(lines)
+    except: pass
+    return ""
+
 FRIDAY_URL = 'http://192.168.8.36:8877'
 BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
