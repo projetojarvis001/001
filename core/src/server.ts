@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── OUTLOOK AGENT ─────────────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith("!outlook") && fromChatId === CHAT_ID) {
+        const query = msg.slice(8).trim() || "mostre os emails recentes";
+        await sendTelegram("Agente Outlook processando...");
+        try {
+          const r = await axios.post("http://host.docker.internal:7779", { task: query }, { timeout: 65000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || "sem resposta");
+        } catch(e: any) {
+          await sendTelegram("Erro no agente Outlook: " + e.message);
+        }
+        continue;
+      }
+
       // ── NETWORK AGENT !rede ──────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith('!rede') && fromChatId === CHAT_ID) {
         const query = msg.slice(5).trim() || 'qual o status geral da rede?';
