@@ -12,6 +12,7 @@ from langgraph.graph import StateGraph, END
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
+from jarvis_context import WAGNER_CONTEXT
 
 load_dotenv('/Users/jarvis001/jarvis/.env')
 
