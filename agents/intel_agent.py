@@ -27,10 +27,39 @@ def notify(msg):
 
 def consulta_cnpj(cnpj):
     cnpj_num = "".join(filter(str.isdigit, cnpj))
+    
+    # Tenta OpenCNPJ primeiro (mais completo)
+    try:
+        r = requests.get(f"https://api.opencnpj.org/{cnpj_num}", timeout=15)
+        if r.status_code == 200:
+            d = r.json()
+            if d.get("razao_social"): return d
+    except: pass
+    
+    # Fallback BrasilAPI
     try:
         r = requests.get(f"https://brasilapi.com.br/api/cnpj/v1/{cnpj_num}", timeout=15)
-        if r.status_code == 200: return r.json()
+        if r.status_code == 200:
+            d = r.json()
+            if d.get("razao_social") or d.get("nome"): return d
     except: pass
+    
+    # Fallback ReceitaWS
+    try:
+        r = requests.get(f"https://receitaws.com.br/v1/cnpj/{cnpj_num}", timeout=15)
+        if r.status_code == 200:
+            d = r.json()
+            if d.get("nome"): return d
+    except: pass
+    
+    # Fallback CNPJ.ws
+    try:
+        r = requests.get(f"https://publica.cnpj.ws/cnpj/{cnpj_num}", timeout=15)
+        if r.status_code == 200:
+            d = r.json()
+            if d.get("razao_social"): return d
+    except: pass
+    
     return None
 
 def consulta_cep(cep):
