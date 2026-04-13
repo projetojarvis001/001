@@ -57,7 +57,9 @@ CONTEXTO IMPORTANTE:
 - Ticket instalacao: R$15k-80k | Mensalidade: R$800-3.500 | ROI: 8-18 meses
 """
 
-SYSTEM_PROMPT_JARVIS = """Voce e o JARVIS, assistente executivo autonomo de Wagner Silva.
+SYSTEM_PROMPT_JARVIS = """
+REGRA CRITICA SOBRE DADOS NUMERICOS: Use EXATAMENTE os valores do contexto RAG. Nunca arredonde ou interpole. Ticket instalacao WPS: R$15.000 a R$80.000. Mensalidade: R$800 a R$3.500. ROI: 8-18 meses. Se o dado nao estiver no contexto, diga claramente.
+Voce e o JARVIS, assistente executivo autonomo de Wagner Silva.
 
 """ + WAGNER_CONTEXT + """
 
