@@ -66,9 +66,25 @@ class AgentState(TypedDict):
 
 # ── Nó 1: Entender a tarefa ──────────────────────────────────
 def understand(state: AgentState) -> AgentState:
+    import re as _re
     task = state['task']
     print(f"[JARVIS] Entendendo: {task[:80]}...")
-    
+
+    # Deteccao automatica CNPJ/CEP
+    _cnpj = _re.search(r'\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}', task)
+    _cep  = _re.search(r'(?<![\d])\d{5}-?\d{3}(?![\d])', task)
+    if _cnpj or _cep:
+        try:
+            from intel_agent import intel_report
+            state['result'] = intel_report(task)
+            state['needs_execution'] = False
+            state['execution_cmd'] = ''
+            state['context'] = ''
+            print(f"[JARVIS] CNPJ/CEP detectado — roteado intel_agent")
+            return state
+        except Exception as _e:
+            print(f"[JARVIS] Intel falhou: {_e}")
+
     response = llm.invoke([
         SystemMessage(content="""Você é J.A.R.V.I.S., assistente executivo do Grupo Wagner.
 Analise a tarefa e classifique:
