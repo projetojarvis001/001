@@ -2,6 +2,7 @@
 import sys, os, warnings, json
 warnings.filterwarnings("ignore")
 sys.path.insert(0, "/Users/jarvis001/Library/Python/3.9/lib/python/site-packages")
+sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from odoo_agent import process_event
 
