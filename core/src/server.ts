@@ -691,6 +691,19 @@ async function telegramPolling(): Promise<void> {
         continue;
       }
 
+      // ── AUTONOMOUS AGENT ─────────────────────────────────────────────
+      if (msg && msg.toLowerCase().startsWith("!auto") && fromChatId === CHAT_ID) {
+        const objective = msg.slice(5).trim() || "status dos servicos";
+        await sendTelegram("JARVIS Autonomo iniciando...");
+        try {
+          const r = await axios.post("http://host.docker.internal:7782", { task: objective }, { timeout: 120000 });
+          await sendTelegram(r.data.response?.slice(0, 3000) || "sem resposta");
+        } catch(e: any) {
+          await sendTelegram("Erro Agente Autonomo: " + e.message);
+        }
+        continue;
+      }
+
       // ── HUNTER AGENT ──────────────────────────────────────────────────
       if (msg && msg.toLowerCase().startsWith("!hunter") && fromChatId === CHAT_ID) {
         const query = msg.slice(7).trim() || "analise geral do mercado";
