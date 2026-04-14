@@ -85,8 +85,8 @@ WPS Digital | wagner@wps.com.br | (19) XXXX-XXXX
             Paragraph(f"Cliente: {cliente} | {mes_ano}", normal),
             Spacer(1, 0.5*cm),
         ]
-        for linha in r.get("content","").split("
-"):
+        for linha in r.get("content","").split("\n"):
+
             if linha.strip():
                 story.append(Paragraph(linha, normal))
             else:
