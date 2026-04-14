@@ -1,3 +1,68 @@
+
+def update_odoo_lead(lead_id: int, stage: str, notes: str = "") -> bool:
+    """Atualiza status de lead no Odoo CRM"""
+    import requests as _req, os
+    from dotenv import load_dotenv
+    load_dotenv("/Users/jarvis001/jarvis/.env")
+    
+    ODOO_URL = "http://localhost:18070"
+    ODOO_DB = "odoo"
+    ODOO_USER = "wagner@wps.com.br"
+    ODOO_PASS = "odoowps"
+    
+    stage_map = {
+        "novo": 1, "qualificado": 2, "proposta": 3,
+        "negociacao": 4, "ganho": 5, "perdido": 6
+    }
+    
+    try:
+        # Login
+        auth = _req.post(f"{ODOO_URL}/web/dataset/call_kw", json={
+            "jsonrpc":"2.0","method":"call","params":{
+                "model":"res.users","method":"authenticate",
+                "args":[ODOO_DB, ODOO_USER, ODOO_PASS, {}],"kwargs":{}
+            }}, timeout=10).json().get("result")
+        if not auth: return False
+        
+        # Atualiza stage
+        stage_id = stage_map.get(stage.lower(), 1)
+        vals = {"stage_id": stage_id}
+        if notes:
+            vals["description"] = notes
+        
+        _req.post(f"{ODOO_URL}/web/dataset/call_kw", json={
+            "jsonrpc":"2.0","method":"call","params":{
+                "model":"crm.lead","method":"write",
+                "args":[[lead_id], vals],"kwargs":{}
+            }}, timeout=10)
+        return True
+    except: return False
+
+def get_pipeline_odoo() -> list:
+    """Retorna pipeline atual do CRM Odoo"""
+    import requests as _req, os
+    from dotenv import load_dotenv
+    load_dotenv("/Users/jarvis001/jarvis/.env")
+    
+    ODOO_URL = "http://localhost:18070"
+    
+    try:
+        auth = _req.post(f"{ODOO_URL}/web/dataset/call_kw", json={
+            "jsonrpc":"2.0","method":"call","params":{
+                "model":"res.users","method":"authenticate",
+                "args":["odoo","wagner@wps.com.br","odoowps",{}],"kwargs":{}
+            }}, timeout=10).json().get("result")
+        if not auth: return []
+        
+        r = _req.post(f"{ODOO_URL}/web/dataset/call_kw", json={
+            "jsonrpc":"2.0","method":"call","params":{
+                "model":"crm.lead","method":"search_read",
+                "args":[[["active","=",True]]],
+                "kwargs":{"fields":["name","partner_name","expected_revenue","stage_id","user_id"],"limit":20}
+            }}, timeout=10)
+        return r.json().get("result",[]) or []
+    except: return []
+
 #!/usr/bin/env python3
 """
 Agente Pipeline Odoo — analisa pedidos/faturas automaticamente

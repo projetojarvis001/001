@@ -129,3 +129,53 @@ if __name__ == "__main__":
     print("Testando sistema de aprovacao...")
     print("Nivel 1 (auto):", send_approval_request("TEST01", "Reiniciar container", 1))
     print("Sistema OK — aguardando integracao")
+
+# Niveis 4 e 5 — acoes criticas com dupla confirmacao
+NIVEL_4_KEYWORDS = [
+    "deletar", "remover pasta", "dropar banco", "truncate",
+    "rm -rf", "drop table", "delete from", "format",
+    "revogar acesso", "bloquear usuario", "cancelar contrato"
+]
+
+NIVEL_5_KEYWORDS = [
+    "producao", "todos os dados", "backup principal",
+    "credenciais master", "vault root", "chave privada",
+    "demitir", "encerrar empresa", "transferir propriedade"
+]
+
+def classify_nivel(action: str) -> int:
+    action_lower = action.lower()
+    if any(k in action_lower for k in NIVEL_5_KEYWORDS): return 5
+    if any(k in action_lower for k in NIVEL_4_KEYWORDS): return 4
+    return 3
+
+def send_critical_approval(task_id: str, action: str, nivel: int) -> str:
+    """Envia aprovacao critica nivel 4 ou 5 com aviso especial"""
+    import os, requests as _req
+    BOT = os.getenv("TELEGRAM_BOT_TOKEN")
+    CHAT = os.getenv("TELEGRAM_CHAT_ID")
+    
+    emoji = "🚨🚨🚨" if nivel == 5 else "⚠️⚠️"
+    aviso = "ACAO IRREVERSIVEL — PENSE DUAS VEZES" if nivel == 5 else "ACAO DE ALTO IMPACTO"
+    
+    msg = f"""{emoji} APROVACAO NIVEL {nivel} — {aviso}
+
+Acao: {action}
+
+{"Esta acao NAO PODE SER DESFEITA." if nivel == 5 else "Esta acao tem impacto significativo."}
+
+Para CONFIRMAR responda exatamente:
+CONFIRMAR_{task_id}
+
+Para CANCELAR responda:
+NAO_{task_id}
+
+Voce tem 5 minutos para responder.
+Apos este prazo a acao sera CANCELADA automaticamente."""
+    
+    try:
+        _req.post(f"https://api.telegram.org/bot{BOT}/sendMessage",
+            json={"chat_id": CHAT, "text": msg, "parse_mode": "Markdown"}, timeout=10)
+        return task_id
+    except: return None
+

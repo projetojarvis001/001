@@ -82,6 +82,47 @@ Wagner Silva — WPS Digital"""
     }
 }
 
+
+def enviar_email_real(destinatario: str, assunto: str, corpo: str) -> bool:
+    """Envia email real via Microsoft Graph OAuth2"""
+    import os, requests as _req
+    
+    CLIENT_ID = os.getenv("AZURE_CLIENT_ID","")
+    CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET","")
+    TENANT_ID = os.getenv("AZURE_TENANT_ID","")
+    
+    if not all([CLIENT_ID, CLIENT_SECRET, TENANT_ID]):
+        print("[Email] Credenciais Azure nao configuradas — email salvo localmente")
+        return False
+    
+    try:
+        # Obtem token
+        token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
+        token_r = _req.post(token_url, data={
+            "grant_type": "client_credentials",
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "scope": "https://graph.microsoft.com/.default"
+        }, timeout=10)
+        token = token_r.json().get("access_token")
+        if not token: return False
+        
+        # Envia email
+        email_r = _req.post(
+            "https://graph.microsoft.com/v1.0/users/wagner@wps.com.br/sendMail",
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            json={"message": {
+                "subject": assunto,
+                "body": {"contentType": "Text", "content": corpo},
+                "toRecipients": [{"emailAddress": {"address": destinatario}}]
+            }},
+            timeout=15
+        )
+        return email_r.status_code == 202
+    except Exception as e:
+        print(f"[Email] Erro Graph: {e}")
+        return False
+
 def gerar_email(query: str, dia: str = "d1") -> dict:
     from datetime import datetime
     
@@ -103,7 +144,14 @@ Responda APENAS JSON.""",
     assunto = template["assunto"].format(**dados)
     corpo = template["corpo"].format(**dados)
     
-    return {"assunto": assunto, "corpo": corpo, "dados": dados}
+    # Tenta enviar via Graph se destinatario fornecido
+    email_sindico = dados.get("email", "")
+    if email_sindico and "@" in email_sindico:
+        enviado = enviar_email_real(email_sindico, assunto, corpo)
+        if enviado:
+            notify(f"Email enviado para {email_sindico}: {assunto}")
+    
+    return {"assunto": assunto, "corpo": corpo, "dados": dados, "enviado": bool(email_sindico)}
 
 def run(query: str) -> str:
     result = gerar_email(query)
