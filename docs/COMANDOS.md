@@ -1,5 +1,5 @@
 # COMANDOS JARVIS — REFERENCIA COMPLETA
-Atualizado: 2026-04-14 09:48
+Atualizado: 2026-04-14 10:03-04-14 09:48
 
 ## TODOS OS COMANDOS DISPONIVEIS NO TELEGRAM
 
@@ -34,6 +34,14 @@ Atualizado: 2026-04-14 09:48
 !cobranca [verificar]       — monitora inadimplencia no Odoo
                               Ex: !cobranca verificar
                               Ex: !cobranca listar
+
+
+### Relatorio e NPS
+!relatorio [cliente]        — gera relatorio mensal PDF para cliente
+                              Ex: !relatorio Condominio Jardins Campinas
+!nps [cliente ou relatorio] — envia pesquisa NPS ou ve resultado
+                              Ex: !nps Condominio Jardins
+                              Ex: !nps relatorio
 
 ### Aprovacao (resposta automatica)
 SIM_[ID]                    — aprova acao pendente nivel 3+
