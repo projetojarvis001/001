@@ -19,7 +19,7 @@ AGENTS = {
 
 def check_agent(port):
     try:
-        r = requests.get(f"http://localhost:{port}", timeout=3)
+        r = requests.get(f"http://host.docker.internal:{port}", timeout=3)
         return 1 if r.status_code == 200 else 0
     except: return 0
 
