@@ -52,6 +52,24 @@ def try_gemini(messages, system="", max_tokens=1000):
     except Exception as e:
         return {"ok": False, "provider": "gemini", "error": str(e)[:100]}
 
+def try_localai(messages, system="", max_tokens=1000):
+    """LocalAI Proxy no VISION — API OpenAI-compatible"""
+    try:
+        import requests as _req
+        msgs = []
+        if system: msgs.append({"role": "system", "content": system})
+        msgs.extend(messages)
+        r = _req.post("http://192.168.8.124:8080/v1/chat/completions",
+            json={"model": "local", "messages": msgs, "max_tokens": max_tokens},
+            timeout=60)
+        if r.status_code == 200:
+            text = r.json()["choices"][0]["message"]["content"]
+            if text:
+                return {"ok": True, "provider": "localai", "model": "qwen3:8b", "content": text}
+        return {"ok": False, "provider": "localai", "error": f"status {r.status_code}"}
+    except Exception as e:
+        return {"ok": False, "provider": "localai", "error": str(e)[:100]}
+
 def try_ollama(messages, system="", max_tokens=1000):
     try:
         import requests
@@ -66,9 +84,9 @@ def try_ollama(messages, system="", max_tokens=1000):
 
 def route(messages, system="", max_tokens=1000, prefer_quality=False):
     if prefer_quality:
-        chain = [try_anthropic, try_groq, try_gemini, try_ollama]
+        chain = [try_anthropic, try_groq, try_gemini, try_localai, try_ollama]
     else:
-        chain = [try_groq, try_anthropic, try_gemini, try_ollama]
+        chain = [try_groq, try_anthropic, try_gemini, try_localai, try_ollama]
     for fn in chain:
         r = fn(messages, system, max_tokens)
         if r["ok"]:
