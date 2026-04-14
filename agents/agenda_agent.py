@@ -99,8 +99,7 @@ def listar_agenda() -> str:
     linhas = ["Agenda WPS Digital:"]
     for e in ativos[-10:]:
         linhas.append(f"  [{e['id']}] {e['data']} {e['hora']} — {e['condominio']} ({e['tipo']})")
-    return "
-".join(linhas)
+    return "\n".join(linhas)
 
 def run(query: str) -> str:
     q = query.lower().strip()
