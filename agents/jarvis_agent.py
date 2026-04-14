@@ -39,7 +39,7 @@ def save_memory(task: str, response: str):
 def lightrag_query(query: str) -> str:
     """Consulta LightRAG grafo de conhecimento — complementa RAG vetorial"""
     try:
-        r = requests.post("http://192.168.8.124:5007/query",
+        r = requests.post("http://192.168.8.124:5008/query",
             json={"query": query, "mode": "hybrid"},
             timeout=20)
         if r.status_code == 200:
