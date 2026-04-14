@@ -40,9 +40,34 @@ def try_anthropic(messages, system="", max_tokens=1000):
     except Exception as e:
         return {"ok": False, "provider": "anthropic", "error": str(e)[:100]}
 
+def try_mistral(messages, system="", max_tokens=1000):
+    """Mistral AI — gratuito 1B tokens/mes sem cartao — console.mistral.ai"""
+    try:
+        import requests as _req
+        MISTRAL_KEY = os.getenv("MISTRAL_API_KEY","")
+        if not MISTRAL_KEY:
+            return {"ok": False, "provider": "mistral", "error": "sem MISTRAL_API_KEY"}
+        msgs = []
+        if system: msgs.append({"role":"system","content":system})
+        msgs.extend(messages)
+        r = _req.post("https://api.mistral.ai/v1/chat/completions",
+            headers={"Authorization": f"Bearer {MISTRAL_KEY}", "Content-Type": "application/json"},
+            json={"model": "mistral-small-latest", "messages": msgs, "max_tokens": max_tokens},
+            timeout=30)
+        if r.status_code == 200:
+            text = r.json()["choices"][0]["message"]["content"]
+            return {"ok": True, "provider": "mistral", "model": "mistral-small", "content": text}
+        return {"ok": False, "provider": "mistral", "error": f"status {r.status_code}"}
+    except Exception as e:
+        return {"ok": False, "provider": "mistral", "error": str(e)[:100]}
+
 def try_gemini(messages, system="", max_tokens=1000):
+    """Gemini — mantido como fallback quando billing ativo"""
     try:
         import google.generativeai as genai
+        GEMINI_KEY = os.getenv("GOOGLE_AI_KEY","")
+        if not GEMINI_KEY:
+            return {"ok": False, "provider": "gemini", "error": "sem key"}
         genai.configure(api_key=GEMINI_KEY)
         model = genai.GenerativeModel("gemini-2.0-flash",
             system_instruction=system or "Voce e o JARVIS, assistente executivo do Wagner Silva.")
@@ -84,9 +109,9 @@ def try_ollama(messages, system="", max_tokens=1000):
 
 def route(messages, system="", max_tokens=1000, prefer_quality=False):
     if prefer_quality:
-        chain = [try_anthropic, try_groq, try_gemini, try_localai, try_ollama]
+        chain = [try_anthropic, try_groq, try_mistral, try_gemini, try_localai, try_ollama]
     else:
-        chain = [try_groq, try_anthropic, try_gemini, try_localai, try_ollama]
+        chain = [try_groq, try_anthropic, try_mistral, try_gemini, try_localai, try_ollama]
     for fn in chain:
         r = fn(messages, system, max_tokens)
         if r["ok"]:
