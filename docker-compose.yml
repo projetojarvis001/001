@@ -82,6 +82,15 @@ services:
       - N8N_SECURE_COOKIE=false
       - WEBHOOK_URL=https://arranged-plus-threshold-campus.trycloudflare.com
 
+  metrics-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.metrics
+    container_name: jarvis-metrics
+    restart: unless-stopped
+    ports:
+      - "9091:9091"
+
 volumes:
   pg_data:
   redis_data:
