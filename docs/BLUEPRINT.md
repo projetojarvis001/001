@@ -3,7 +3,7 @@ Gerado: 2026-04-14 00:58 | Versao: FINAL COMPLETO
 
 ## VISAO GERAL
 Sistema de inteligencia executiva autonomo para Wagner Silva, Chairman do Grupo Wagner.
-4 nos, 9 agentes especializados, 285+ vetores RAG, Cost Router 5 providers.
+4 nos, 9 agentes especializados + LightRAG grafo, 297+ vetores RAG, Cost Router 5 providers.
 Principio: self-solving, zero intervencao humana.
 
 ## INFRAESTRUTURA
@@ -31,7 +31,7 @@ LocalAI :8080        proxy qwen3:8b local
 Ollama VISION        bunker local sem internet
 
 ## KNOWLEDGE BASE
-Total: 285+ vetores | Motor: pgvector PostgreSQL VISION
+Total: 297+ vetores | Motor: pgvector PostgreSQL VISION
 Embedding: nomic-embed-text | Geracao: qwen3:8b 5.2GB
 Auto-ingestao: Obsidian ~/Documents/JARVIS_KB watcher 30s
 
