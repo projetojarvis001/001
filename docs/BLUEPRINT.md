@@ -3,7 +3,7 @@ Gerado: 2026-04-14 00:58 | Versao: FINAL COMPLETO
 
 ## VISAO GERAL
 Sistema de inteligencia executiva autonomo para Wagner Silva, Chairman do Grupo Wagner.
-4 nos, 9 agentes especializados + LightRAG grafo, 297+ vetores RAG, Cost Router 5 providers.
+4 nos, 13 agentes especializados + LightRAG grafo, 343+ vetores RAG, Cost Router 5 providers.
 Principio: self-solving, zero intervencao humana.
 
 ## INFRAESTRUTURA
@@ -21,7 +21,12 @@ TADASH  177.104.176.69/ 100.67.82.123   VM 72vCPU 93GB    Odoo Keycloak Vault
 :7782 auto-agent      !auto        Agente autonomo LangGraph
 :7783 intel-agent     !intel       CNPJ CEP Selic APIs publicas
 :7784 prospect-agent  !prospect    Leads condominiais DuckDuckGo
-:7785 financial-agent !financeiro  MRR Odoo relatorio financeiro
+:7785 financial-agent  !financeiro  MRR Odoo relatorio financeiro
+:7786 contract-agent  !contrato    Gera proposta PDF personalizada
+:7787 email-agent     !email       Follow-up automatico pos visita
+:7788 agenda-agent    !visita      Agendamento visitas tecnicas
+:7789 cobranca-agent  !cobranca    Monitora inadimplencia Odoo
+ !financeiro  MRR Odoo relatorio financeiro
 
 ## COST ROUTER
 Groq llama-3.3-70b   primario gratuito rapido
@@ -31,7 +36,7 @@ LocalAI :8080        proxy qwen3:8b local
 Ollama VISION        bunker local sem internet
 
 ## KNOWLEDGE BASE
-Total: 297+ vetores | Motor: pgvector PostgreSQL VISION
+Total: 343+ vetores | Motor: pgvector PostgreSQL VISION
 Embedding: nomic-embed-text | Geracao: qwen3:8b 5.2GB
 Auto-ingestao: Obsidian ~/Documents/JARVIS_KB watcher 30s
 

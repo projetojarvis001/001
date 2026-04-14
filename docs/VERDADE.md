@@ -2,9 +2,9 @@
 Atualizado: 2026-04-14 01:39
 
 ## FUNCIONA 100%
-- 9 agentes Python :7777-7785 operacionais
+- 13 agentes Python :7777-7789 operacionais
 - Cost Router 6 providers: Groq OK, Anthropic OK, Mistral OK, Gemini quota, LocalAI OK, Ollama OK
-- VISION pgvector 297 vetores RAG semantico
+- VISION pgvector 343 vetores RAG semantico
 - VISION LightRAG 60+ docs grafo de conhecimento :5008
 - Intel Agent CNPJ 4 APIs cascata dados reais Receita Federal
 - jarvis-agent v2.0 RAG + LightRAG + memoria episodica + CNPJ/CEP auto
@@ -33,7 +33,7 @@ Atualizado: 2026-04-14 01:39
 
 ## NUMEROS FINAIS
 - Agentes: 9 operacionais
-- KB pgvector: 297 vetores
+- KB pgvector: 343 vetores
 - KB LightRAG: 60+ documentos no grafo
 - Cost Router: 5/6 providers ativos
 - LaunchAgents: 28+ entre JARVIS e VISION
