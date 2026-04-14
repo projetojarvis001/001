@@ -31,6 +31,27 @@ def notify(msg):
             json={"chat_id": CHAT, "text": msg, "parse_mode": "Markdown"}, timeout=10)
     except: pass
 
+def busca_serpapi(keyword):
+    """SerpAPI — 100 buscas/dia gratis — serpapi.com"""
+    try:
+        import requests as _req
+        SERP_KEY = os.getenv("SERPAPI_KEY","")
+        if not SERP_KEY: return []
+        r = _req.get("https://serpapi.com/search",
+            params={"q": keyword, "api_key": SERP_KEY, "num": 5, "hl": "pt", "gl": "br"},
+            timeout=15)
+        if r.status_code == 200:
+            results = []
+            for item in r.json().get("organic_results", [])[:5]:
+                results.append({
+                    "title": item.get("title",""),
+                    "snippet": item.get("snippet",""),
+                    "url": item.get("link","")
+                })
+            return results
+    except: pass
+    return []
+
 def busca_duckduckgo(keyword):
     try:
         r = requests.get("https://api.duckduckgo.com/",
@@ -70,7 +91,7 @@ def run(keyword=None):
     notify(f"Prospeccao: {len(kws)} keywords")
     leads = []
     for kw in kws:
-        results = busca_duckduckgo(kw)
+        results = busca_serpapi(kw) or busca_duckduckgo(kw)
         q = qualifica(kw, results)
         if q and q.get("e_lead") and q.get("score",0) >= 6:
             leads.append(q)
