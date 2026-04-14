@@ -1,96 +1,17 @@
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s
-
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets: ['alertmanager:9093']
-
-rule_files:
-  - /etc/prometheus/alerts.yml
 
 scrape_configs:
-  - job_name: prometheus
+  - job_name: 'jarvis-agents'
     static_configs:
-      - targets: ['prometheus:9090']
+      - targets: ['host.docker.internal:9091']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
 
-  - job_name: node_exporter_local
+  - job_name: 'prometheus'
     static_configs:
-      - targets: ['node_exporter:9100']
-        labels:
-          node: jarvis
+      - targets: ['localhost:9090']
 
-  - job_name: node_exporter_vision
+  - job_name: 'grafana'
     static_configs:
-      - targets: ['192.168.8.124:9100']
-        labels:
-          node: vision
-
-  - job_name: node_exporter_friday
-    static_configs:
-      - targets: ['192.168.8.36:9100']
-        labels:
-          node: friday
-
-  - job_name: node_exporter_tadash
-    static_configs:
-      - targets: ['host.docker.internal:19100']
-        labels:
-          node: tadash
-
-  - job_name: cadvisor_local
-    static_configs:
-      - targets: ['cadvisor:8080']
-
-  - job_name: blackbox_http
-    metrics_path: /probe
-    params:
-      module: [http_2xx]
-    static_configs:
-      - targets:
-          - http://177.104.176.69:58069
-          - http://192.168.8.124:5006/health
-          - http://192.168.8.124:5007/health
-          - http://192.168.8.36:3010/health
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox:9115
-
-  - job_name: blackbox_tcp
-    metrics_path: /probe
-    params:
-      module: [tcp_connect]
-    static_configs:
-      - targets:
-          - 177.104.176.69:61022
-          - 177.104.176.69:58069
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox:9115
-
-  - job_name: friday_worker
-    metrics_path: /probe
-    params:
-      module: [http_2xx]
-    static_configs:
-      - targets:
-          - http://192.168.8.36:8877/health
-        labels:
-          node: friday
-          service: worker
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox:9115
+      - targets: ['obs_grafana:3000']
