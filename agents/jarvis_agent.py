@@ -36,6 +36,19 @@ def save_memory(task: str, response: str):
             timeout=8)
     except: pass
 
+def lightrag_query(query: str) -> str:
+    """Consulta LightRAG grafo de conhecimento — complementa RAG vetorial"""
+    try:
+        r = requests.post("http://192.168.8.124:5007/query",
+            json={"query": query, "mode": "hybrid"},
+            timeout=20)
+        if r.status_code == 200:
+            result = r.json().get("response","")
+            if result and len(result) > 50:
+                return f"[LightRAG Grafo]: {result[:500]}"
+    except: pass
+    return ""
+
 def get_memories(query: str) -> str:
     try:
         r = requests.post(f"{VISION_URL}/memories/search",
@@ -113,6 +126,7 @@ def search_context(state: AgentState) -> AgentState:
     task = state['task']
     print(f"[JARVIS] Buscando contexto RAG + memorias no VISION...")
     memories = get_memories(task)
+    lightrag = lightrag_query(task)
     
     try:
         r = requests.post(f'{VISION_URL}/search-and-generate',
@@ -138,11 +152,13 @@ def plan_and_respond(state: AgentState) -> AgentState:
     print(f"[JARVIS] Gerando resposta com Groq...")
     
     memories = get_memories(task)
+    lightrag = lightrag_query(task)
     mem_block = f"\n\nINTERAÇÕES ANTERIORES RELEVANTES:\n{memories}" if memories else ""
+    rag_graph = f"\n\nCONHECIMENTO EM GRAFO (relacoes e contexto profundo):\n{lightrag}" if lightrag else ""
     ctx_block = f"\n\nCONTEXTO RAG (dados reais WPS Digital — use obrigatoriamente):\n{context[:800]}" if context else ""
 
     response = llm.invoke([
-        SystemMessage(content=SYSTEM_PROMPT_JARVIS + ctx_block + mem_block),
+        SystemMessage(content=SYSTEM_PROMPT_JARVIS + ctx_block + mem_block + (rag_graph if "rag_graph" in dir() else "")),
         HumanMessage(content=task)
     ])
     
