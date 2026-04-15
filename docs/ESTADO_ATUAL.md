@@ -1,32 +1,32 @@
-# ESTADO ATUAL JARVIS — 15/04/2026
+# ESTADO ATUAL JARVIS — 15/04/2026 19:40
 
-## PROXIMA ACAO IMEDIATA
-pgvector OK no Docker postgres:pgvector:pg16
-Tabela documents criada com 0 registros
-PRECISA: reingerir os 495 vetores via semantic_api do VISION
-PRECISA: reiniciar semantic_api do VISION para reconectar ao banco novo
+## STATUS GERAL
+SISTEMA OPERACIONAL — RAG FUNCIONANDO
 
-## PROBLEMA EM RESOLUCAO
-- semantic_api.py no VISION usava docker exec vision-postgres-vision-1 que nao existe
-- Banco migrado para pgvector/pgvector:pg16 no JARVIS docker
-- semantic_api.py precisa ser reescrito para usar psycopg2 direto
+## RAG STATUS
+- pgvector/pgvector:pg16 com indice hnsw ATIVO
+- 62 vetores no banco jarvis_db tabela documents
+- Search retornando scores reais 0.75+
+- semantic_api v3 psycopg2 direto funcionando
+- VISION :5006 health OK
 
-## ESTADO SISTEMA
-- 15 agentes :7777-7791 operacionais
-- 495 vetores NO BANCO ANTIGO (precisam ser reingeridos)
-- pgvector novo banco VAZIO esperando reingestao
+## JARVIS END-TO-END
+- 15 agentes 7777-7791 operacionais
 - SYSTEM_PROMPT cirurgico aplicado
+- Respostas com dados reais
 - Cost Router 6 providers OK
-- Grafana com dados reais OK
+
+## PROXIMA ACAO
+Continuar ingestao KB ate 500 vetores
+Metodo: ingestao item por item sleep 2 entre cada
+Script base em /tmp/ingest_lento.py
 
 ## CREDENCIAIS BANCO
-host: localhost (do JARVIS) ou 192.168.8.121 (do VISION)
-port: 5432
-dbname: jarvis_db
-user: jarvis_admin
-password: ver PG_PASSWORD no .env
+host: localhost porta 5432
+dbname: jarvis_db user: jarvis_admin
+password: PG_PASSWORD no .env
 
-## VISION SEMANTIC_API
-arquivo: /Users/vision/jarvis-vision/semantic_api.py
-problema: usa docker exec que nao existe
-solucao: substituir por psycopg2 direto apontando para 192.168.8.121:5432
+## INFRA
+JARVIS: 192.168.8.121
+VISION: 192.168.8.124
+semantic_api v3 psycopg2 direto no VISION
