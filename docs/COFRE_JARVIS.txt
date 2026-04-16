@@ -1,0 +1,478 @@
+
+================================================================================
+PROJETO J.A.R.V.I.S — COFRE DE INFORMAÇÕES
+Grupo Wagner — Documento Confidencial
+Gerado: 16/04/2026 19:17
+================================================================================
+
+SUMÁRIO EXECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Serviços online:     16/16
+Shadow interações:   561
+Skills autônomas:    3
+KB vetores:          538
+Dataset fine-tuning: 279 exemplos
+Pipeline Odoo:       R$390.600
+MRR WPS:             R$156.000
+Gênio da lâmpada:    72%
+
+
+================================================================================
+EQUIPAMENTO 1 — JARVIS (Mac Mini M4)
+================================================================================
+IP LOCAL:     192.168.8.121
+HOSTNAME:     1-JARVIS
+OS:           macOS (Apple Silicon M4)
+RAM:          16GB
+USUÁRIO:      jarvis001
+HOME:         /Users/jarvis001/
+PROJETO:      /Users/jarvis001/jarvis/
+
+ACESSO SSH:
+  ssh jarvis001@192.168.8.121
+  (sem senha — chave configurada)
+
+CREDENCIAIS SISTEMA:
+  macOS user:   jarvis001
+  sem senha SSH para máquinas do cluster
+
+REPOSITÓRIO GIT:
+  URL:    https://github.com/projetojarvis001/001
+  Branch: main
+  Última tag: baseline-DIA1-COMPLETO-20260416-1717
+  Backup tag: backup-COMPLETO-20260416-1708
+
+ARQUIVOS CRÍTICOS:
+  .env:           /Users/jarvis001/jarvis/.env
+  Agentes:        /Users/jarvis001/jarvis/agents/
+  Grape:          /Users/jarvis001/jarvis/grape/
+  Integracondo:   /Users/jarvis001/jarvis/integracondo/
+  hubOS:          /Users/jarvis001/jarvis/hubos/
+  Scripts:        /Users/jarvis001/jarvis/scripts/
+  Backups:        /Users/jarvis001/jarvis/backups/
+  Dashboard:      /Users/jarvis001/jarvis/data/dashboard.html
+  Fine-tuning:    /Users/jarvis001/jarvis/data/finetuning/wps_dataset_completo.jsonl
+  Modelfile:      /Users/jarvis001/jarvis/data/finetuning/Modelfile
+
+LAUNCHAGENTS (/Users/jarvis001/Library/LaunchAgents/):
+  com.jarvis.agent.server        → agents/jarvis_agent.py
+  com.jarvis.sentinel            → agents/sentinel_server.py
+  com.jarvis.memory.api          → agents/memory_api.py
+  com.jarvis.proativo            → agents/proativo_server.py
+  com.jarvis.feedback            → agents/feedback_server.py
+  com.jarvis.prospect.auto       → agents/prospect_autonomo_server.py
+  com.jarvis.intel.externo       → agents/intel_externo_server.py
+  com.jarvis.knowledge.daily     → agents/knowledge_daily_server.py
+  com.jarvis.odoo.v2             → agents/odoo_server.py
+  com.jarvis.odoo.tunnel         → SSH tunnel → TADASH:443+8070
+  com.jarvis.grape               → grape/agents/jarvis_grape_agent.py
+  com.jarvis.integracondo        → integracondo/agents/jarvis_integracondo_agent.py
+  com.jarvis.hubos               → hubos/agents/jarvis_hubos_agent.py
+  com.jarvis.voz                 → agents/voz_server.py
+  com.jarvis.telegram.bot        → core/src/index.js
+  com.jarvis.backup.diario       → scripts/backup_diario.sh (3h todo dia)
+
+SERVIÇOS E PORTAS (JARVIS):
+  :7777  JARVIS Core (FastAPI — orquestrador principal)    ✅
+  :7780  Odoo Agent v2                                     ✅
+  :7792  SENTINEL (monitoramento)                          ✅
+  :7793  Proativo v2                                       ✅
+  :7794  Prospect Autônomo                                 ✅
+  :7795  Intel Externo (SerpAPI)                           ✅
+  :7800  JARVIS Grape Networks                             ✅
+  :7801  JARVIS Integracondo                               ✅
+  :7802  JARVIS hubOS                                      ✅
+  :7900  Dashboard Server                                  ✅
+  :5010  Memory API                                        ✅
+  :5011  Feedback Loop                                     ✅
+  :5012  Knowledge Daily                                   ✅
+  :5013  Voz TTS/STT (Luciana PT-BR)                      ✅
+  :5678  n8n (Docker — workflows automação)                ✅
+  :8888  Dashboard HTTP Server                             ✅
+
+TUNEIS SSH ATIVOS (JARVIS → TADASH):
+  localhost:18443 → TADASH:443  (Odoo HTTPS)
+  localhost:18070 → TADASH:8070 (Odoo HTTP)
+  SSH key: ~/.ssh/jarvis_tadash (sem senha)
+
+COST ROUTER — ORDEM DE FALLBACK:
+  1. Groq llama-3.3-70b (grátis — primário)
+  2. Anthropic Claude Sonnet (pago — fallback 1)
+  3. Mistral small (fallback 2)
+  4. Gemma4:e4b VISION :11434 (fallback 3)
+  5. jarvis-wps Friday :11434 (modelo customizado PT-BR)
+  6. qwen2.5:14b Friday (fallback 5)
+
+
+================================================================================
+EQUIPAMENTO 2 — VISION (Mac Mini M4)
+================================================================================
+IP LOCAL:     192.168.8.124
+HOSTNAME:     2-VISION
+OS:           macOS (Apple Silicon M4)
+RAM:          16GB — ~8GB livre
+USUÁRIO:      vision
+HOME:         /Users/vision/
+
+ACESSO SSH:
+  ssh vision@192.168.8.124
+  (sem senha — chave configurada)
+
+MODELOS OLLAMA INSTALADOS:
+  gemma4:e4b          9.6GB  (modelo principal — semantic + respostas)
+  qwen3:8b            5.2GB  (fallback secundário)
+  nomic-embed-text    274MB  (embeddings pgvector)
+  REMOVIDO: llava:7b  (-4.7GB liberado)
+  REMOVIDO: gemma3:12b (-8.1GB liberado)
+
+SERVIÇOS E PORTAS (VISION):
+  :5006  Semantic API (FastAPI — RAG + pgvector)    ✅
+  :5009  Hermes Shadow (aprendizado autônomo)       ✅
+  :11434 Ollama API
+
+LAUNCHAGENTS (/Users/vision/Library/LaunchAgents/):
+  com.jarvis.vision.semantic   → Semantic API :5006
+  com.jarvis.hermes.shadow     → Hermes Shadow :5009
+  homebrew.mxcl.ollama         → Ollama daemon
+  com.wagner.vision.backup     → backup automático
+  com.wagner.vision.guardian   → watchdog serviços
+  com.wagner.vision.memory     → memory optimizer (PARADO — falso positivo)
+
+BANCO DE DADOS PGVECTOR (Docker OrbStack):
+  Container:  vision-postgres-vision-1
+  Imagem:     pgvector/pgvector:pg16
+  Porta:      5432
+  Usuário:    vision_admin
+  Senha:      Vision2026Forte!
+  Banco:      vision
+  Tabelas:
+    - business_embeddings  (vetores negócio)
+    - knowledge_vectors    (conhecimento KB)
+    - memories_semantic    (memórias semânticas)
+  Total vetores: 538
+
+  DOCKER COMMAND:
+    /Users/vision/.orbstack/bin/docker exec vision-postgres-vision-1 \
+        psql -U vision_admin -d vision
+
+  BACKUP:
+    /Users/jarvis001/jarvis/backups/pgvector_vision_20260416_1708.sql (4.5MB)
+
+HERMES SHADOW DB:
+  Arquivo:      /Users/vision/.hermes/jarvis_memory.db
+  Interações:   561
+  Skills:       3
+  Backup:       /Users/jarvis001/jarvis/backups/shadow_20260416_1654.db (556KB)
+
+  Skills criadas autonomamente:
+    1. Metas e Planejamento de Vendas WPS 2026
+    2. Estratégia de Venda e Implementação de SLA Premium WPS
+    3. Estratégias de Resiliência e Diversificação de Receitas WPS
+
+
+================================================================================
+EQUIPAMENTO 3 — FRIDAY (Dell Optiplex 7020)
+================================================================================
+IP LOCAL:     192.168.8.36
+OS:           Ubuntu 22.04
+CPU:          20 cores
+RAM:          62GB
+USUÁRIO:      wagner
+SSH:          ssh wagner@192.168.8.36
+SENHA SSH:    04475475
+
+MODELOS OLLAMA INSTALADOS:
+  llama3.1:8b      (modelo base)
+  jarvis-wps       (modelo customizado WPS PT-BR — Modelfile gemma4)
+  qwen2.5:14b      (modelo pesado — em download)
+
+FUNÇÃO:
+  Worker de processamento pesado
+  Fine-tuning local
+  Fallback Ollama quando VISION ocupado
+  Porta Ollama: :11434
+
+MODELFILE jarvis-wps:
+  Base:    gemma4:e4b
+  System:  PT-BR forçado, dados WPS, PROXIMA ACAO CONCRETA
+  Temp:    0.3
+  Ctx:     4096
+  Arquivo: /Users/jarvis001/jarvis/data/finetuning/Modelfile
+
+
+================================================================================
+EQUIPAMENTO 4 — TADASH (VM Ubuntu Cloud)
+================================================================================
+IP PÚBLICO:   177.104.176.69
+IP TAILSCALE: 100.67.82.123
+OS:           Ubuntu 24.04
+CPU:          72 cores
+RAM:          93GB
+USUÁRIO:      wps
+SENHA:        12qwaszx
+SSH:          ssh -p 61022 wps@177.104.176.69
+SSH KEY:      /Users/jarvis001/.ssh/jarvis_tadash
+
+SERVIÇOS ATIVOS:
+  Odoo 16.0       :8070  (interno) / :443 via Nginx
+  PostgreSQL 16   :5432  (banco Odoo)
+  Keycloak        :8080  (SSO)
+  Nginx           :80/:443 (proxy reverso)
+  Tailscale       ativo  (IP: 100.67.82.123)
+
+ODOO CRM:
+  URL externa:    https://177.104.176.69 (certificado autoassinado)
+  URL tunnel:     https://localhost:18443 (via SSH tunnel do JARVIS)
+  URL Tailscale:  http://100.67.82.123:8070
+  Login:          wagner@wps.com.br
+  Senha:          odoowps
+  Admin senha:    odoowps
+  Banco:          WPS
+  UID:            7
+
+  PIPELINE ATUAL:
+    Parceria Administradora 10 condominios  R$216.000
+    Expansão Ribeirão Preto 3 condominios   R$64.800
+    CFTV Barao Geraldo 150ap               R$30.000
+    Portaria Alphaville Premium 120ap       R$21.600
+    Portaria Taquaral Gardens 80ap          R$21.600
+    Novo contrato Vinhedo Park 60ap         R$21.600
+    Retrofit Bosque das Palmeiras           R$15.000
+    TOTAL PIPELINE:                         R$390.600
+
+  CLIENTES CADASTRADOS (8):
+    Cond Alphaville Premium, Taquaral Gardens, Nova Campinas,
+    Vinhedo Park, Valinhos Residencial, Barao Geraldo Tower,
+    Bosque das Palmeiras, Parque Prado Elite
+
+  MÓDULOS INSTALADOS:
+    Sales, Account, CRM, HR Contract, Stock, Project
+
+ODOO CONFIG FILE:
+  /etc/odoo.conf
+  db_user: odoo / db_password: odoowps
+  http_port: 8070
+
+
+================================================================================
+INTEGRAÇÕES EXTERNAS
+================================================================================
+
+TELEGRAM BOT:
+  Token:    (em /Users/jarvis001/jarvis/.env → TELEGRAM_BOT_TOKEN)
+  Chat ID:  170323936
+  Comandos:
+    !jarvis [pergunta]     → resposta executiva
+    !status                → estado do sistema
+    !prospect [regiao]     → prospecção autônoma
+    !bom                   → valida resposta (treina)
+    !errado [correção]     → corrige e treina
+    /learn [texto]         → adiciona à KB
+    /info [termo]          → busca na KB
+    !lembrar [chave] [val] → salva contexto
+
+GOOGLE CALENDAR:
+  Projeto GCP:  jarvis-grupo-wagner (668442799285)
+  Client ID:    668442799285-9up8pq6e4jul2rbibv7enrviga252r1p.apps.googleusercontent.com
+  Token:        GOOGLE_CALENDAR_TOKEN no .env
+  Evento teste: hsec7b52d2074lg1s5i7epgldg
+
+SERPAPI:
+  Conta 1:  chave ...05bbd600
+  Conta 2:  chave ...614df125
+  Cota:     500 buscas/mês total (250 cada)
+  Agenda:   9h diário — 3 queries WPS estratégicas
+  Controle: /Users/jarvis001/jarvis/data/serpapi_uso.json
+
+N8N WORKFLOWS:
+  URL:      http://localhost:5678
+  Email:    projetojarvis001@gmail.com
+  Senha:    jarvis2026
+  Workflows:
+    ✅ Odoo Events JARVIS          (ativo)
+    ⚪ JARVIS Daily Digest 8h      (ativar no UI)
+    ⚪ JARVIS Prospect → Telegram  (ativar no UI)
+    ⚪ JARVIS Lead CRM → Telegram  (ativar no UI)
+  Webhook prospect: http://localhost:5678/webhook/prospect
+  Webhook lead:     http://localhost:5678/webhook/odoo-lead
+
+WHATSAPP BUSINESS:
+  Status:   PENDENTE (Twilio + Meta)
+  Número:   +5519995968004
+  WABA ID:  14277662475510718
+  Impacto:  +13% quando resolvido
+
+GROQ API:
+  Chave:    (em .env → GROQ_API_KEY)
+  Modelo:   llama-3.3-70b
+  Limite:   rate limit frequente — failover automático
+
+ANTHROPIC API:
+  Chave:    (em .env → ANTHROPIC_API_KEY)
+  Modelo:   claude-sonnet-4 (fallback 1 do cost router)
+
+
+================================================================================
+INSTÂNCIAS GRUPO WAGNER
+================================================================================
+
+WPS DIGITAL :7777
+  Arquivo contexto: agents/jarvis_context.py
+  KB: 87 contratos, MRR R$156k, meta R$220k
+  NOC SLA 8 segundos, portaria virtual R$1.800/mês
+
+GRAPE NETWORKS :7800
+  Diretório:        grape/
+  Contexto:         grape/jarvis_grape_context.py
+  Agente:           grape/agents/jarvis_grape_agent.py
+  KB: redes corporativas, NOC próprio, SD-WAN
+
+INTEGRACONDO :7801
+  Diretório:        integracondo/
+  Contexto:         integracondo/jarvis_integracondo_context.py
+  Agente:           integracondo/agents/jarvis_integracondo_agent.py
+  KB: podcast, comunidade condominial, geração de leads
+
+HUBOS :7802
+  Diretório:        hubos/
+  Contexto:         hubos/jarvis_hubos_context.py
+  Agente:           hubos/agents/jarvis_hubos_agent.py
+  URL produção:     hubos.app
+  Stack:            React 18 + TypeScript + Supabase
+
+
+================================================================================
+BACKUPS E RECUPERAÇÃO
+================================================================================
+
+BACKUP AUTOMÁTICO:
+  Schedule:  3h todo dia
+  Script:    /Users/jarvis001/jarvis/scripts/backup_diario.sh
+  LaunchAgent: com.jarvis.backup.diario
+
+ARQUIVOS DE BACKUP ATUAIS:
+  Shadow DB:  backups/shadow_20260416_1654.db       (556KB)
+  pgvector:   backups/pgvector_vision_20260416_1708.sql (4.5MB)
+  JSON:       backups/pgvector_search_backup.json   (123KB)
+
+RESTAURAÇÃO SHADOW:
+  cp backups/shadow_YYYYMMDD_HHMM.db /Users/vision/.hermes/jarvis_memory.db
+
+RESTAURAÇÃO PGVECTOR:
+  /Users/vision/.orbstack/bin/docker exec vision-postgres-vision-1 \
+      psql -U vision_admin -d vision < backups/pgvector_vision_*.sql
+
+RESTAURAÇÃO COMPLETA (máquina nova):
+  1. git clone https://github.com/projetojarvis001/001
+  2. Restaurar .env (não está no git — guardar separado)
+  3. pip3 install -r requirements.txt
+  4. Restaurar Shadow DB e pgvector
+  5. launchctl load ~/Library/LaunchAgents/com.jarvis.*.plist
+
+
+================================================================================
+FLUXO DE DADOS — ARQUITETURA REAL
+================================================================================
+
+USUÁRIO (Telegram)
+    │
+    ▼
+JARVIS CORE :7777 (FastAPI — orquestrador)
+    │
+    ├──► COST ROUTER
+    │         │
+    │         ├──► Groq API (primário)
+    │         ├──► Anthropic API (fallback 1)
+    │         ├──► VISION Gemma4 :11434 (fallback 2)
+    │         └──► FRIDAY jarvis-wps :11434 (fallback 3)
+    │
+    ├──► VISION SEMANTIC API :5006
+    │         │
+    │         └──► pgvector Docker (538 vetores)
+    │                   ├── business_embeddings
+    │                   ├── knowledge_vectors
+    │                   └── memories_semantic
+    │
+    ├──► HERMES SHADOW :5009
+    │         │
+    │         └──► SQLite /Users/vision/.hermes/jarvis_memory.db
+    │                   (561 interações, 3 skills autônomas)
+    │
+    ├──► MEMORY API :5010 (contexto sessão)
+    │
+    ├──► ODOO AGENT :7780
+    │         │
+    │         └──► SSH Tunnel → TADASH:18443 → Odoo CRM
+    │
+    ├──► PROSPECT AUTO :7794
+    │         │
+    │         └──► SerpAPI → Intel → KB → Lead → Odoo → Telegram
+    │
+    └──► N8N :5678
+              ├── Odoo Events → Telegram
+              ├── Daily Digest 8h → Telegram
+              ├── Prospect webhook → Telegram
+              └── Lead CRM → Telegram
+
+KNOWLEDGE DAILY :5012
+    └──► 6h todo dia → 56 temas → KB pgvector
+
+BACKUP DIÁRIO :3h
+    └──► Shadow DB + pgvector → local + GitHub
+
+
+================================================================================
+PENDÊNCIAS CRÍTICAS
+================================================================================
+
+PRIORIDADE 1 — WhatsApp Business
+  Status:   aguardando Twilio + Meta
+  Número:   +5519995968004
+  WABA ID:  14277662475510718
+  Impacto:  +13% — cobrança D+5, NPS, follow up automático
+
+PRIORIDADE 2 — n8n workflows ativar
+  Ação:     http://localhost:5678 → toggle Active nos 3 workflows
+  Tempo:    2 minutos
+
+PRIORIDADE 3 — Odoo mobile
+  Problema: porta bloqueada pelo provedor
+  Solução:  usar Tailscale IP 100.67.82.123:8070
+  App:      Odoo (App Store/Play Store)
+
+PRIORIDADE 4 — Fine-tuning real
+  Status:   279 exemplos no dataset
+  Falta:    221 exemplos validados via !bom no Telegram
+  Arquivo:  data/finetuning/wps_dataset_completo.jsonl
+
+PRIORIDADE 5 — Odoo 87 contratos reais
+  Ação:     Odoo > Contatos > Importar CSV
+  Impacto:  MRR real vs estimado
+
+
+================================================================================
+RESUMO GÊNIO DA LÂMPADA
+================================================================================
+
+Início do dia:    42%
+Estado atual:     72%
+Meta próxima:     85% (WhatsApp resolvido)
+Meta final:       96%
+
+Evolução do dia:
+  +VISION limpo:         +2%
+  +Shadow 561 interações: +8%
+  +Odoo CRM conectado:   +5%
+  +Google Calendar:      +3%
+  +Grape Networks:       +2%
+  +Integracondo:         +2%
+  +hubOS:                +2%
+  +Voz PT-BR:            +2%
+  +Dashboard 15/15:      +2%
+  +n8n workflows:        +2%
+
+
+================================================================================
+FIM DO DOCUMENTO — 16/04/2026 19:17
+CONFIDENCIAL — GRUPO WAGNER / PROJETO JARVIS
+================================================================================
