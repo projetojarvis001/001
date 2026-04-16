@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="30">
+<title>JARVIS — Grupo Wagner</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SF Pro Display',Arial,sans-serif;background:#0d1117;color:#e6edf3;padding:20px;min-height:100vh}
+h1{color:#58a6ff;text-align:center;font-size:28px;margin-bottom:4px;letter-spacing:2px}
+.sub{text-align:center;color:#6e7681;font-size:12px;margin-bottom:24px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px}
+.card h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:8px}
+.card .val{font-size:32px;font-weight:700}
+.card .sub2{font-size:11px;color:#6e7681;margin-top:4px}
+.ok{color:#3fb950}.warn{color:#d29922}.err{color:#f85149}.blue{color:#58a6ff}
+.table{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin-bottom:16px}
+.table h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:#8b949e;padding:6px 8px;border-bottom:1px solid #21262d;font-weight:500}
+td{padding:6px 8px;border-bottom:1px solid #21262d}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-ok{background:#1a3a2a;color:#3fb950}
+.badge-err{background:#3a1a1a;color:#f85149}
+.badge-warn{background:#3a2a1a;color:#d29922}
+footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
+</style>
+</head>
+<body>
+<h1>⚡ JARVIS — GRUPO WAGNER</h1>
+<div class="sub" id="ts">Carregando...</div>
+
+<div class="grid4">
+  <div class="card">
+    <h3>Agentes Online</h3>
+    <div class="val ok" id="agentes">-</div>
+    <div class="sub2">de 19 agentes totais</div>
+  </div>
+  <div class="card">
+    <h3>Shadow Interações</h3>
+    <div class="val blue" id="interacoes">-</div>
+    <div class="sub2" id="skills-sub">skills criadas</div>
+  </div>
+  <div class="card">
+    <h3>KB Vetores</h3>
+    <div class="val blue" id="vetores">-</div>
+    <div class="sub2">pgvector hnsw</div>
+  </div>
+  <div class="card">
+    <h3>Pipeline Odoo</h3>
+    <div class="val ok">R$390k</div>
+    <div class="sub2">7 oportunidades CRM</div>
+  </div>
+</div>
+
+<div class="grid4">
+  <div class="card">
+    <h3>MRR WPS</h3>
+    <div class="val warn">R$156k</div>
+    <div class="sub2">meta R$220k</div>
+  </div>
+  <div class="card">
+    <h3>SerpAPI</h3>
+    <div class="val blue" id="serpapi">-</div>
+    <div class="sub2" id="serpapi-sub">buscas disponiveis</div>
+  </div>
+  <div class="card">
+    <h3>Knowledge Daily</h3>
+    <div class="val blue" id="knowledge">-</div>
+    <div class="sub2">ciclos completados</div>
+  </div>
+  <div class="card">
+    <h3>Dataset Fine-tuning</h3>
+    <div class="val ok">279</div>
+    <div class="sub2">exemplos validados</div>
+  </div>
+</div>
+
+<div class="table">
+  <h3>Serviços — Status em Tempo Real</h3>
+  <table>
+    <thead><tr><th>Serviço</th><th>Porta</th><th>Status</th><th>Empresa</th></tr></thead>
+    <tbody id="servicos"></tbody>
+  </table>
+</div>
+
+<div class="grid3">
+  <div class="table">
+    <h3>Pipeline Odoo CRM</h3>
+    <table>
+      <thead><tr><th>Oportunidade</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Parceria Admin 10 condominios</td><td class="ok">R$216k</td></tr>
+        <tr><td>Expansao Ribeirao Preto 3x</td><td class="ok">R$64k</td></tr>
+        <tr><td>CFTV Barao Geraldo 150ap</td><td class="ok">R$30k</td></tr>
+        <tr><td>Portaria Alphaville 120ap</td><td class="ok">R$21k</td></tr>
+        <tr><td>Taquaral Gardens 80ap</td><td class="ok">R$21k</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table">
+    <h3>Grupo Wagner — Instâncias</h3>
+    <table>
+      <thead><tr><th>Empresa</th><th>Porta</th><th>Status</th></tr></thead>
+      <tbody id="grupo"></tbody>
+    </table>
+  </div>
+  <div class="table">
+    <h3>Skills Hermes Shadow</h3>
+    <table>
+      <thead><tr><th>Skill Criada Autonomamente</th></tr></thead>
+      <tbody id="skills"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>JARVIS v1.0 — Atualiza a cada 30s — 16/04/2026</footer>
+
+<script>
+async function f(url) {
+  try { const r=await fetch(url,{signal:AbortSignal.timeout(4000)}); return r.ok?await r.json():null; }
+  catch { return null; }
+}
+
+async function update() {
+  document.getElementById("ts").textContent = "Atualizado: " + new Date().toLocaleString("pt-BR");
+  
+  const [sent,shad,kb,serp,know] = await Promise.all([
+    f("http://localhost:7792/"), f("http://192.168.8.124:5009/stats"),
+    f("http://192.168.8.124:5006/stats"), f("http://localhost:7795/serpapi/status"),
+    f("http://localhost:5012/"),
+  ]);
+  
+  if(sent) document.getElementById("agentes").textContent = (sent.online||0)+"/19";
+  if(shad) {
+    document.getElementById("interacoes").textContent = shad.total_interactions||0;
+    document.getElementById("skills-sub").textContent = (shad.skills_criadas||0)+" skills criadas";
+  }
+  if(kb) document.getElementById("vetores").textContent = kb.vectors_total||0;
+  if(serp) {
+    document.getElementById("serpapi").textContent = (serp.total_mes||0)+"/500";
+    document.getElementById("serpapi-sub").textContent = "usadas este mes — "+(serp.pode_buscar?"disponivel":"esgotada");
+  }
+  if(know) document.getElementById("knowledge").textContent = know.total_ciclos||0;
+  
+  // Servicos
+  const srvs = [
+    ["JARVIS Core","http://localhost:7777","7777","WPS Digital"],
+    ["SENTINEL","http://localhost:7792","7792","Infraestrutura"],
+    ["Memory API","http://localhost:5010","5010","Wagner"],
+    ["Proativo v2","http://localhost:7793","7793","WPS Digital"],
+    ["Feedback","http://localhost:5011","5011","WPS Digital"],
+    ["Prospect Auto","http://localhost:7794","7794","WPS Digital"],
+    ["Intel Externo","http://localhost:7795","7795","Mercado"],
+    ["Knowledge Daily","http://localhost:5012","5012","Grupo Wagner"],
+    ["Voz TTS/STT","http://localhost:5013","5013","Interface"],
+    ["Odoo Agent","http://localhost:7780","7780","WPS Digital"],
+    ["Semantic API","http://192.168.8.124:5006/health","5006","VISION"],
+    ["Hermes Shadow","http://192.168.8.124:5009/health","5009","VISION"],
+  ];
+  const rows = await Promise.all(srvs.map(async([n,u,p,e])=>{
+    const r=await f(u); const ok=r!==null;
+    return `<tr><td>${n}</td><td>${p}</td><td><span class="badge ${ok?"badge-ok":"badge-err"}">${ok?"ONLINE":"OFFLINE"}</span></td><td style="color:#6e7681">${e}</td></tr>`;
+  }));
+  document.getElementById("servicos").innerHTML = rows.join("");
+  
+  // Grupo Wagner
+  const grupo = [
+    ["WPS Digital","http://localhost:7777","7777"],
+    ["Grape Networks","http://localhost:7800","7800"],
+    ["Integracondo","http://localhost:7801","7801"],
+    ["hubOS","http://localhost:7802","7802"],
+  ];
+  const grows = await Promise.all(grupo.map(async([n,u,p])=>{
+    const r=await f(u); const ok=r!==null;
+    return `<tr><td>${n}</td><td>${p}</td><td><span class="badge ${ok?"badge-ok":"badge-err"}">${ok?"OK":"OFF"}</span></td></tr>`;
+  }));
+  document.getElementById("grupo").innerHTML = grows.join("");
+  
+  // Skills
+  if(shad && shad.ultimas_skills) {
+    document.getElementById("skills").innerHTML = shad.ultimas_skills.map(s=>
+      `<tr><td class="ok">✓ ${s}</td></tr>`
+    ).join("") || "<tr><td style='color:#6e7681'>Nenhuma ainda</td></tr>";
+  }
+}
+update();
+setInterval(update,30000);
+</script>
+</body>
+</html>
