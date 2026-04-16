@@ -26,6 +26,17 @@ VISION_URL = 'http://192.168.8.124:5006'
 
 SESSION_ID = "wagner_principal"
 
+
+def log_to_hermes_shadow(pergunta: str, resposta: str, provider: str = "unknown"):
+    """Envia cada interacao ao Hermes Shadow para aprender"""
+    try:
+        import requests as _req
+        _req.post("http://192.168.8.124:5009/log",
+            json={"pergunta": pergunta, "resposta": resposta, "provider": provider, "agente": "jarvis"},
+            timeout=3)
+    except:
+        pass
+
 def save_memory(task: str, response: str):
     try:
         requests.post(f"{VISION_URL}/memories/save",
