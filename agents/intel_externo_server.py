@@ -14,6 +14,16 @@ import uvicorn
 from dotenv import load_dotenv
 load_dotenv("/Users/jarvis001/jarvis/.env")
 
+QUERIES_DIARIAS_WPS = [
+    "portaria virtual condominio tendencias 2026",
+    "seguranca eletronica condominial mercado brasil novidades",
+    "sindico profissional tecnologia inovacao",
+    "controle acesso biometrico condominio brasil",
+    "automacao residencial condominio inteligente",
+    "startup seguranca condominio investimento",
+    "LGPD cameras seguranca condominio obrigacoes",
+]
+
 app = FastAPI(title="Intel Externo v1")
 SERPAPI_KEY = os.getenv("SERPAPI_KEY", "")
 BOT = os.getenv("TELEGRAM_BOT_TOKEN","")
@@ -76,11 +86,19 @@ def ciclo_intel():
     while True:
         try:
             hora = datetime.datetime.now().hour
-            # Monitora diariamente as 9h
-            if hora == 9:
+            minuto = datetime.datetime.now().minute
+            # Monitora diariamente as 9h com queries estrategicas WPS
+            if hora == 9 and minuto < 10:
                 chave = f"intel_{datetime.date.today().isoformat()}"
                 if chave not in cache_intel:
-                    resultados = monitorar_mercado()
+                    # Usa queries estrategicas WPS
+                    import hashlib
+                    todos = []
+                    for q in QUERIES_DIARIAS_WPS[:3]:  # 3 queries/dia = dentro da cota
+                        resultados = serpapi_search(q, 3)
+                        todos.extend(resultados)
+                        time.sleep(2)
+                    resultados = todos
                     cache_intel[chave] = resultados
                     
                     if resultados:
