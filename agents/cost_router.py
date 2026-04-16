@@ -121,6 +121,27 @@ def route(messages, system="", max_tokens=1000, prefer_quality=False):
             print(f"[Router] {r['provider']} falhou: {r['error'][:60]}")
     return {"ok": False, "provider": "none", "content": "Todos os providers falharam."}
 
+
+def _try_gemma4(msgs, max_tokens=1000):
+    """Gemma4:e4b via Ollama no VISION — fallback local gratuito"""
+    try:
+        import requests as _req
+        payload = {
+            "model": "gemma4:e4b",
+            "messages": msgs,
+            "stream": False,
+            "options": {"num_ctx": 8192}
+        }
+        r = _req.post("http://192.168.8.124:11434/api/chat",
+            json=payload, timeout=60)
+        if r.status_code == 200:
+            text = r.json().get("message", {}).get("content", "")
+            if text:
+                return {"ok": True, "provider": "gemma4", "model": "gemma4:e4b", "content": text}
+        return {"ok": False, "provider": "gemma4", "error": f"status {r.status_code}"}
+    except Exception as e:
+        return {"ok": False, "provider": "gemma4", "error": str(e)[:100]}
+
 def ask(question, system="", prefer_quality=False, max_tokens=1000):
     return route([{"role": "user", "content": question}], system, max_tokens, prefer_quality)
 
