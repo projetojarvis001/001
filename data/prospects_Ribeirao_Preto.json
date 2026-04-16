@@ -1,0 +1,23 @@
+[
+  {
+    "nome": "Condomínio Morada dos Lagos",
+    "unidades": 150,
+    "tipo": "horizontal",
+    "score_estimado": 8,
+    "abordagem": "Apresentar o sistema de portaria virtual como solução para reduzir custos e melhorar a segurança do condomínio."
+  },
+  {
+    "nome": "Edifício Residencial São Francisco",
+    "unidades": 80,
+    "tipo": "vertical",
+    "score_estimado": 6,
+    "abordagem": "Destacar a economia de R$3.700 por mês com a substituição do porteiro tradicional pelo sistema de portaria virtual."
+  },
+  {
+    "nome": "Condomínio Villa dos Pinheiros",
+    "unidades": 200,
+    "tipo": "horizontal",
+    "score_estimado": 9,
+    "abordagem": "Oferecer uma demonstração do sistema de portaria virtual e destacar a sua capacidade de integrar com outros sistemas de segurança do condomínio."
+  }
+]

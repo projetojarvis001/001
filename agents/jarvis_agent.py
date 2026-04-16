@@ -28,6 +28,43 @@ SESSION_ID = "wagner_principal"
 
 
 
+import datetime
+
+def executar_acao(resposta: str, pergunta: str) -> str:
+    """Detecta e executa acoes reais na resposta do JARVIS"""
+    try:
+        import re
+        from agenda_tools import agendar_visita
+        import requests as _req
+
+        # Detecta pedido de agendamento
+        if any(w in pergunta.lower() for w in ["agenda", "agendar", "marcar visita", "visita"]):
+            # Extrai dados se presentes
+            data_match = re.search(r"(\d{4}-\d{2}-\d{2}|\d{2}/\d{2})", pergunta)
+            condo_match = re.search(r"condomínio\s+([\w\s]+?)(?:\s+em|\s+no|,|$)", pergunta, re.I)
+            
+            if data_match and condo_match:
+                data = data_match.group(1).replace("/", f"-{datetime.date.today().year}-") if "/" in data_match.group(1) else data_match.group(1)
+                condo = condo_match.group(1).strip()
+                visita = agendar_visita(condo, data, "09:00")
+                
+                # Notifica no Telegram
+                _req.post("http://localhost:5010/lembrar",
+                    json={"tipo": "acao_executada", "conteudo": f"Visita agendada: {condo} em {data}", "relevancia": 8},
+                    timeout=3)
+                return f"\n\nACAO EXECUTADA: Visita agendada para {condo} em {data} (ID: {visita['id']})"
+        
+        # Detecta pedido de cobranca
+        if any(w in pergunta.lower() for w in ["cobrar", "cobrança", "inadimplente"]):
+            _req.post("http://localhost:7789",
+                json={"task": "listar inadimplentes"},
+                timeout=10)
+            return "\n\nACAO EXECUTADA: Agente cobrança acionado"
+            
+    except Exception as e:
+        pass
+    return ""
+
 def get_wagner_context() -> str:
     """Busca contexto atual do Wagner para injetar em cada resposta"""
     try:
