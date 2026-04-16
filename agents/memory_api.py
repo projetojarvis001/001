@@ -113,12 +113,9 @@ Prioridades: {ctx.get("prioridade_2026","")}
 Ultimo assunto: {ctx.get("ultimo_assunto","")}"""
 
     if recentes:
-        briefing_text += "
-
-MEMORIAS RECENTES:"
+        briefing_text += "\n\nMEMORIAS RECENTES:"
         for tipo, conteudo in recentes[:3]:
-            briefing_text += f"
-- [{tipo}] {conteudo[:100]}"
+            briefing_text += f"\n- [{tipo}] {conteudo[:100]}"
 
     return {"briefing": briefing_text, "contexto": ctx}
 
