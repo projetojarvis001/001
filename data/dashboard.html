@@ -28,13 +28,13 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
 </head>
 <body>
 <h1>⚡ JARVIS — GRUPO WAGNER</h1>
-<div class="sub">Atualizado: 16/04/2026 16:42:13 — Atualiza a cada 60s</div>
+<div class="sub">Atualizado: 16/04/2026 16:47:09 — Auto-refresh 60s</div>
 
 <div class="grid4">
   <div class="card">
     <h3>Agentes Online</h3>
-    <div class="val ok">13/15</div>
-    <div class="sub2">de 15 servicos monitorados</div>
+    <div class="val ok">15/15</div>
+    <div class="sub2">servicos monitorados</div>
   </div>
   <div class="card">
     <h3>Shadow Interações</h3>
@@ -44,7 +44,7 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
   <div class="card">
     <h3>KB Vetores</h3>
     <div class="val blue">538</div>
-    <div class="sub2">pgvector hnsw scores 0.75+</div>
+    <div class="sub2">pgvector hnsw</div>
   </div>
   <div class="card">
     <h3>Pipeline Odoo</h3>
@@ -57,22 +57,22 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
   <div class="card">
     <h3>MRR WPS</h3>
     <div class="val warn">R$156k</div>
-    <div class="sub2">meta R$220k — faltam R$64k</div>
+    <div class="sub2">meta R$220k</div>
   </div>
   <div class="card">
-    <h3>SerpAPI Cota</h3>
+    <h3>SerpAPI</h3>
     <div class="val blue">0/500</div>
-    <div class="sub2">2 contas — 0/16 hoje</div>
+    <div class="sub2">2 contas ativas</div>
   </div>
   <div class="card">
     <h3>Knowledge Daily</h3>
     <div class="val blue">1</div>
-    <div class="sub2">ciclos — proximo: 6h amanha</div>
+    <div class="sub2">ciclos completados</div>
   </div>
   <div class="card">
-    <h3>Dataset Fine-tuning</h3>
+    <h3>Fine-tuning Dataset</h3>
     <div class="val ok">279</div>
-    <div class="sub2">exemplos validados JSONL</div>
+    <div class="sub2">exemplos validados</div>
   </div>
 </div>
 
@@ -80,8 +80,7 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
   <h3>Servicos — Status</h3>
   <table>
     <thead><tr><th>Servico</th><th>Porta</th><th>Status</th><th>Empresa</th></tr></thead>
-    <tbody>
-<tr><td>JARVIS Core</td><td>7777</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>WPS Digital</td></tr>
+    <tbody><tr><td>JARVIS Core</td><td>7777</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>WPS Digital</td></tr>
 <tr><td>SENTINEL</td><td>7792</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Infraestrutura</td></tr>
 <tr><td>Memory API</td><td>5010</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Wagner</td></tr>
 <tr><td>Proativo v2</td><td>7793</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>WPS Digital</td></tr>
@@ -89,11 +88,11 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
 <tr><td>Prospect Auto</td><td>7794</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>WPS Digital</td></tr>
 <tr><td>Intel Externo</td><td>7795</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Mercado</td></tr>
 <tr><td>Knowledge Daily</td><td>5012</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Grupo Wagner</td></tr>
-<tr><td>Voz TTS/STT</td><td>5013</td><td><span class="badge badge-err">OFFLINE</span></td><td style='color:#6e7681'>Interface</td></tr>
+<tr><td>Voz TTS/STT</td><td>5013</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Interface</td></tr>
 <tr><td>Odoo Agent</td><td>7780</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>WPS Digital</td></tr>
 <tr><td>Grape Networks</td><td>7800</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Grape</td></tr>
 <tr><td>Integracondo</td><td>7801</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>Integracondo</td></tr>
-<tr><td>hubOS</td><td>7802</td><td><span class="badge badge-err">OFFLINE</span></td><td style='color:#6e7681'>hubOS</td></tr>
+<tr><td>hubOS</td><td>7802</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>hubOS</td></tr>
 <tr><td>Semantic API</td><td>5006</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>VISION</td></tr>
 <tr><td>Hermes Shadow</td><td>5009</td><td><span class="badge badge-ok">ONLINE</span></td><td style='color:#6e7681'>VISION</td></tr>
 
@@ -104,37 +103,27 @@ footer{text-align:center;color:#6e7681;font-size:11px;margin-top:20px}
 <div class="grid3">
   <div class="table">
     <h3>Pipeline Odoo CRM</h3>
-    <table>
-      <thead><tr><th>Oportunidade</th><th>Valor</th></tr></thead>
-      <tbody>
-        <tr><td>Parceria Admin 10 condominios</td><td class="ok">R$216k</td></tr>
-        <tr><td>Expansao Ribeirao Preto 3x</td><td class="ok">R$64k</td></tr>
-        <tr><td>CFTV Barao Geraldo 150ap</td><td class="ok">R$30k</td></tr>
-        <tr><td>Portaria Alphaville 120ap</td><td class="ok">R$21k</td></tr>
-        <tr><td>Taquaral Gardens 80ap</td><td class="ok">R$21k</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Oportunidade</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Parceria Admin 10 condominios</td><td class="ok">R$216k</td></tr>
+      <tr><td>Expansao Ribeirao Preto 3x</td><td class="ok">R$64k</td></tr>
+      <tr><td>CFTV Barao Geraldo 150ap</td><td class="ok">R$30k</td></tr>
+      <tr><td>Portaria Alphaville 120ap</td><td class="ok">R$21k</td></tr>
+      <tr><td>Taquaral Gardens 80ap</td><td class="ok">R$21k</td></tr>
+    </tbody></table>
   </div>
   <div class="table">
-    <h3>Grupo Wagner — Instancias</h3>
-    <table>
-      <thead><tr><th>Empresa</th><th>Porta</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>WPS Digital</td><td>7777</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>Grape Networks</td><td>7800</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>Integracondo</td><td>7801</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>hubOS</td><td>7802</td><td><span class="badge badge-err">OFF</span></td></tr>
-      </tbody>
-    </table>
+    <h3>Grupo Wagner</h3>
+    <table><thead><tr><th>Empresa</th><th>Porta</th><th>Status</th></tr></thead><tbody>
+      <tr><td>WPS Digital</td><td>7777</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>Grape Networks</td><td>7800</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>Integracondo</td><td>7801</td><td><span class="badge badge-ok">OK</span></td></tr><tr><td>hubOS</td><td>7802</td><td><span class="badge badge-ok">OK</span></td></tr>
+    </tbody></table>
   </div>
   <div class="table">
     <h3>Skills Hermes Shadow</h3>
-    <table>
-      <thead><tr><th>Skill Criada Autonomamente</th></tr></thead>
-      <tbody>
-        <tr><td class="ok">✓ Estratégias de Resiliência e Diversificação de Receitas para WPS Digital</td></tr><tr><td class="ok">✓ Estratégia de Venda e Implementação de SLA Premium WPS</td></tr><tr><td class="ok">✓ Metas e Planejamento de Vendas WPS 2026</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Skill Criada Autonomamente</th></tr></thead><tbody>
+      <tr><td class="ok">✓ Estratégias de Resiliência e Diversificação de Receitas para WPS Digital</td></tr><tr><td class="ok">✓ Estratégia de Venda e Implementação de SLA Premium WPS</td></tr><tr><td class="ok">✓ Metas e Planejamento de Vendas WPS 2026</td></tr>
+    </tbody></table>
   </div>
 </div>
 
-<footer>JARVIS v1.0 — Grupo Wagner — 16/04/2026 — 13/15 servicos online</footer>
-</body>
-</html>
+<footer>JARVIS v1.0 — Grupo Wagner — 16/04/2026 16:47 — 15/15 online</footer>
+</body></html>
