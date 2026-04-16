@@ -52,6 +52,15 @@ def try_mistral(messages, system="", max_tokens=1000):
         msgs.extend(messages)
         r = _req.post("https://api.mistral.ai/v1/chat/completions",
             headers={"Authorization": f"Bearer {MISTRAL_KEY}", "Content-Type": "application/json"},
+    {
+        "name": "gemma4_local",
+        "type": "ollama",
+        "base_url": "http://192.168.8.124:11434",
+        "model": "gemma4:e4b",
+        "context_window": 128000,
+        "free": True,
+        "priority": 3
+    },
             json={"model": "mistral-small-latest", "messages": msgs, "max_tokens": max_tokens},
             timeout=30)
         if r.status_code == 200:
