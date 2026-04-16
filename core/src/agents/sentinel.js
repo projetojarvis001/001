@@ -1,12 +1,16 @@
-const { Dispatcher } = require('../services/dispatcher');
-// ... (código anterior de conexão) ...
+// SENTINEL.JS — stub que delega para Python SENTINEL :7792
+const http = require('http');
 
-async function analyzeSystemStatus(statusReport) {
-  const analysis = await Dispatcher.route(
-    `Analise este status de servidor e resuma em uma frase para um gestor de 9 empresas: ${statusReport}`,
-    'low'
-  );
-  return analysis;
+function checkSentinel() {
+    http.get('http://localhost:7792/health', (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => console.log('[Sentinel] Python SENTINEL ativo :7792'));
+    }).on('error', () => {
+        console.log('[Sentinel] Python SENTINEL offline — verificar :7792');
+    });
 }
 
-// O Sentinel agora enviará uma análise inteligente para o Telegram
+checkSentinel();
+setInterval(checkSentinel, 60000);
+module.exports = { checkSentinel };
