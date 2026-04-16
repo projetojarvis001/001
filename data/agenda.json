@@ -1,0 +1,14 @@
+{
+  "visitas": [
+    {
+      "condominio": "Cond Alphaville Premium — TESTE JARVIS",
+      "data": "2026-04-17",
+      "hora": "10:00",
+      "sindico": "Joao Silva",
+      "telefone": "(19) 99999-0000",
+      "descricao": "Visita tecnica portaria virtual — agendada pelo JARVIS automaticamente",
+      "status": "agendada",
+      "created_at": "2026-04-16T12:53:02.694841"
+    }
+  ]
+}
