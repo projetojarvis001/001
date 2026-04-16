@@ -38,6 +38,7 @@ SERVICOS_EXTERNOS = {
     "semantic_api": "http://192.168.8.124:5006/health",
     "hermes_shadow": "http://192.168.8.124:5009/health",
     "vision_ollama": "http://192.168.8.124:11434/api/tags",
+    "friday_ollama": "http://192.168.8.36:11434/api/tags",
 }
 
 status_cache = {}
