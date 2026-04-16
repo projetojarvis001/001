@@ -33,3 +33,4 @@ backups/
 .secrets/
 .env.local
 .env.secret
+backups/*.sql
