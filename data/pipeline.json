@@ -1,0 +1,14 @@
+[
+  {
+    "id": "L0001",
+    "nome": "Sindico Teste",
+    "condominio": "Alphaville Premium",
+    "telefone": "",
+    "email": "",
+    "valor": 45000.0,
+    "origem": "JARVIS",
+    "regiao": "Campinas",
+    "estagio": "lead",
+    "created_at": "2026-04-15T22:57:47.430872"
+  }
+]

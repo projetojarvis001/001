@@ -86,14 +86,24 @@ def update_wagner_context(chave: str, valor: str):
         pass
 
 def log_to_hermes_shadow(pergunta: str, resposta: str, provider: str = "unknown"):
-    """Envia cada interacao ao Hermes Shadow para aprender"""
+    """Envia cada interacao ao Hermes Shadow E registra no feedback server"""
     try:
         import requests as _req
+        # Shadow
         _req.post("http://192.168.8.124:5009/log",
             json={"pergunta": pergunta, "resposta": resposta, "provider": provider, "agente": "jarvis"},
             timeout=3)
+        # Feedback server — ultima resposta para bom/errado
+        _req.post("http://localhost:5011/ultima",
+            json={"pergunta": pergunta, "resposta": resposta},
+            timeout=2)
+        # Memoria — atualiza ultimo assunto
+        _req.post("http://localhost:5010/contexto",
+            json={"chave": "ultimo_assunto", "valor": pergunta[:100]},
+            timeout=2)
     except:
         pass
+
 
 def save_memory(task: str, response: str):
     try:
