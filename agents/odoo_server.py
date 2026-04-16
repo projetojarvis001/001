@@ -13,6 +13,34 @@ import uvicorn
 from dotenv import load_dotenv
 load_dotenv("/Users/jarvis001/jarvis/.env")
 
+def criar_lead_odoo_real(nome: str, condominio: str, valor: float,
+                          regiao: str = "Campinas", descricao: str = "") -> dict:
+    """Cria oportunidade real no CRM Odoo via xmlrpc"""
+    import xmlrpc.client, ssl as _ssl
+    ctx = _ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = _ssl.CERT_NONE
+    ODOO_URL_REAL = os.getenv("ODOO_URL","https://localhost:18443")
+    DB_REAL = os.getenv("ODOO_DB","WPS")
+    USER_REAL = os.getenv("ODOO_USER","wagner@wps.com.br")
+    PASS_REAL = os.getenv("ODOO_PASSWORD","odoowps")
+    try:
+        common = xmlrpc.client.ServerProxy(f"{ODOO_URL_REAL}/xmlrpc/2/common", context=ctx)
+        uid = common.authenticate(DB_REAL, USER_REAL, PASS_REAL, {})
+        if not uid:
+            return {"ok": False, "error": "auth failed"}
+        models_rpc = xmlrpc.client.ServerProxy(f"{ODOO_URL_REAL}/xmlrpc/2/object", context=ctx)
+        lead_id = models_rpc.execute_kw(DB_REAL, uid, PASS_REAL,
+            "crm.lead", "create", [{
+                "name": f"{condominio} — {regiao}",
+                "expected_revenue": valor,
+                "description": descricao or f"Lead gerado pelo JARVIS. Origem: prospect autonomo",
+                "priority": "1",
+            }])
+        return {"ok": True, "lead_id": lead_id, "odoo": ODOO_URL_REAL}
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:100]}
+
 app = FastAPI(title="Odoo Agent Autonomo v2")
 ODOO_URL = os.getenv("ODOO_URL", "http://localhost:18070")
 ODOO_DB = os.getenv("ODOO_DB", "odoo")
