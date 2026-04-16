@@ -142,6 +142,27 @@ def _try_gemma4(msgs, max_tokens=1000):
     except Exception as e:
         return {"ok": False, "provider": "gemma4", "error": str(e)[:100]}
 
+
+def _try_friday(msgs, max_tokens=1000):
+    """qwen2.5:14b via Ollama no FRIDAY — 62GB RAM disponivel"""
+    try:
+        import requests as _req
+        payload = {
+            "model": "qwen2.5:14b",
+            "messages": msgs,
+            "stream": False,
+            "options": {"num_ctx": 16384}
+        }
+        r = _req.post("http://192.168.8.36:11434/api/chat",
+            json=payload, timeout=90)
+        if r.status_code == 200:
+            text = r.json().get("message", {}).get("content", "")
+            if text:
+                return {"ok": True, "provider": "friday", "model": "qwen2.5:14b", "content": text}
+        return {"ok": False, "provider": "friday", "error": f"status {r.status_code}"}
+    except Exception as e:
+        return {"ok": False, "provider": "friday", "error": str(e)[:100]}
+
 def ask(question, system="", prefer_quality=False, max_tokens=1000):
     return route([{"role": "user", "content": question}], system, max_tokens, prefer_quality)
 
