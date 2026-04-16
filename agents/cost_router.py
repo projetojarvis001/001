@@ -163,6 +163,21 @@ def _try_friday(msgs, max_tokens=1000):
     except Exception as e:
         return {"ok": False, "provider": "friday", "error": str(e)[:100]}
 
+def _try_jarvis_wps(msgs, max_tokens=1000):
+    """JARVIS-WPS modelo fine-tuned no Friday"""
+    try:
+        import requests as _req
+        r = _req.post("http://192.168.8.36:11434/api/chat",
+            json={"model":"jarvis-wps","messages":msgs,"stream":False},
+            timeout=90)
+        if r.status_code == 200:
+            text = r.json().get("message",{}).get("content","")
+            if text:
+                return {"ok":True,"provider":"jarvis-wps","model":"jarvis-wps","content":text}
+        return {"ok":False,"provider":"jarvis-wps","error":f"status {r.status_code}"}
+    except Exception as e:
+        return {"ok":False,"provider":"jarvis-wps","error":str(e)[:100]}
+
 def ask(question, system="", prefer_quality=False, max_tokens=1000):
     return route([{"role": "user", "content": question}], system, max_tokens, prefer_quality)
 
