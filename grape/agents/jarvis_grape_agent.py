@@ -6,6 +6,7 @@ Instancia separada para Grape Networks — redes corporativas
 import sys, os
 sys.path.insert(0, "/Users/jarvis001/Library/Python/3.9/lib/python/site-packages")
 sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
+sys.path.insert(0, "/Users/jarvis001/jarvis/grape")
 import requests
 from fastapi import FastAPI
 from pydantic import BaseModel
