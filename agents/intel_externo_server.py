@@ -140,7 +140,40 @@ thread.start()
 
 @app.get("/serpapi/status")
 def serpapi_status():
-    return {"ok": True, **serpapi_status_completo()}
+    try:
+        return {"ok": True, **serpapi_status_completo()}
+    except Exception as e:
+        # Fallback simples se multi-conta falhar
+        import json, os, datetime
+        db = "/Users/jarvis001/jarvis/data/serpapi_uso.json"
+        uso = {}
+        if os.path.exists(db):
+            with open(db) as f2:
+                uso = json.load(f2)
+        contas_raw = []
+        from dotenv import dotenv_values
+        env = dotenv_values("/Users/jarvis001/jarvis/.env")
+        if env.get("SERPAPI_KEY"): contas_raw.append(env["SERPAPI_KEY"])
+        for i in range(2,10):
+            k = env.get(f"SERPAPI_KEY_{i}")
+            if k: contas_raw.append(k)
+        hoje = str(datetime.date.today())
+        contas_info = []
+        for i, c in enumerate(contas_raw):
+            cid = c[-8:]
+            dados = uso.get("contas",{}).get(cid, {"total":0,"hoje":0,"dia":""})
+            if dados.get("dia") != hoje: dados["hoje"] = 0
+            contas_info.append({"conta": i+1, "id": cid,
+                "uso_hoje": dados["hoje"], "uso_mes": dados["total"],
+                "limite_diario": 8, "limite_mensal": 250,
+                "disponivel": dados["hoje"] < 8 and dados["total"] < 245})
+        total_hoje = sum(c["uso_hoje"] for c in contas_info)
+        total_mes = sum(c["uso_mes"] for c in contas_info)
+        return {"ok": True, "total_contas": len(contas_raw),
+                "capacidade_total_mes": len(contas_raw)*250,
+                "total_hoje": total_hoje, "total_mes": total_mes,
+                "pode_buscar": any(c["disponivel"] for c in contas_info),
+                "contas": contas_info}
 
 @app.post("/serpapi/adicionar_conta")
 def adicionar_conta(chave: str):
