@@ -76,7 +76,18 @@ def restart_agente(nome, launchctl):
     except:
         return False
 
+# Cooldown de restarts externos — evita spam
+ultimo_restart_externo = {}
+
 def restart_externo(nome):
+    import time as _time
+    agora = _time.time()
+    ultimo = ultimo_restart_externo.get(nome, 0)
+    # Cooldown de 10 minutos entre restarts do mesmo servico
+    if agora - ultimo < 600:
+        return False
+    ultimo_restart_externo[nome] = agora
+    
     if nome == "semantic_api":
         try:
             subprocess.run([
@@ -91,6 +102,14 @@ def restart_externo(nome):
                 "ssh", "-o", "StrictHostKeyChecking=no", "vision@192.168.8.124",
                 "export PATH=/opt/homebrew/bin:$PATH && launchctl kickstart -k gui/$(id -u)/com.jarvis.hermes.shadow 2>/dev/null"
             ], capture_output=True, timeout=15)
+            return True
+        except: return False
+    if nome == "vision_ollama":
+        try:
+            subprocess.run([
+                "ssh", "-o", "StrictHostKeyChecking=no", "vision@192.168.8.124",
+                "export PATH=/opt/homebrew/bin:$PATH && brew services restart ollama 2>/dev/null"
+            ], capture_output=True, timeout=30)
             return True
         except: return False
     return False
@@ -136,8 +155,14 @@ def ciclo_vigilancia():
                 if not ok:
                     falhas_consecutivas[nome] = falhas_consecutivas.get(nome, 0) + 1
                     if falhas_consecutivas[nome] >= 2:
-                        restart_externo(nome)
-                        telegram(f"SENTINEL: {nome} no VISION reiniciado")
+                        restarted = restart_externo(nome)
+                        if restarted:
+                            # Alerta apenas se passou 1 hora desde o ultimo
+                            chave_alerta = f"alerta_{nome}"
+                            import time as _t
+                            if _t.time() - alertas_enviados.get(chave_alerta, 0) > 3600:
+                                telegram(f"SENTINEL: {nome} reiniciado automaticamente")
+                                alertas_enviados[chave_alerta] = _t.time()
                         falhas_consecutivas[nome] = 0
                 else:
                     falhas_consecutivas[nome] = 0
