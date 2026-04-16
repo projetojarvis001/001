@@ -138,6 +138,28 @@ def intel_mercado():
 thread = threading.Thread(target=ciclo_intel, daemon=True)
 thread.start()
 
+@app.get("/serpapi/status")
+def serpapi_status():
+    return {"ok": True, **serpapi_status_completo()}
+
+@app.post("/serpapi/adicionar_conta")
+def adicionar_conta(chave: str):
+    """Adiciona nova chave SerpAPI ao .env"""
+    with open("/Users/jarvis001/jarvis/.env", "r") as f:
+        env_content = f.read()
+    
+    # Conta quantas chaves ja existem
+    n = 1
+    while f"SERPAPI_KEY_{n}" in env_content:
+        n += 1
+    
+    with open("/Users/jarvis001/jarvis/.env", "a") as f:
+        f.write(f"\nSERPAPI_KEY_{n}={chave}")
+    
+    total = len(serpapi_get_contas())
+    return {"ok": True, "chave_id": n, "total_contas": total,
+            "capacidade_mensal": total * 250}
+
 if __name__ == "__main__":
     print("[Intel Externo] :7795 — monitorando mercado")
     uvicorn.run(app, host="0.0.0.0", port=7795)
