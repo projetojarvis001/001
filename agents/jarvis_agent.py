@@ -27,6 +27,27 @@ VISION_URL = 'http://192.168.8.124:5006'
 SESSION_ID = "wagner_principal"
 
 
+
+def get_wagner_context() -> str:
+    """Busca contexto atual do Wagner para injetar em cada resposta"""
+    try:
+        import requests as _req
+        r = _req.get("http://localhost:5010/briefing", timeout=3)
+        if r.status_code == 200:
+            return r.json().get("briefing", "")
+    except:
+        pass
+    return ""
+
+def update_wagner_context(chave: str, valor: str):
+    """Atualiza contexto do Wagner apos cada interacao"""
+    try:
+        import requests as _req
+        _req.post("http://localhost:5010/contexto",
+            json={"chave": chave, "valor": valor}, timeout=3)
+    except:
+        pass
+
 def log_to_hermes_shadow(pergunta: str, resposta: str, provider: str = "unknown"):
     """Envia cada interacao ao Hermes Shadow para aprender"""
     try:
