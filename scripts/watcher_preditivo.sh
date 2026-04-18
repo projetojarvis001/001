@@ -1,52 +1,42 @@
 #!/bin/bash
-if ./scripts/telegram_guard.sh; then
-  exit 0
-fi
+# Watcher Preditivo JARVIS — analisa tendencias e alertas
+cd /Users/jarvis001/jarvis
+python3 - << 'PYEOF'
+import sys, requests, json, datetime
+sys.path.insert(0,'/Users/jarvis001/Library/Python/3.9/lib/python/site-packages')
 
-TELEGRAM_BOT_TOKEN="8036971657:AAEGIF9BxetgE226XwQXTPYSwFvw4smX-_8"
-TELEGRAM_CHAT_ID="8206117553"
-ALERTAS=""
+BOT = "$(grep TELEGRAM_BOT_TOKEN .env | cut -d= -f2)"
+CHAT = "170323936"
 
-notify() {
-  curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-    -H "Content-Type: application/json" \
-    -d "{\"chat_id\":\"$TELEGRAM_CHAT_ID\",\"text\":\"$1\",\"parse_mode\":\"Markdown\"}" > /dev/null
-}
+def notify(msg):
+    try:
+        requests.post(f"https://api.telegram.org/bot{BOT}/sendMessage",
+            json={"chat_id": CHAT, "text": msg}, timeout=10)
+    except: pass
 
-# Watcher 1 — containers críticos caídos
-CAIDOS=$(docker ps -a --format "{{.Names}}:{{.Status}}" \
-  | grep -v "Up\|healthy" \
-  | grep "jarvis-core\|postgres\|redis\|grafana\|n8n\|prometheus\|loki" \
-  | grep -v "^$")
-[ -n "$CAIDOS" ] && ALERTAS="$ALERTAS\n⚠️ Containers caídos:\n$CAIDOS"
+# Status dos servicos
+servicos = {"JARVIS":7777,"Sentinel":7792,"Security":7798,"Crypto":7799}
+offline = []
+for nome, porta in servicos.items():
+    try:
+        r = requests.get(f"http://localhost:{porta}", timeout=3)
+        if r.status_code != 200:
+            offline.append(nome)
+    except:
+        offline.append(nome)
 
-# Watcher 2 — disco > 85%
-USO_SSD=$(df -h / | tail -1 | awk '{print $5}' | tr -d '%')
-[ "${USO_SSD:-0}" -gt 85 ] && ALERTAS="$ALERTAS\n⚠️ SSD em ${USO_SSD}% — crítico"
+if offline:
+    notify(f"⚠️ JARVIS Watcher\nServicos OFFLINE: {', '.join(offline)}")
 
-# Watcher 3 — VISION offline
-VISION=$(curl -s --max-time 5 http://192.168.8.124:5006/health 2>/dev/null | grep -c "ok")
-[ "$VISION" -eq 0 ] && ALERTAS="$ALERTAS\n❌ VISION Semantic API offline"
-
-# Watcher 4 — RAM disponível real no macOS M4 (page size = 16384 bytes)
-MEM_MB=$(python3 -c "
-import subprocess
-r = subprocess.run(['vm_stat'], capture_output=True, text=True)
-stats = {}
-for l in r.stdout.split('\n')[1:]:
-    if ':' in l:
-        k,v = l.split(':')
-        try: stats[k.strip()] = int(v.strip().rstrip('.'))
-        except: pass
-page = 16384
-avail = (stats.get('Pages free',0) + stats.get('Pages inactive',0) + stats.get('Pages speculative',0)) * page // 1048576
-print(avail)
-" 2>/dev/null || echo "9999")
-[ "${MEM_MB:-9999}" -lt 1000 ] && ALERTAS="$ALERTAS\n⚠️ RAM disponível: ${MEM_MB}MB (abaixo de 1GB)"
-
-# SÓ notifica se houver alerta real
-if [ -n "$ALERTAS" ]; then
-  notify "🔍 *Watcher Preditivo — $(date '+%d/%m %H:%M')*$(echo -e "$ALERTAS")"
-fi
-
-echo "[$(date)] Watcher: $([ -n "$ALERTAS" ] && echo "ALERTA ENVIADO" || echo "tudo ok — RAM ${MEM_MB}MB livre")"
+# Shadow stats
+try:
+    r = requests.get("http://192.168.8.124:5009/stats", timeout=5)
+    stats = r.json()
+    msg = (f"📊 JARVIS Watcher Preditivo\n"
+           f"{datetime.datetime.now().strftime('%d/%m %H:%M')}\n\n"
+           f"Shadow: {stats.get('total_interactions',0)} interacoes\n"
+           f"Skills: {stats.get('skills_criadas',0)} autonomas\n"
+           f"Offline: {len(offline)} servicos")
+    notify(msg)
+except: pass
+PYEOF

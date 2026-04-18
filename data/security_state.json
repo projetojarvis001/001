@@ -1,5 +1,151 @@
 {
-  "logins_vistos": {},
+  "logins_vistos": {
+    "d62e9c310279": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys008                         s\u00e1b 18 abr 00:55 - 00:55  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332012"
+    },
+    "a40ebb897f11": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys007                         s\u00e1b 18 abr 00:18 - 00:18  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332051"
+    },
+    "93f198356e18": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys006                         s\u00e1b 18 abr 00:12 - 00:12  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332057"
+    },
+    "ef7d3d035c3d": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys005                         s\u00e1b 18 abr 00:10 - 00:10  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332060"
+    },
+    "a3935a9e50d4": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys004                         s\u00e1b 18 abr 00:06 - 00:06  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332064"
+    },
+    "cce4e87481ee": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys002                         sex 17 abr 23:49 - 23:49  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332068"
+    },
+    "5678dcb7fd71": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys001                         sex 17 abr 23:46 - 23:46  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332076"
+    },
+    "b065fb0b1b9d": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys000                         sex 17 abr 23:45 - 23:45  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332080"
+    },
+    "d5ab606b436f": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys000  192.168.8.111          ter 14 abr 17:56 - 08:42  (14:46)",
+      "visto_em": "2026-04-18T09:21:12.332106"
+    },
+    "f233a0eb0c5d": {
+      "servidor": "JARVIS:121",
+      "linha": "jarvis001  ttys003                         ter 14 abr 00:53 - 00:53  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.332111"
+    },
+    "a43f6330051a": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys000                         seg 13 abr 16:06   still logged in",
+      "visto_em": "2026-04-18T09:21:12.554789"
+    },
+    "aee739743e7f": {
+      "servidor": "VISION:124",
+      "linha": "vision     console                         seg 13 abr 16:06   still logged in",
+      "visto_em": "2026-04-18T09:21:12.554821"
+    },
+    "5ae4442e5914": {
+      "servidor": "VISION:124",
+      "linha": "reboot time                                seg 13 abr 16:06",
+      "visto_em": "2026-04-18T09:21:12.554825"
+    },
+    "2c116595e528": {
+      "servidor": "VISION:124",
+      "linha": "shutdown time                              seg 13 abr 16:06",
+      "visto_em": "2026-04-18T09:21:12.554835"
+    },
+    "7eb83d17c854": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys002                         dom 12 abr 21:27 - 21:27  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.554841"
+    },
+    "4f6fcfd6d023": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys001  192.168.8.121          dom 12 abr 21:27 - 21:27  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.554853"
+    },
+    "11b069f6cee8": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys001  192.168.8.121          dom 12 abr 21:26 - 21:26  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.554865"
+    },
+    "050a8dce9116": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys002                         dom 12 abr 21:26 - 21:26  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.554869"
+    },
+    "cd98d3812649": {
+      "servidor": "VISION:124",
+      "linha": "vision     ttys001  192.168.8.121          dom 12 abr 21:25 - 21:25  (00:00)",
+      "visto_em": "2026-04-18T09:21:12.554874"
+    },
+    "1841e9f46469": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/0        192.168.8.121    Sat Apr 18 03:08 - 12:20  (09:12)",
+      "visto_em": "2026-04-18T09:21:13.535275"
+    },
+    "f0d5f78018e2": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/0        192.168.8.102    Thu Apr 16 13:40 - 13:55  (00:15)",
+      "visto_em": "2026-04-18T09:21:13.535336"
+    },
+    "1090dd24e8ac": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/0        192.168.8.100    Mon Apr 13 18:57 - 18:58  (00:00)",
+      "visto_em": "2026-04-18T09:21:13.535342"
+    },
+    "c4dca4e1badd": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/1        192.168.8.124    Sat Apr 11 17:53 - 17:54  (00:00)",
+      "visto_em": "2026-04-18T09:21:13.535349"
+    },
+    "2b161b2062f1": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/0        192.168.8.121    Sat Apr 11 13:21 - 05:09  (15:48)",
+      "visto_em": "2026-04-18T09:21:13.535353"
+    },
+    "dab60ca2e118": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/0        192.168.8.40     Thu Apr  9 17:44 - 22:38  (04:53)",
+      "visto_em": "2026-04-18T09:21:13.535361"
+    },
+    "194c1d23aeb6": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   tty7         :0               Thu Apr  9 17:44    gone - no logout",
+      "visto_em": "2026-04-18T09:21:13.535373"
+    },
+    "1a2580779ee3": {
+      "servidor": "FRIDAY:36",
+      "linha": "reboot   system boot  5.15.0-119-gener Thu Apr  9 17:44   still running",
+      "visto_em": "2026-04-18T09:21:13.535379"
+    },
+    "997676977b16": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/1        192.168.8.40     Thu Apr  9 16:14 - 17:43  (01:29)",
+      "visto_em": "2026-04-18T09:21:13.535387"
+    },
+    "0f32151a95c1": {
+      "servidor": "FRIDAY:36",
+      "linha": "wagner   pts/1        192.168.8.40     Thu Apr  9 16:03 - 16:11  (00:07)",
+      "visto_em": "2026-04-18T09:21:13.535393"
+    }
+  },
   "alertas_enviados": [
     "aba9db7d7365",
     "dc4e5ceb6375",
@@ -8,5 +154,5 @@
     "c6d2d7959e7c",
     "fcb1236ddac1"
   ],
-  "ultimo_check": "2026-04-18T08:22:00.508045"
+  "ultimo_check": "2026-04-18T09:16:12.288874"
 }
