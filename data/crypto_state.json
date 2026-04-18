@@ -275,6 +275,14 @@
     "f1d5e711a61f": {
       "titulo": "Introducing: The DoubleZero Ambassador Program",
       "visto_em": "2026-04-18T18:17:02.101292"
+    },
+    "19f055d0c3f1": {
+      "titulo": "Principais Airdrops de Mineração em Testnet 2026 Notícias",
+      "visto_em": "2026-04-18T20:17:17.720384"
+    },
+    "4dadc5ce6957": {
+      "titulo": "How to Earn Free OP NET Tokens in Under 15 Minutes",
+      "visto_em": "2026-04-18T20:17:18.206617"
     }
   },
   "oportunidades_ativas": [
@@ -1588,9 +1596,47 @@
       },
       "encontrada_em": "2026-04-18T18:17:02.101261",
       "status": "nova"
+    },
+    {
+      "id": "19f055d0c3f1",
+      "titulo": "Principais Airdrops de Mineração em Testnet 2026 Notícias",
+      "link": "https://enriquecatrabalhando.com.br/noticias/principais-airdrops-de-mineracao-em-testnet-2026/",
+      "snippet": "Entre as principais vantagens de participar do airdrop 375AI, destaca-se o ganho gratuito de criptomoedas, sem necessidade de investimento ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Participe do airdrop 375AI para ganhar criptomoedas gratuitamente",
+        "acao_necessaria": "Inscreva-se no airdrop 375AI e siga as instruções"
+      },
+      "encontrada_em": "2026-04-18T20:17:17.720358",
+      "status": "nova"
+    },
+    {
+      "id": "4dadc5ce6957",
+      "titulo": "How to Earn Free OP NET Tokens in Under 15 Minutes",
+      "link": "https://www.weex.com/es/wiki/article/op-net-airdrop-guide-how-to-earn-free-op-net-tokens-in-under-15-minutes-22948",
+      "snippet": "... participar en sorteos diarios antes del 12 de abril de 2026. Selecciones latinoamericanas clasificadas para el Mundial 2026. Descubre las ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "urgente",
+        "score": 80,
+        "resumo": "Participe de sorteios diarios para ganhar OP NET Tokens",
+        "acao_necessaria": "Participe dos sorteios diarios antes do dia 12 de abril de 2026"
+      },
+      "encontrada_em": "2026-04-18T20:17:18.206585",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 5,
-  "ultimo_ciclo": "2026-04-18T18:16:46.249103"
+  "ciclos": 6,
+  "ultimo_ciclo": "2026-04-18T20:17:10.934391"
 }
