@@ -35,7 +35,7 @@ IPS_AUTORIZADOS = {
     "127.0.0.1":      "localhost",
 }
 
-USUARIOS_AUTORIZADOS = ["wps","wagner","vision","jarvis001","grape","root","postgres"]
+USUARIOS_AUTORIZADOS = ["wps","wagner","vision","jarvis001","grape","root","postgres","reboot","shutdown","_mbsetupuser","daemon","nobody"]
 
 def telegram(msg: str, urgente: bool = False):
     if not TELEGRAM_TOKEN:
