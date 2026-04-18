@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 // Config
-const PORT         = 3005;
+const PORT = 3006;
 const JARVIS_URL   = 'http://localhost:7777';
 const SHADOW_URL   = 'http://192.168.8.124:5009';
 const TELEGRAM_BOT = process.env.TELEGRAM_BOT_TOKEN || '';
