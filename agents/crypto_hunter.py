@@ -78,13 +78,21 @@ def analisar_llm(titulo: str, snippet: str) -> dict:
         sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
         cr = importlib.import_module("cost_router")
         ask = cr.ask
-        prompt = f"""Analise esta oportunidade cripto. Responda APENAS JSON valido sem markdown:
+        prompt = f"""Voce e um especialista em criptomoedas avaliando oportunidades para ganhar cripto SEM investimento.
 
 Titulo: {titulo}
 Descricao: {snippet}
 
-{{"tipo":"airdrop_defi|testnet_reward|ambassador|learn_to_earn|faucet|bug_bounty|outro","roi_estimado":"alto|medio|baixo","requer_capital":false,"requer_kyc":false,"dificuldade":"facil|medio|dificil","prazo":"urgente|esta_semana|este_mes|sem_prazo","score":0,"resumo":"uma linha","acao_necessaria":"o que fazer"}}"""
-        resp = ask(prompt, system="Especialista cripto. Responda APENAS JSON valido.")
+Regras de score (seja generoso — usuario quer participar):
+- Airdrop confirmado com criterios claros = 85-95
+- Airdrop possivel / testnet ativa = 65-80  
+- Learn-to-earn / ambassador = 55-70
+- Faucet funcional = 35-50
+- Apenas artigo sem acao clara = 20-35
+
+Responda APENAS JSON valido sem markdown ou explicacao:
+{{"tipo":"airdrop_defi|testnet_reward|ambassador|learn_to_earn|faucet|bug_bounty|outro","roi_estimado":"alto|medio|baixo","requer_capital":false,"requer_kyc":false,"dificuldade":"facil|medio|dificil","prazo":"urgente|esta_semana|este_mes|sem_prazo","score":70,"resumo":"uma linha sobre a oportunidade","acao_necessaria":"passo especifico para participar"}}"""
+        resp = ask(prompt, system="Especialista cripto. Responda APENAS JSON valido sem markdown. Use scores entre 35-95 para oportunidades reais.")
         content = resp.get("content","").strip()
         content = content.replace("```json","").replace("```","").strip()
         # Pega so o JSON
