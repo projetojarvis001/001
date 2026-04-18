@@ -267,6 +267,14 @@
     "3ff46bebcf74": {
       "titulo": "Earn Crypto in 2026 Without Charts or Trading | Beginner Ste",
       "visto_em": "2026-04-18T16:16:41.525311"
+    },
+    "697d501d7a3c": {
+      "titulo": "Os 10 melhores airdrops de criptomoedas que realmente ...",
+      "visto_em": "2026-04-18T18:16:53.240154"
+    },
+    "f1d5e711a61f": {
+      "titulo": "Introducing: The DoubleZero Ambassador Program",
+      "visto_em": "2026-04-18T18:17:02.101292"
     }
   },
   "oportunidades_ativas": [
@@ -1542,9 +1550,47 @@
       },
       "encontrada_em": "2026-04-18T16:16:41.525281",
       "status": "nova"
+    },
+    {
+      "id": "697d501d7a3c",
+      "titulo": "Os 10 melhores airdrops de criptomoedas que realmente ...",
+      "link": "https://www.cryptopolitan.com/pt/top-10-crypto-airdrops-that-actually-worth-your-time-right-now/",
+      "snippet": "1. Grama (GRASS) — Temporada 2. Blockchain: Solana / DePIN. Recompensa: Tokens GRASS — TGE 29 de abril de 2026. Como participar ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Airdrop de Grama (GRASS) na blockchain Solana com recompensa em tokens GRASS",
+        "acao_necessaria": "Participar do airdrop antes do TGE em 29 de abril de 2026"
+      },
+      "encontrada_em": "2026-04-18T18:16:53.240127",
+      "status": "nova"
+    },
+    {
+      "id": "f1d5e711a61f",
+      "titulo": "Introducing: The DoubleZero Ambassador Program",
+      "link": "https://doublezero.xyz/journal/introducing-the-doublezero-ambassador-program",
+      "snippet": "The DoubleZero Ambassador Program exists to extend network understanding through credible, community-led education.",
+      "analise": {
+        "tipo": "ambassador",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 65,
+        "resumo": "Programa de embaixadores para educação comunitária",
+        "acao_necessaria": "Inscrever-se no programa de embaixadores DoubleZero"
+      },
+      "encontrada_em": "2026-04-18T18:17:02.101261",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 4,
-  "ultimo_ciclo": "2026-04-18T16:16:23.203844"
+  "ciclos": 5,
+  "ultimo_ciclo": "2026-04-18T18:16:46.249103"
 }
