@@ -24,6 +24,18 @@ IPS_AUTORIZADOS = {
     "192.168.8.124": "VISION",
     "192.168.8.36":  "FRIDAY",
     "192.168.8.86":  "rede_interna",
+    "192.168.8.40":  "rede_interna",
+    "192.168.8.31":  "rede_interna",
+    "192.168.8.38":  "rede_interna",
+    "192.168.8.43":  "rede_interna",
+    "192.168.8.44":  "rede_interna",
+    "192.168.8.45":  "rede_interna",
+    "192.168.8.46":  "rede_interna",
+    "192.168.8.47":  "rede_interna",
+    "192.168.8.109": "rede_interna",
+    "192.168.8.117": "rede_interna",
+    "192.168.8.127": "rede_interna",
+    "192.168.8.143": "rede_interna",
     "192.168.8.100": "rede_interna",
     "192.168.8.102": "dispositivo_temp",
     "192.168.8.111": "rede_interna",
@@ -35,7 +47,7 @@ IPS_AUTORIZADOS = {
     "127.0.0.1":      "localhost",
 }
 
-USUARIOS_AUTORIZADOS = ["wps","wagner","vision","jarvis001","grape","root","postgres","reboot","shutdown","_mbsetupuser","daemon","nobody"]
+USUARIOS_AUTORIZADOS = ["wps","wagner","vision","jarvis001","grape","root","postgres","reboot","shutdown","_mbsetupuser","daemon","nobody","sync","syslog","avahi","xrdp","systemd+","_windowserver","_netbios","_spotlight"]
 
 def telegram(msg: str, urgente: bool = False):
     if not TELEGRAM_TOKEN:
