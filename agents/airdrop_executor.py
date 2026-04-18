@@ -325,4 +325,4 @@ if __name__ == "__main__":
     print(f"Wallet: {WALLET_ADDRESS}")
     print(f"Threshold auto: score >= {THRESHOLD_AUTO}")
     loop_background()
-    uvicorn.run(app, host="0.0.0.0", port=7800)
+    uvicorn.run(app, host="0.0.0.0", port=7810)
