@@ -203,6 +203,34 @@
     "851cbe20e05e": {
       "titulo": "Learn New Skills and Earn Crypto | Coinbase Wallet Quest",
       "visto_em": "2026-04-18T12:15:47.598935"
+    },
+    "573bffe43c7a": {
+      "titulo": "5 Best Crypto Airdrops in 2026: Get Free Coins | MEXC News",
+      "visto_em": "2026-04-18T14:16:03.567725"
+    },
+    "ffd607659dd6": {
+      "titulo": "How to Claim Monad Testnet Rewards 2026_ A ... - Kirolsite",
+      "visto_em": "2026-04-18T14:16:07.507424"
+    },
+    "c98722c832f0": {
+      "titulo": "Top Crypto Airdrops in March 2026: Active Campaigns & ...",
+      "visto_em": "2026-04-18T14:16:08.192841"
+    },
+    "f81269a2b4e8": {
+      "titulo": "Testnet",
+      "visto_em": "2026-04-18T14:16:09.051546"
+    },
+    "1879939da4be": {
+      "titulo": "Testnet Incentive Program: 1m SESH Allocated for ...",
+      "visto_em": "2026-04-18T14:16:09.511715"
+    },
+    "903c051234ac": {
+      "titulo": "YouTube",
+      "visto_em": "2026-04-18T14:16:09.997359"
+    },
+    "e8399657823e": {
+      "titulo": "BNB Smart Chain (BSC) Testnet Faucet",
+      "visto_em": "2026-04-18T14:16:10.455562"
     }
   },
   "oportunidades_ativas": [
@@ -1174,9 +1202,142 @@
       },
       "encontrada_em": "2026-04-18T12:15:47.598906",
       "status": "nova"
+    },
+    {
+      "id": "573bffe43c7a",
+      "titulo": "5 Best Crypto Airdrops in 2026: Get Free Coins | MEXC News",
+      "link": "https://www.mexc.co/news/852104",
+      "snippet": "5 Best Crypto Airdrops in 2026: Get Free Coins · 1. OpenLedger – A blockchain network for sharing and monetizing AI data · 2. Spacecoin – A ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 80,
+        "resumo": "Participe dos 5 melhores airdrops de criptomoedas em 2026 para ganhar moedas gratuitas",
+        "acao_necessaria": "Inscreva-se nos airdrops listados no artigo"
+      },
+      "encontrada_em": "2026-04-18T14:16:03.567695",
+      "status": "nova"
+    },
+    {
+      "id": "ffd607659dd6",
+      "titulo": "How to Claim Monad Testnet Rewards 2026_ A ... - Kirolsite",
+      "link": "https://www.kirolsite.com/2026/AI-Help-Crypto%E2%80%99s-2026-Update-New-Predictive-Algorithms?How-to-Claim-Monad-Testnet-Rewards-2026_-A-Comprehensive-Guide",
+      "snippet": "Next, access the official Monad Testnet rewards portal. This platform is where you can check your eligibility and claim your rewards.",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Claim de recompensas no testnet da Monad",
+        "acao_necessaria": "Acessar o portal oficial de recompensas da Monad Testnet"
+      },
+      "encontrada_em": "2026-04-18T14:16:07.507392",
+      "status": "nova"
+    },
+    {
+      "id": "c98722c832f0",
+      "titulo": "Top Crypto Airdrops in March 2026: Active Campaigns & ...",
+      "link": "https://web3.bitget.com/en/academy/top-crypto-airdrops-in-march-2026-active-campaigns-how-to-qualify",
+      "snippet": "Crypto airdrops are token distribution programs that reward users for participating in a project's ecosystem. In 2026, most airdrops are ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Participe de airdrops de criptomoedas em março de 2026",
+        "acao_necessaria": "Inscreva-se nos programas de airdrop ativos e complete os critérios de participação"
+      },
+      "encontrada_em": "2026-04-18T14:16:08.192815",
+      "status": "nova"
+    },
+    {
+      "id": "f81269a2b4e8",
+      "titulo": "Testnet",
+      "link": "https://minaprotocol.com/testworld",
+      "snippet": "Accumulate Testnet Tokens. Earn up to 40,000 MINA Tokens. Distributed after mainnet launch. ; Earn tokens selling SNARKs. Earn up to 6,500 Testnet Points*. Level ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 75,
+        "resumo": "Ganhe até 40.000 MINA Tokens participando do Testnet da Accumulate",
+        "acao_necessaria": "Participar do Testnet e realizar tarefas para acumular tokens"
+      },
+      "encontrada_em": "2026-04-18T14:16:09.051527",
+      "status": "nova"
+    },
+    {
+      "id": "1879939da4be",
+      "titulo": "Testnet Incentive Program: 1m SESH Allocated for ...",
+      "link": "https://token.getsession.org/blog/testnet-rewards",
+      "snippet": "Testnet rewards will be distributed directly to participants' wallets during the Session Token TGE. They will be distributed to addresses used ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Participe do Testnet Incentive Program para receber 1m SESH",
+        "acao_necessaria": "Participe do testnet e use o endereco de wallet para receber recompensas"
+      },
+      "encontrada_em": "2026-04-18T14:16:09.511691",
+      "status": "nova"
+    },
+    {
+      "id": "903c051234ac",
+      "titulo": "YouTube",
+      "link": "https://www.youtube.com/watch?v=NxrjTeP0huw",
+      "snippet": "Share your videos with friends, family, and the world.",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "baixo",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 55,
+        "resumo": "Criar conteúdo no YouTube sobre criptomoedas e monetizar com anúncios",
+        "acao_necessaria": "Criar um canal no YouTube e publicar conteúdo de qualidade sobre criptomoedas"
+      },
+      "encontrada_em": "2026-04-18T14:16:09.997348",
+      "status": "nova"
+    },
+    {
+      "id": "e8399657823e",
+      "titulo": "BNB Smart Chain (BSC) Testnet Faucet",
+      "link": "https://www.bnbchain.org/pt-BR/testnet-faucet",
+      "snippet": "Get Test Tokens. 0.002 BNB on BSC Mainnet is needed for test funding. How to get BNB. Every 24 hours, BSC Testnet tokens can be claimed. Select token.",
+      "analise": {
+        "tipo": "faucet",
+        "roi_estimado": "baixo",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 40,
+        "resumo": "Receba tokens de teste na BNB Smart Chain (BSC) Testnet Faucet",
+        "acao_necessaria": "Acessar o site e solicitar tokens de teste a cada 24 horas"
+      },
+      "encontrada_em": "2026-04-18T14:16:10.455540",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 2,
-  "ultimo_ciclo": "2026-04-18T12:15:14.666907"
+  "ciclos": 3,
+  "ultimo_ciclo": "2026-04-18T14:15:52.415390"
 }
