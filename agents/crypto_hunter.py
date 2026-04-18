@@ -74,7 +74,10 @@ def buscar_serpapi(query: str, num: int = 5) -> list:
 
 def analisar_llm(titulo: str, snippet: str) -> dict:
     try:
-        from cost_router import ask
+        import importlib, sys
+        sys.path.insert(0, "/Users/jarvis001/jarvis/agents")
+        cr = importlib.import_module("cost_router")
+        ask = cr.ask
         prompt = f"""Analise esta oportunidade cripto. Responda APENAS JSON valido sem markdown:
 
 Titulo: {titulo}
