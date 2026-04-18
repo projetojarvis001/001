@@ -888,7 +888,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:01:36.908443",
+      "executado_em": "2026-04-18T15:01:57.005698",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -903,7 +903,7 @@
       "sucesso": false,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:01:44.152036",
+      "executado_em": "2026-04-18T15:02:01.900429",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
     },
@@ -918,7 +918,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:01:48.184042",
+      "executado_em": "2026-04-18T15:02:05.923068",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -933,7 +933,7 @@
       "sucesso": false,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:01:54.686521",
+      "executado_em": "2026-04-18T15:02:12.264606",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
     },
@@ -948,7 +948,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:01:58.742893",
+      "executado_em": "2026-04-18T15:02:16.279927",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -963,7 +963,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:02:04.544421",
+      "executado_em": "2026-04-18T15:02:25.205879",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -978,7 +978,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:02:10.239565",
+      "executado_em": "2026-04-18T15:02:30.784651",
       "tipo_cadastro": "form",
       "detalhes": "Formulario detectado — email: jarvis.e24c3397@proton.me"
     },
@@ -993,7 +993,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:02:16.107267",
+      "executado_em": "2026-04-18T15:02:36.530396",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1008,7 +1008,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:02:21.937695",
+      "executado_em": "2026-04-18T15:02:42.246988",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1023,7 +1023,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:02:27.849186",
+      "executado_em": "2026-04-18T15:02:48.207959",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1038,7 +1038,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:02:34.527624",
+      "executado_em": "2026-04-18T15:02:53.133575",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1053,7 +1053,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:02:41.720051",
+      "executado_em": "2026-04-18T15:02:59.418672",
       "tipo_cadastro": "acesso",
       "detalhes": "Site acessado com sucesso"
     },
@@ -1068,7 +1068,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:02:48.706374",
+      "executado_em": "2026-04-18T15:03:06.009868",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1083,7 +1083,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:02:57.907761",
+      "executado_em": "2026-04-18T15:03:10.905129",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1098,7 +1098,7 @@
       "sucesso": false,
       "prazo": "3-6 meses",
       "roi_est": "R$1000-20000",
-      "executado_em": "2026-04-18T15:03:04.661811",
+      "executado_em": "2026-04-18T15:03:17.202020",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
     },
@@ -1113,7 +1113,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:03:08.704327",
+      "executado_em": "2026-04-18T15:03:21.207783",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1128,7 +1128,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:03:14.272844",
+      "executado_em": "2026-04-18T15:03:26.819723",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1143,7 +1143,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:03:20.740091",
+      "executado_em": "2026-04-18T15:03:32.863528",
       "tipo_cadastro": "form",
       "detalhes": "Formulario detectado — email: jarvis.e24c3397@proton.me"
     },
@@ -1158,7 +1158,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:03:26.701289",
+      "executado_em": "2026-04-18T15:03:37.754806",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1173,7 +1173,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:03:31.967205",
+      "executado_em": "2026-04-18T15:03:42.855481",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1188,7 +1188,7 @@
       "sucesso": false,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:03:38.290171",
+      "executado_em": "2026-04-18T15:03:49.668014",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
     },
@@ -1203,7 +1203,7 @@
       "sucesso": false,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:03:42.325379",
+      "executado_em": "2026-04-18T15:03:53.672738",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
     },
@@ -1218,7 +1218,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:03:46.447880",
+      "executado_em": "2026-04-18T15:03:57.762051",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1233,7 +1233,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:03:52.144913",
+      "executado_em": "2026-04-18T15:04:02.815025",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1248,7 +1248,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$200-2000",
-      "executado_em": "2026-04-18T15:03:57.880431",
+      "executado_em": "2026-04-18T15:04:10.111557",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1263,9 +1263,9 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:04:03.329178",
-      "tipo_cadastro": "acesso",
-      "detalhes": "Site acessado com sucesso"
+      "executado_em": "2026-04-18T15:04:15.758983",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
     {
       "op_id": "c98722c832f0",
@@ -1278,7 +1278,7 @@
       "sucesso": true,
       "prazo": "2-3 meses",
       "roi_est": "R$500-10000",
-      "executado_em": "2026-04-18T15:04:09.891994",
+      "executado_em": "2026-04-18T15:04:22.300220",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1293,7 +1293,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$1000-20000",
-      "executado_em": "2026-04-18T15:04:15.301713",
+      "executado_em": "2026-04-18T15:04:27.162549",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     },
@@ -1308,7 +1308,7 @@
       "sucesso": true,
       "prazo": "3-6 meses",
       "roi_est": "R$500-5000",
-      "executado_em": "2026-04-18T15:04:21.358177",
+      "executado_em": "2026-04-18T15:04:32.647748",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     }
