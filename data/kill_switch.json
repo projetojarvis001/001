@@ -1,0 +1,10 @@
+{
+  "autonomo": true,
+  "threshold_auto": 70,
+  "max_valor_auto_usd": 5.0,
+  "pausado": false,
+  "pausado_em": null,
+  "operacoes_hoje": 0,
+  "max_operacoes_dia": 10,
+  "log": []
+}

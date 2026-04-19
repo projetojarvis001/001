@@ -283,6 +283,18 @@
     "4dadc5ce6957": {
       "titulo": "How to Earn Free OP NET Tokens in Under 15 Minutes",
       "visto_em": "2026-04-18T20:17:18.206617"
+    },
+    "1563f22dc6c9": {
+      "titulo": "Crypto Airdrops April 2026 | Free cryptocurrency giveaways",
+      "visto_em": "2026-04-18T22:17:36.576769"
+    },
+    "9c73f0cbdf5f": {
+      "titulo": "Top 11 Airdrops GRÁTIS Fevereiro 2026: Farming Fácil ...",
+      "visto_em": "2026-04-18T22:17:37.120756"
+    },
+    "b510b4b53dbe": {
+      "titulo": "Best Crypto Faucets 2026: Earn Free Bitcoin, Ethereum, ...",
+      "visto_em": "2026-04-18T22:17:47.346565"
     }
   },
   "oportunidades_ativas": [
@@ -1634,9 +1646,66 @@
       },
       "encontrada_em": "2026-04-18T20:17:18.206585",
       "status": "nova"
+    },
+    {
+      "id": "1563f22dc6c9",
+      "titulo": "Crypto Airdrops April 2026 | Free cryptocurrency giveaways",
+      "link": "https://markets.coinpedia.org/airdrops/",
+      "snippet": "Free Crypto Airdrops, April 2026 ; 1. ArbitrumARB · Ethereum Ecosystem · Pantera Capital Portfolio; +5 More ; 2. ForesoFORESO · Ethereum Ecosystem · Marketing ; 3 ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Airdrop de criptomoedas gratuitas em abril de 2026",
+        "acao_necessaria": "Inscrever-se nos projetos listados, como Arbitrum e Foreso"
+      },
+      "encontrada_em": "2026-04-18T22:17:36.576740",
+      "status": "nova"
+    },
+    {
+      "id": "9c73f0cbdf5f",
+      "titulo": "Top 11 Airdrops GRÁTIS Fevereiro 2026: Farming Fácil ...",
+      "link": "https://www.youtube.com/watch?v=1Ec4dybFA6I",
+      "snippet": "11 airdrops GRÁTIS e fáceis de farmar em fevereiro 2026! Sem precisar gastar nada: Sosovalue S2, Sodex, Fair Shares, Humanoid Network, ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 80,
+        "resumo": "11 airdrops gratuitas em fevereiro 2026 sem investimento",
+        "acao_necessaria": "inscrever-se nos projetos listados, como Sosovalue S2 e Sodex"
+      },
+      "encontrada_em": "2026-04-18T22:17:37.120727",
+      "status": "nova"
+    },
+    {
+      "id": "b510b4b53dbe",
+      "titulo": "Best Crypto Faucets 2026: Earn Free Bitcoin, Ethereum, ...",
+      "link": "https://www.businessinsider.com/personal-finance/best-crypto-faucets",
+      "snippet": "Users can earn small amounts of free crypto for completing tasks, like solving captchas, filling out surveys, or watching ads. You won't earn a ...",
+      "analise": {
+        "tipo": "faucet",
+        "roi_estimado": "baixo",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 40,
+        "resumo": "Ganhe criptomoedas gratuitas completando tarefas simples",
+        "acao_necessaria": "Complete tarefas como resolver captchas, preencher pesquisas ou assistir anuncios"
+      },
+      "encontrada_em": "2026-04-18T22:17:47.346543",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 6,
-  "ultimo_ciclo": "2026-04-18T20:17:10.934391"
+  "ciclos": 7,
+  "ultimo_ciclo": "2026-04-18T22:17:30.048666"
 }
