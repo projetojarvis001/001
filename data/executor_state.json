@@ -1446,7 +1446,52 @@
       "executado_em": "2026-04-18T23:05:30.222710",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "6a5bd1c8fa8b",
+      "titulo": "Pi Day 2026: Smart Contracts,Token Launchpad and 526 ...",
+      "link": "https://www.binance.com/en/square/post/301710469823330",
+      "tipo": "testnet_reward",
+      "score": 75,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": false,
+      "prazo": "3-6 meses",
+      "roi_est": "R$500-5000",
+      "executado_em": "2026-04-19T01:05:36.820359",
+      "tipo_cadastro": "",
+      "detalhes": "HTTP 202"
+    },
+    {
+      "op_id": "7ba003a43278",
+      "titulo": "How to Claim Monad Testnet Rewards 2026_ A ... - Kirolsite",
+      "link": "https://www.kirolsite.com/2026/Understanding-Crypto-Income-for-Finance-Professionals?How-to-Claim-Monad-Testnet-Rewards-2026_-A-Comprehensive-Guide,-Part",
+      "tipo": "testnet_reward",
+      "score": 75,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "3-6 meses",
+      "roi_est": "R$500-5000",
+      "executado_em": "2026-04-19T01:05:40.852328",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "c38cea9bf2fe",
+      "titulo": "Top Airdrops in February 2026 – Your Complete Guide to ...",
+      "link": "https://web3.bitget.com/en/academy/top-airdrops-in-february-2026-your-complete-guide-to-free-crypto-rewards",
+      "tipo": "airdrop_defi",
+      "score": 85,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "2-3 meses",
+      "roi_est": "R$500-10000",
+      "executado_em": "2026-04-19T01:05:47.966453",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     }
   ],
-  "total_cadastros": 38
+  "total_cadastros": 41
 }
