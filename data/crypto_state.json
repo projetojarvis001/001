@@ -383,6 +383,10 @@
     "83dd1d50fffc": {
       "titulo": "Happy Pi Day 2026: Major Feature and Ecosystem ...",
       "visto_em": "2026-04-19T16:21:00.770379"
+    },
+    "18f55729539c": {
+      "titulo": "REWARDS + AIRDROP INCOMING | HOW TO JOIN",
+      "visto_em": "2026-04-19T18:21:23.879975"
     }
   },
   "oportunidades_ativas": [
@@ -2209,9 +2213,28 @@
       },
       "encontrada_em": "2026-04-19T16:21:00.770350",
       "status": "nova"
+    },
+    {
+      "id": "18f55729539c",
+      "titulo": "REWARDS + AIRDROP INCOMING | HOW TO JOIN",
+      "link": "https://www.youtube.com/watch?v=P5TXQWlvkvM",
+      "snippet": "AESC TESTNET GUIDE | REWARDS + AIRDROP INCOMING | HOW TO JOIN. 7.9K views · 2 weeks ago. #bitcoin #ethereum #btc ...more. Token Tracker ... 2026.",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 80,
+        "resumo": "Participe do airdrop e testnet da AESC para ganhar recompensas",
+        "acao_necessaria": "Acesse o link do vídeo e siga as instruções para se inscrever"
+      },
+      "encontrada_em": "2026-04-19T18:21:23.879945",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 16,
-  "ultimo_ciclo": "2026-04-19T16:20:54.113386"
+  "ciclos": 17,
+  "ultimo_ciclo": "2026-04-19T18:21:13.005365"
 }
