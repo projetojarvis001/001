@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Club Necaxa vs. Tigres de la UANL: O/U 2.5",
+    "lado": "YES",
+    "preco": 0.0005,
+    "edge": 0.4995,
+    "posicao": 2.34,
+    "liquidity": 36750.79083,
+    "slug": "mex-nec-tig-2026-04-17-total-2pt5"
+  },
+  {
+    "question": "Will the highest temperature in San Francisco be between 56-",
+    "lado": "YES",
+    "preco": 0.0015,
+    "edge": 0.4985,
+    "posicao": 2.34,
+    "liquidity": 9537.80343,
+    "slug": "highest-temperature-in-san-francisco-on-april-19-2026-56-57f"
+  },
+  {
+    "question": "Will Maxx Crosby play for Los Angeles Rams next?",
+    "lado": "YES",
+    "preco": 0.002,
+    "edge": 0.498,
+    "posicao": 2.34,
+    "liquidity": 2405.37769,
+    "slug": "will-maxx-crosby-play-for-los-angeles-rams-next"
+  },
+  {
+    "question": "Will Everton finish in 3rd place in the 2025-26 English Prem",
+    "lado": "YES",
+    "preco": 0.003,
+    "edge": 0.497,
+    "posicao": 2.34,
+    "liquidity": 3606.02485,
+    "slug": "will-everton-finish-in-3rd-place-in-the-2025-26-english-premier-league"
+  },
+  {
+    "question": "Will the highest temperature in San Francisco be 55\u00b0F or bel",
+    "lado": "YES",
+    "preco": 0.0035,
+    "edge": 0.4965,
+    "posicao": 2.34,
+    "liquidity": 8273.13585,
+    "slug": "highest-temperature-in-san-francisco-on-april-20-2026-55forbelow"
+  },
+  {
+    "question": "Will the highest temperature in Lagos be 37\u00b0C on April 20?",
+    "lado": "YES",
+    "preco": 0.004,
+    "edge": 0.496,
+    "posicao": 2.34,
+    "liquidity": 3208.31199,
+    "slug": "highest-temperature-in-lagos-on-april-20-2026-37c"
+  },
+  {
+    "question": "Will Ken McFeeters win the 2026 Alabama Governor Republican ",
+    "lado": "YES",
+    "preco": 0.0065,
+    "edge": 0.4935,
+    "posicao": 2.34,
+    "liquidity": 9241.63966,
+    "slug": "will-ken-mcfeeters-win-the-2026-alabama-governor-republican-primary-election"
+  },
+  {
+    "question": "Will Ryan Fox win the 2026 RBC Heritage?",
+    "lado": "YES",
+    "preco": 0.011,
+    "edge": 0.489,
+    "posicao": 2.34,
+    "liquidity": 1167.82259,
+    "slug": "2026-rbc-heritage-winner-ryan-fox-win"
+  },
+  {
+    "question": "Will Seattle Sounders FC win on 2026-04-18?",
+    "lado": "NO",
+    "preco": 0.0145,
+    "edge": 0.48550000000000004,
+    "posicao": 2.34,
+    "liquidity": 9137.89597,
+    "slug": "mls-sea-stl-2026-04-18-sea"
+  },
+  {
+    "question": "Will the price of XRP be above $0.90 on April 21?",
+    "lado": "NO",
+    "preco": 0.0215,
+    "edge": 0.47850000000000004,
+    "posicao": 2.34,
+    "liquidity": 7618.29313,
+    "slug": "xrp-above-0pt9-on-april-21"
+  }
+]
