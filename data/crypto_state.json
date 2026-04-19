@@ -347,6 +347,18 @@
     "0caebf86c429": {
       "titulo": "Zoomex Announces Argentine Football Star Emiliano ...",
       "visto_em": "2026-04-19T06:19:08.689554"
+    },
+    "e7cce27f8514": {
+      "titulo": "Testnet Incentive Program",
+      "visto_em": "2026-04-19T10:19:51.378809"
+    },
+    "3f86b3105250": {
+      "titulo": "Robinhood Chain Launches Public Testnet",
+      "visto_em": "2026-04-19T10:19:51.866342"
+    },
+    "ae0cff1f5bc2": {
+      "titulo": "Best Learn-to-Earn Crypto Platforms to Try in 2026",
+      "visto_em": "2026-04-19T10:20:00.394895"
     }
   },
   "oportunidades_ativas": [
@@ -2002,9 +2014,66 @@
       },
       "encontrada_em": "2026-04-19T06:19:08.689531",
       "status": "nova"
+    },
+    {
+      "id": "e7cce27f8514",
+      "titulo": "Testnet Incentive Program",
+      "link": "https://token.getsession.org/testnet-incentive-program",
+      "snippet": "Session Tokens will be awarded based on your active participation in our testnet activities. This program, powered by the Ecosystem and Community Fund, marks an ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 75,
+        "resumo": "Participe do Testnet Incentive Program para ganhar Session Tokens",
+        "acao_necessaria": "Participe ativamente das atividades do testnet"
+      },
+      "encontrada_em": "2026-04-19T10:19:51.378779",
+      "status": "nova"
+    },
+    {
+      "id": "3f86b3105250",
+      "titulo": "Robinhood Chain Launches Public Testnet",
+      "link": "https://robinhood.com/us/en/newsroom/robinhood-chain-launches-public-testnet/",
+      "snippet": "The testnet will support early experimentation, identify potential issues, improve network stability, and build a foundation for developers ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Participe do testnet da Robinhood Chain para ganhar recompensas",
+        "acao_necessaria": "Acesse o site oficial e siga as instruções para participar do testnet"
+      },
+      "encontrada_em": "2026-04-19T10:19:51.866311",
+      "status": "nova"
+    },
+    {
+      "id": "ae0cff1f5bc2",
+      "titulo": "Best Learn-to-Earn Crypto Platforms to Try in 2026",
+      "link": "https://www.bitdegree.org/crypto/learn-to-earn-crypto-platforms",
+      "snippet": "Are crypto learn-to-earn platforms legit? Yes, crypto learn-to-earn platforms can be legit, but it's important to choose reputable ones. Platforms like ...",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 65,
+        "resumo": "Plataformas de aprendizado para ganhar criptomoedas",
+        "acao_necessaria": "selecionar plataforma e completar tarefas de aprendizado"
+      },
+      "encontrada_em": "2026-04-19T10:20:00.394863",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 12,
-  "ultimo_ciclo": "2026-04-19T08:19:14.984273"
+  "ciclos": 13,
+  "ultimo_ciclo": "2026-04-19T10:19:40.381130"
 }
