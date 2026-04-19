@@ -335,6 +335,18 @@
     "abdeb21dfde9": {
       "titulo": "Chainlink Faucets - Get Testnet Tokens",
       "visto_em": "2026-04-19T04:18:38.322142"
+    },
+    "914cab674ff2": {
+      "titulo": "CoinList",
+      "visto_em": "2026-04-19T06:19:03.853044"
+    },
+    "970c4a98c7fd": {
+      "titulo": "The Alchemy Pay Global Ambassador Program Opens ...",
+      "visto_em": "2026-04-19T06:19:08.114653"
+    },
+    "0caebf86c429": {
+      "titulo": "Zoomex Announces Argentine Football Star Emiliano ...",
+      "visto_em": "2026-04-19T06:19:08.689554"
     }
   },
   "oportunidades_ativas": [
@@ -1933,9 +1945,66 @@
       },
       "encontrada_em": "2026-04-19T04:18:38.322115",
       "status": "nova"
+    },
+    {
+      "id": "914cab674ff2",
+      "titulo": "CoinList",
+      "link": "https://coinlist.co/",
+      "snippet": "This site is operated by Amalgamated Token Services Inc. and its subsidiaries (\"CoinList\"). CoinList does not provide investment, legal, or tax advice.",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 80,
+        "resumo": "Participe do airdrop da CoinList para ganhar criptomoedas",
+        "acao_necessaria": "Crie uma conta na plataforma e complete as tarefas necessárias"
+      },
+      "encontrada_em": "2026-04-19T06:19:03.853014",
+      "status": "nova"
+    },
+    {
+      "id": "970c4a98c7fd",
+      "titulo": "The Alchemy Pay Global Ambassador Program Opens ...",
+      "link": "https://alchemypay.org/news-and-press/the-alchemy-pay-global-ambassador-program-opens-for-application",
+      "snippet": "Global ambassadors represent Alchemy Pay at online and real-world events and meetups. Ambassadors are product experts and work to create interest in Alchemy Pay ...",
+      "analise": {
+        "tipo": "ambassador",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 65,
+        "resumo": "Seja um embaixador global da Alchemy Pay e ajude a criar interesse na plataforma",
+        "acao_necessaria": "Inscrever-se no programa de embaixadores da Alchemy Pay"
+      },
+      "encontrada_em": "2026-04-19T06:19:08.114623",
+      "status": "nova"
+    },
+    {
+      "id": "0caebf86c429",
+      "titulo": "Zoomex Announces Argentine Football Star Emiliano ...",
+      "link": "https://www.zoomex.com/en/media/company-news/zoomex-emiliano-martinez-ambassador/",
+      "snippet": "Zoomex partners with football star Emiliano Martínez as Global Brand Ambassador, merging sports and Web3 to deliver fast, precise, ...",
+      "analise": {
+        "tipo": "ambassador",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 65,
+        "resumo": "Parceria entre Zoomex e Emiliano Martínez para promover a marca",
+        "acao_necessaria": "Acompanhar as redes sociais da Zoomex para possíveis oportunidades de recompensa"
+      },
+      "encontrada_em": "2026-04-19T06:19:08.689531",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 10,
-  "ultimo_ciclo": "2026-04-19T04:18:29.627955"
+  "ciclos": 11,
+  "ultimo_ciclo": "2026-04-19T06:18:57.094149"
 }
