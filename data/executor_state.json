@@ -1521,7 +1521,22 @@
       "executado_em": "2026-04-19T05:06:00.701680",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "914cab674ff2",
+      "titulo": "CoinList",
+      "link": "https://coinlist.co/",
+      "tipo": "airdrop_defi",
+      "score": 80,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "2-3 meses",
+      "roi_est": "R$200-2000",
+      "executado_em": "2026-04-19T07:06:07.117317",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     }
   ],
-  "total_cadastros": 43
+  "total_cadastros": 44
 }
