@@ -323,6 +323,18 @@
     "2c00e32c6e21": {
       "titulo": "Best Crypto Learn and Earn Programs 2026: Coinbase, ...",
       "visto_em": "2026-04-19T02:18:25.693700"
+    },
+    "ff85d5a82e7f": {
+      "titulo": "As melhores caças a airdrop do mês: janeiro de 2026",
+      "visto_em": "2026-04-19T04:18:31.184316"
+    },
+    "85b3e44ee641": {
+      "titulo": "Xenea Wallet Launches Testnet || All you need to do",
+      "visto_em": "2026-04-19T04:18:37.778838"
+    },
+    "abdeb21dfde9": {
+      "titulo": "Chainlink Faucets - Get Testnet Tokens",
+      "visto_em": "2026-04-19T04:18:38.322142"
     }
   },
   "oportunidades_ativas": [
@@ -1864,9 +1876,66 @@
       },
       "encontrada_em": "2026-04-19T02:18:25.693669",
       "status": "nova"
+    },
+    {
+      "id": "ff85d5a82e7f",
+      "titulo": "As melhores caças a airdrop do mês: janeiro de 2026",
+      "link": "https://www.weex.com/pt/news/detail/the-best-airdrop-hunts-of-the-month-january-2026-675081",
+      "snippet": "Este guia destaca cinco protocolos promissores sem token para oportunidades iniciais de airdrop em janeiro de 2026, selecionados para ajudar ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 85,
+        "resumo": "Oportunidade de airdrop em janeiro de 2026 com criterios claros",
+        "acao_necessaria": "Inscrever-se nos protocolos promissores sem token"
+      },
+      "encontrada_em": "2026-04-19T04:18:31.184289",
+      "status": "nova"
+    },
+    {
+      "id": "85b3e44ee641",
+      "titulo": "Xenea Wallet Launches Testnet || All you need to do",
+      "link": "https://www.youtube.com/shorts/RDzmyueUFRM",
+      "snippet": "How to receive and transfer token on Xenea Wallet. Registration link in pinned comment or telegram channel: https://t.me/Terrytrail Use my ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Participe do testnet da Xenea Wallet e receba tokens",
+        "acao_necessaria": "Se registrar no link do telegram e seguir as instrucoes"
+      },
+      "encontrada_em": "2026-04-19T04:18:37.778809",
+      "status": "nova"
+    },
+    {
+      "id": "abdeb21dfde9",
+      "titulo": "Chainlink Faucets - Get Testnet Tokens",
+      "link": "https://faucets.chain.link/",
+      "snippet": "How to get testnet tokens. 1. Choose Faucet. Choose one or multiple Faucet(s) you want to receive testnet tokens from.",
+      "analise": {
+        "tipo": "faucet",
+        "roi_estimado": "baixo",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 40,
+        "resumo": "Receba tokens de testnet gratuitos escolhendo um ou mais faucets",
+        "acao_necessaria": "Escolher um faucet e seguir as instrucoes para receber tokens"
+      },
+      "encontrada_em": "2026-04-19T04:18:38.322115",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 9,
-  "ultimo_ciclo": "2026-04-19T02:18:12.329692"
+  "ciclos": 10,
+  "ultimo_ciclo": "2026-04-19T04:18:29.627955"
 }
