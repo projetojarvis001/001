@@ -371,6 +371,18 @@
     "5f99e325f80b": {
       "titulo": "Join Our Ambassador Program",
       "visto_em": "2026-04-19T12:20:16.706709"
+    },
+    "56c78dabacf7": {
+      "titulo": "I Tried Arc Testnet — Here's How to Qualify for Rewards",
+      "visto_em": "2026-04-19T16:20:59.672225"
+    },
+    "5c4fe0e44915": {
+      "titulo": "CryptoSmartHub Announces Shift in Airdrop Trends for 2026",
+      "visto_em": "2026-04-19T16:21:00.151376"
+    },
+    "83dd1d50fffc": {
+      "titulo": "Happy Pi Day 2026: Major Feature and Ecosystem ...",
+      "visto_em": "2026-04-19T16:21:00.770379"
     }
   },
   "oportunidades_ativas": [
@@ -2140,9 +2152,66 @@
       },
       "encontrada_em": "2026-04-19T12:20:16.706695",
       "status": "nova"
+    },
+    {
+      "id": "56c78dabacf7",
+      "titulo": "I Tried Arc Testnet — Here's How to Qualify for Rewards",
+      "link": "https://www.youtube.com/watch?v=OU1EH3s6Wp0",
+      "snippet": "... Token: $ARC (confirmed) Cost: Free TGE: Expected Q3 2026 Simple Farming Guide 1. Claim faucet → faucet.circle.com 2. Swap → curve.finance ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 75,
+        "resumo": "Participe do Arc Testnet para ganhar recompensas em $ARC",
+        "acao_necessaria": "Claim faucet em faucet.circle.com e swap em curve.finance"
+      },
+      "encontrada_em": "2026-04-19T16:20:59.672189",
+      "status": "nova"
+    },
+    {
+      "id": "5c4fe0e44915",
+      "titulo": "CryptoSmartHub Announces Shift in Airdrop Trends for 2026",
+      "link": "https://chainwire.org/2026/01/20/cryptosmarthub-announces-shift-in-airdrop-trends-for-2026-from-free-tokens-to-strategic-rewards/",
+      "snippet": "CryptoSmartHub Announces Shift in Airdrop Trends for 2026: From Free Tokens to Strategic Rewards ... Testnet TGE Token Treasury Web3. Send a ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 80,
+        "resumo": "CryptoSmartHub anuncia mudança nos padrões de airdrop para 2026",
+        "acao_necessaria": "se inscrever no programa de recompensas estratégicas"
+      },
+      "encontrada_em": "2026-04-19T16:21:00.151352",
+      "status": "nova"
+    },
+    {
+      "id": "83dd1d50fffc",
+      "titulo": "Happy Pi Day 2026: Major Feature and Ecosystem ...",
+      "link": "https://minepi.com/blog/pi-day-2026/",
+      "snippet": "Pi Day 2026 marks the seventh official anniversary of Pi Network and reflects years of innovation and community building across the ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Comemoracao do 7o aniversario do Pi Network com possivel airdrop",
+        "acao_necessaria": "Participar da comunidade e verificar criterios de elegibilidade"
+      },
+      "encontrada_em": "2026-04-19T16:21:00.770350",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 15,
-  "ultimo_ciclo": "2026-04-19T14:20:25.370316"
+  "ciclos": 16,
+  "ultimo_ciclo": "2026-04-19T16:20:54.113386"
 }
