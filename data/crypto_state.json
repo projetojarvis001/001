@@ -295,6 +295,26 @@
     "b510b4b53dbe": {
       "titulo": "Best Crypto Faucets 2026: Earn Free Bitcoin, Ethereum, ...",
       "visto_em": "2026-04-18T22:17:47.346565"
+    },
+    "6a5bd1c8fa8b": {
+      "titulo": "Pi Day 2026: Smart Contracts,Token Launchpad and 526 ...",
+      "visto_em": "2026-04-19T00:17:58.406260"
+    },
+    "7ba003a43278": {
+      "titulo": "How to Claim Monad Testnet Rewards 2026_ A ... - Kirolsite",
+      "visto_em": "2026-04-19T00:17:58.955433"
+    },
+    "c38cea9bf2fe": {
+      "titulo": "Top Airdrops in February 2026 – Your Complete Guide to ...",
+      "visto_em": "2026-04-19T00:17:59.557120"
+    },
+    "c3e0de02ab9b": {
+      "titulo": "2026 Earn While You Learn The Ultimate Guide ...",
+      "visto_em": "2026-04-19T00:18:06.950752"
+    },
+    "e61ed4bc1834": {
+      "titulo": "10 Legit Ways to Earn Free Crypto in Canada 2026 - BTCC",
+      "visto_em": "2026-04-19T00:18:07.552342"
     }
   },
   "oportunidades_ativas": [
@@ -1703,9 +1723,104 @@
       },
       "encontrada_em": "2026-04-18T22:17:47.346543",
       "status": "nova"
+    },
+    {
+      "id": "6a5bd1c8fa8b",
+      "titulo": "Pi Day 2026: Smart Contracts,Token Launchpad and 526 ...",
+      "link": "https://www.binance.com/en/square/post/301710469823330",
+      "snippet": "The most anticipated announcement is the launch of Pi Launchpad on Testnet, a token launch platform designed specifically for product-first ...",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Lançamento do Pi Launchpad na Testnet com possibilidade de recompensas",
+        "acao_necessaria": "Participar da Testnet e seguir as instruções do lançamento"
+      },
+      "encontrada_em": "2026-04-19T00:17:58.406239",
+      "status": "nova"
+    },
+    {
+      "id": "7ba003a43278",
+      "titulo": "How to Claim Monad Testnet Rewards 2026_ A ... - Kirolsite",
+      "link": "https://www.kirolsite.com/2026/Understanding-Crypto-Income-for-Finance-Professionals?How-to-Claim-Monad-Testnet-Rewards-2026_-A-Comprehensive-Guide,-Part",
+      "snippet": "Avoidance: Always check the transaction fees before claiming rewards. Some claims may have associated fees that could reduce your net reward.",
+      "analise": {
+        "tipo": "testnet_reward",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 75,
+        "resumo": "Reivindicar recompensas do testnet Monad 2026",
+        "acao_necessaria": "Verificar taxas de transacao e reivindicar recompensas"
+      },
+      "encontrada_em": "2026-04-19T00:17:58.955415",
+      "status": "nova"
+    },
+    {
+      "id": "c38cea9bf2fe",
+      "titulo": "Top Airdrops in February 2026 – Your Complete Guide to ...",
+      "link": "https://web3.bitget.com/en/academy/top-airdrops-in-february-2026-your-complete-guide-to-free-crypto-rewards",
+      "snippet": "Top Airdrops in February 2026 focus on activity-driven crypto rewards, spanning DeFi quests, testnet participation, cross-chain usage, ...",
+      "analise": {
+        "tipo": "airdrop_defi",
+        "roi_estimado": "alto",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "esta_semana",
+        "score": 85,
+        "resumo": "Participe de airdrops de criptomoedas em fevereiro de 2026 com recompensas em criptomoedas",
+        "acao_necessaria": "Inscreva-se nos airdrops listados e complete as tarefas necessárias"
+      },
+      "encontrada_em": "2026-04-19T00:17:59.557106",
+      "status": "nova"
+    },
+    {
+      "id": "c3e0de02ab9b",
+      "titulo": "2026 Earn While You Learn The Ultimate Guide ...",
+      "link": "https://cimaloc.com/2026-Earn-While-You-Learn-The-Ultimate-Guide-to-Cryptocurrency-Educational-Platforms",
+      "snippet": "2026 Earn While You Learn The Ultimate Guide to Cryptocurrency Educational Platforms ... Legal · Site Map.",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 65,
+        "resumo": "Plataforma de educação em criptomoedas com recompensas",
+        "acao_necessaria": "Inscrever-se e completar cursos"
+      },
+      "encontrada_em": "2026-04-19T00:18:06.950722",
+      "status": "nova"
+    },
+    {
+      "id": "e61ed4bc1834",
+      "titulo": "10 Legit Ways to Earn Free Crypto in Canada 2026 - BTCC",
+      "link": "https://www.btcc.com/en-CA/academy/crypto-trading/crypto-earning/10-legit-ways-to-earn-free-crypto-in-canada",
+      "snippet": "The best ways to get free crypto in Canada include crypto sign-up bonuses, learn-and-earn crypto, crypto referral programs, crypto staking, ...",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 60,
+        "resumo": "Oportunidade de ganhar criptomoedas gratuitas no Canadá através de bônus de cadastro, programas de referência e staking",
+        "acao_necessaria": "Cadastrar-se em exchanges e plataformas de criptomoedas canadenses e participar de programas de recompensa"
+      },
+      "encontrada_em": "2026-04-19T00:18:07.552321",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 7,
-  "ultimo_ciclo": "2026-04-18T22:17:30.048666"
+  "ciclos": 8,
+  "ultimo_ciclo": "2026-04-19T00:17:52.149800"
 }

@@ -1,92 +1,122 @@
 [
   {
-    "question": "Club Necaxa vs. Tigres de la UANL: O/U 2.5",
-    "lado": "YES",
-    "preco": 0.0005,
-    "edge": 0.4995,
-    "posicao": 2.34,
-    "liquidity": 36750.79083,
-    "slug": "mex-nec-tig-2026-04-17-total-2pt5"
-  },
-  {
-    "question": "Will the highest temperature in San Francisco be between 56-",
-    "lado": "YES",
-    "preco": 0.0015,
-    "edge": 0.4985,
-    "posicao": 2.34,
-    "liquidity": 9537.80343,
-    "slug": "highest-temperature-in-san-francisco-on-april-19-2026-56-57f"
-  },
-  {
-    "question": "Will Maxx Crosby play for Los Angeles Rams next?",
-    "lado": "YES",
-    "preco": 0.002,
-    "edge": 0.498,
-    "posicao": 2.34,
-    "liquidity": 2405.37769,
-    "slug": "will-maxx-crosby-play-for-los-angeles-rams-next"
-  },
-  {
-    "question": "Will Everton finish in 3rd place in the 2025-26 English Prem",
-    "lado": "YES",
-    "preco": 0.003,
-    "edge": 0.497,
-    "posicao": 2.34,
-    "liquidity": 3606.02485,
-    "slug": "will-everton-finish-in-3rd-place-in-the-2025-26-english-premier-league"
-  },
-  {
-    "question": "Will the highest temperature in San Francisco be 55\u00b0F or bel",
-    "lado": "YES",
-    "preco": 0.0035,
-    "edge": 0.4965,
-    "posicao": 2.34,
-    "liquidity": 8273.13585,
-    "slug": "highest-temperature-in-san-francisco-on-april-20-2026-55forbelow"
-  },
-  {
-    "question": "Will the highest temperature in Lagos be 37\u00b0C on April 20?",
-    "lado": "YES",
-    "preco": 0.004,
-    "edge": 0.496,
-    "posicao": 2.34,
-    "liquidity": 3208.31199,
-    "slug": "highest-temperature-in-lagos-on-april-20-2026-37c"
-  },
-  {
-    "question": "Will Ken McFeeters win the 2026 Alabama Governor Republican ",
-    "lado": "YES",
-    "preco": 0.0065,
-    "edge": 0.4935,
-    "posicao": 2.34,
-    "liquidity": 9241.63966,
-    "slug": "will-ken-mcfeeters-win-the-2026-alabama-governor-republican-primary-election"
-  },
-  {
-    "question": "Will Ryan Fox win the 2026 RBC Heritage?",
-    "lado": "YES",
-    "preco": 0.011,
-    "edge": 0.489,
-    "posicao": 2.34,
-    "liquidity": 1167.82259,
-    "slug": "2026-rbc-heritage-winner-ryan-fox-win"
-  },
-  {
-    "question": "Will Seattle Sounders FC win on 2026-04-18?",
+    "question": "Will Bitcoin dip to $25,000 in April?",
+    "slug": "will-bitcoin-dip-to-25k-in-april-2026",
     "lado": "NO",
-    "preco": 0.0145,
-    "edge": 0.48550000000000004,
-    "posicao": 2.34,
-    "liquidity": 9137.89597,
-    "slug": "mls-sea-stl-2026-04-18-sea"
+    "preco": 0.9975,
+    "retorno": 0.25062656641603454,
+    "posicao": 5.0,
+    "liquidity": 99982.00861,
+    "volume": 204826.6484560008,
+    "score": 9.973205358847501,
+    "conditionId": "0xa5d8edf079750ac69408a3cc752d07a4fa19e0f45f3b598be0ad84c13571d642"
   },
   {
-    "question": "Will the price of XRP be above $0.90 on April 21?",
+    "question": "Spread: EC Juventude (-1.5)",
+    "slug": "bra2-crb-juv-2026-04-18-spread-away-1pt5",
     "lado": "NO",
-    "preco": 0.0215,
-    "edge": 0.47850000000000004,
-    "posicao": 2.34,
-    "liquidity": 7618.29313,
-    "slug": "xrp-above-0pt9-on-april-21"
+    "preco": 0.9995,
+    "retorno": 0.050025012506238475,
+    "posicao": 5.0,
+    "liquidity": 9992.0291,
+    "volume": 80.140908,
+    "score": 0.998703308545,
+    "conditionId": "0x0666e383cfaa57c22e1db77e6f266614617ff43eab2c7c4a9b364b5c4b5400ca"
+  },
+  {
+    "question": "Will Jeff Johnson win the 2026 Minnesota Governor Republican primary e",
+    "slug": "will-jeff-johnson-win-the-2026-minnesota-governor-republican-primary-election",
+    "lado": "NO",
+    "preco": 0.9975,
+    "retorno": 0.25062656641603454,
+    "posicao": 5.0,
+    "liquidity": 9999.76616,
+    "volume": 2647.3065930000002,
+    "score": 0.9974766744599999,
+    "conditionId": "0x405b6e3ce8caf18dea56ec418ea5a5c715f43aad946059e3eb7e3d1281698a78"
+  },
+  {
+    "question": "Will the highest temperature in Atlanta be between 60-61°F on April 19",
+    "slug": "highest-temperature-in-atlanta-on-april-19-2026-60-61f",
+    "lado": "NO",
+    "preco": 0.9985,
+    "retorno": 0.1502253380070151,
+    "posicao": 5.0,
+    "liquidity": 9973.68918,
+    "volume": 2125.5796920000003,
+    "score": 0.995872864623,
+    "conditionId": "0x1361d08020fa4cf644d3d13183571ba12079c7ab74096dcf099e7555e7d857e0"
+  },
+  {
+    "question": "Will Baidu have the second best AI model at the end of April 2026?",
+    "slug": "will-baidu-have-the-second-best-ai-model-at-the-end-of-april-2026",
+    "lado": "NO",
+    "preco": 0.9975,
+    "retorno": 0.25062656641603454,
+    "posicao": 5.0,
+    "liquidity": 9969.64652,
+    "volume": 5231.995327000005,
+    "score": 0.9944722403700001,
+    "conditionId": "0x53b76a0308adb7104fc8b7cf3dc1829dee86cddee95d62f1218436af4d3e15ab"
+  },
+  {
+    "question": "Will Judith Nakamura win the 2026 New Mexico Governor Republican prima",
+    "slug": "will-judith-nakamura-win-the-2026-new-mexico-governor-republican-primary-election",
+    "lado": "NO",
+    "preco": 0.9975,
+    "retorno": 0.25062656641603454,
+    "posicao": 5.0,
+    "liquidity": 9966.72382,
+    "volume": 6062.674930000001,
+    "score": 0.994180701045,
+    "conditionId": "0x261f8c417b9d3fdc4015bd68516a937cb8bb930916e03528eb4d9b7820cc7fbd"
+  },
+  {
+    "question": "Will Donald May be the Republican Nominee for TX-19?",
+    "slug": "will-donald-may-be-the-republican-nominee-for-tx-19",
+    "lado": "NO",
+    "preco": 0.9975,
+    "retorno": 0.25062656641603454,
+    "posicao": 5.0,
+    "liquidity": 9962.03167,
+    "volume": 3079.846283,
+    "score": 0.9937126590825001,
+    "conditionId": "0x9f6f7d6f2c9e224df6ff87ab786bcae3e5bb26d832a9c26fcb7490c7c61ed18c"
+  },
+  {
+    "question": "Will the highest temperature in New York City be 64°F or higher on Apr",
+    "slug": "highest-temperature-in-nyc-on-april-20-2026-64forhigher",
+    "lado": "NO",
+    "preco": 0.9955,
+    "retorno": 0.45203415369161615,
+    "posicao": 5.0,
+    "liquidity": 9962.06394,
+    "volume": 822.078293,
+    "score": 0.9917234652270001,
+    "conditionId": "0x584b21c82845412620504f7c41cc939471ffbbf08ab623016889a804f2f08352"
+  },
+  {
+    "question": "Will Trump and Putin meet next in Russia?",
+    "slug": "will-trump-and-putin-meet-next-in-russia-594-493-482",
+    "lado": "NO",
+    "preco": 0.9885,
+    "retorno": 1.163378856853825,
+    "posicao": 5.0,
+    "liquidity": 9986.01123,
+    "volume": 648103.2985570004,
+    "score": 0.9871172100855001,
+    "conditionId": "0x9031561489f77ba1f89c0b963170a6853c39840e6e89a6a658a05d12b60a1ff0"
+  },
+  {
+    "question": "Will Patty Murray be the next Senate Majority Leader?",
+    "slug": "will-patty-murray-be-the-next-senate-majority-leader",
+    "lado": "NO",
+    "preco": 0.973,
+    "retorno": 2.7749229188078095,
+    "posicao": 5.0,
+    "liquidity": 9966.72934,
+    "volume": 86.63,
+    "score": 0.969762764782,
+    "conditionId": "0x9bb2ff96232df5dc501137ee711e0dfef0056ee1754f8308330d8d4369e59e14"
   }
 ]
