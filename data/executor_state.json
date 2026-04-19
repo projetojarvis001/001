@@ -1566,7 +1566,22 @@
       "executado_em": "2026-04-19T11:06:18.549994",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "5692bb215d7c",
+      "titulo": "Testnet 3 Incentives Kickoff",
+      "link": "https://aleo.org/post/testnet-3-incentives-kickoff/",
+      "tipo": "testnet_reward",
+      "score": 75,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "3-6 meses",
+      "roi_est": "R$500-5000",
+      "executado_em": "2026-04-19T13:06:24.248583",
+      "tipo_cadastro": "form",
+      "detalhes": "Formulario detectado — email: jarvis.e24c3397@proton.me"
     }
   ],
-  "total_cadastros": 46
+  "total_cadastros": 47
 }
