@@ -315,6 +315,14 @@
     "e61ed4bc1834": {
       "titulo": "10 Legit Ways to Earn Free Crypto in Canada 2026 - BTCC",
       "visto_em": "2026-04-19T00:18:07.552342"
+    },
+    "126c91c49f4f": {
+      "titulo": "Crypto Marketing Strategy: Promote Your Token in 2026",
+      "visto_em": "2026-04-19T02:18:21.529001"
+    },
+    "2c00e32c6e21": {
+      "titulo": "Best Crypto Learn and Earn Programs 2026: Coinbase, ...",
+      "visto_em": "2026-04-19T02:18:25.693700"
     }
   },
   "oportunidades_ativas": [
@@ -1818,9 +1826,47 @@
       },
       "encontrada_em": "2026-04-19T00:18:07.552321",
       "status": "nova"
+    },
+    {
+      "id": "126c91c49f4f",
+      "titulo": "Crypto Marketing Strategy: Promote Your Token in 2026",
+      "link": "https://www.blockchainappfactory.com/blog/crypto-marketing-strategy-promote-token-2026/",
+      "snippet": "Learn proven crypto marketing strategies for 2026 to promote your token, build trust, grow community, and drive real adoption.",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "este_mes",
+        "score": 60,
+        "resumo": "Aprenda estratégias de marketing de criptomoedas para promover tokens",
+        "acao_necessaria": "Assista aos cursos e complete as tarefas para ganhar recompensas"
+      },
+      "encontrada_em": "2026-04-19T02:18:21.528970",
+      "status": "nova"
+    },
+    {
+      "id": "2c00e32c6e21",
+      "titulo": "Best Crypto Learn and Earn Programs 2026: Coinbase, ...",
+      "link": "https://www.bitget.com/academy/crypto-learn-earn-6",
+      "snippet": "Compare top cryptocurrency learn and earn platforms. Discover how Coinbase, Binance, Bitget & Kraken reward users for blockchain education ...",
+      "analise": {
+        "tipo": "learn_to_earn",
+        "roi_estimado": "medio",
+        "requer_capital": false,
+        "requer_kyc": false,
+        "dificuldade": "facil",
+        "prazo": "sem_prazo",
+        "score": 65,
+        "resumo": "Plataformas de criptomoedas como Coinbase, Binance, Bitget e Kraken oferecem recompensas para educação em blockchain",
+        "acao_necessaria": "Crie uma conta e complete os cursos de educação em blockchain"
+      },
+      "encontrada_em": "2026-04-19T02:18:25.693669",
+      "status": "nova"
     }
   ],
   "convertidas": [],
-  "ciclos": 8,
-  "ultimo_ciclo": "2026-04-19T00:17:52.149800"
+  "ciclos": 9,
+  "ultimo_ciclo": "2026-04-19T02:18:12.329692"
 }
