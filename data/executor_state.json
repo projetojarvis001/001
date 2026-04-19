@@ -1386,7 +1386,37 @@
       "executado_em": "2026-04-18T19:04:58.267108",
       "tipo_cadastro": "",
       "detalhes": "HTTP 403"
+    },
+    {
+      "op_id": "19f055d0c3f1",
+      "titulo": "Principais Airdrops de Mineração em Testnet 2026 Notícias",
+      "link": "https://enriquecatrabalhando.com.br/noticias/principais-airdrops-de-mineracao-em-testnet-2026/",
+      "tipo": "airdrop_defi",
+      "score": 85,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "2-3 meses",
+      "roi_est": "R$500-10000",
+      "executado_em": "2026-04-18T21:05:04.512441",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "4dadc5ce6957",
+      "titulo": "How to Earn Free OP NET Tokens in Under 15 Minutes",
+      "link": "https://www.weex.com/es/wiki/article/op-net-airdrop-guide-how-to-earn-free-op-net-tokens-in-under-15-minutes-22948",
+      "tipo": "airdrop_defi",
+      "score": 80,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "2-3 meses",
+      "roi_est": "R$200-2000",
+      "executado_em": "2026-04-18T21:05:10.601928",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     }
   ],
-  "total_cadastros": 34
+  "total_cadastros": 36
 }
