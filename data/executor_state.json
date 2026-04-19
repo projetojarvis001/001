@@ -1491,7 +1491,37 @@
       "executado_em": "2026-04-19T01:05:47.966453",
       "tipo_cadastro": "wallet_connect",
       "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "ff85d5a82e7f",
+      "titulo": "As melhores caças a airdrop do mês: janeiro de 2026",
+      "link": "https://www.weex.com/pt/news/detail/the-best-airdrop-hunts-of-the-month-january-2026-675081",
+      "tipo": "airdrop_defi",
+      "score": 85,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "2-3 meses",
+      "roi_est": "R$500-10000",
+      "executado_em": "2026-04-19T05:05:53.663820",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
+    },
+    {
+      "op_id": "85b3e44ee641",
+      "titulo": "Xenea Wallet Launches Testnet || All you need to do",
+      "link": "https://www.youtube.com/shorts/RDzmyueUFRM",
+      "tipo": "testnet_reward",
+      "score": 75,
+      "email": "jarvis.e24c3397@proton.me",
+      "wallet": "0x3bcf1f824ccdf9b632737e3790d59418e24c3397",
+      "sucesso": true,
+      "prazo": "3-6 meses",
+      "roi_est": "R$500-5000",
+      "executado_em": "2026-04-19T05:06:00.701680",
+      "tipo_cadastro": "wallet_connect",
+      "detalhes": "Site requer wallet — endereco registrado: 0x3bcf1f824ccdf9b632..."
     }
   ],
-  "total_cadastros": 41
+  "total_cadastros": 43
 }
